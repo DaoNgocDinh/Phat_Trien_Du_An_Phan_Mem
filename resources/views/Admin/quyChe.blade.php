@@ -51,49 +51,49 @@
             </svg>
           </div>
          <li>
-            <a href="#" class="border rounded-md border-gray-600 p-2 shadow-lg flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group">
+            <a href="#" class="border rounded-md border-gray-600 p-2 shadow-lg flex items-center px-2 py-1.5 text-body rounded-base hover:bg-[#2c5d6e] hover:shadow-xl hover:scale-[1.03] hover:border-[#3f7b8e]">
                <i class="text-white fa fa-home"></i>
                <span class="text-white flex-1 ms-3 whitespace-nowrap">Trang chủ</span>
             </a>
          </li>
          <li>
-            <a href="#" class="border rounded-md border-gray-600 p-2 shadow-lg flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group">
+            <a href="#" class="border rounded-md border-gray-600 p-2 shadow-lg flex items-center px-2 py-1.5 text-body rounded-base hover:bg-[#2c5d6e] hover:shadow-xl hover:scale-[1.03] hover:border-[#3f7b8e]">
                <i class="text-white fa fa-file"></i>
                <span class="text-white flex-1 ms-3 whitespace-nowrap">Đề tài nghiên cứu</span>
             </a>
          </li>
          <li>
-            <a href="#" class="border rounded-md border-gray-600 p-2 shadow-lg flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group">
+            <a href="#" class="border rounded-md border-gray-600 p-2 shadow-lg flex items-center px-2 py-1.5 text-body rounded-base hover:bg-[#2c5d6e] hover:shadow-xl hover:scale-[1.03] hover:border-[#3f7b8e]">
                <i class="text-white fa fa-pen"></i>
                <span class="text-white flex-1 ms-3 whitespace-nowrap">Quy chế khoa học</span>
             </a>
          </li>
          <li>
-            <a href="#" class="border rounded-md border-gray-600 p-2 shadow-lg flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group">
+            <a href="#" class="border rounded-md border-gray-600 p-2 shadow-lg flex items-center px-2 py-1.5 text-body rounded-base hover:bg-[#2c5d6e] hover:shadow-xl hover:scale-[1.03] hover:border-[#3f7b8e]">
                <i class="text-white fa fa-book"></i>
                <span class="text-white flex-1 ms-3 whitespace-nowrap">Công bố khoa học</span>
             </a>
          </li>
          <li>
-            <a href="#" class="border rounded-md border-gray-600 p-2 shadow-lg flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group">
+            <a href="#" class="border rounded-md border-gray-600 p-2 shadow-lg flex items-center px-2 py-1.5 text-body rounded-base hover:bg-[#2c5d6e] hover:shadow-xl hover:scale-[1.03] hover:border-[#3f7b8e]">
                <i class="text-white fa fa-bars"></i>
                 <span class="text-white flex-1 ms-3 whitespace-nowrap">Hoạt động khoa học</span>
             </a>
          </li>
          <li>
-            <a href="#" class="border rounded-md border-gray-600 p-2 shadow-lg flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group">
+            <a href="#" class="border rounded-md border-gray-600 p-2 shadow-lg flex items-center px-2 py-1.5 text-body rounded-base hover:bg-[#2c5d6e] hover:shadow-xl hover:scale-[1.03] hover:border-[#3f7b8e]">
                <i class="text-white fa fa-calendar"></i>
                 <span class="text-white flex-1 ms-3 whitespace-nowrap">Sự kiện</span>
             </a>
          </li>
          <li>
-            <a href="#" class="border rounded-md border-gray-600 p-2 shadow-lg flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group">
+            <a href="#" class="border rounded-md border-gray-600 p-2 shadow-lg flex items-center px-2 py-1.5 text-body rounded-base hover:bg-[#2c5d6e] hover:shadow-xl hover:scale-[1.03] hover:border-[#3f7b8e]">
                <i class="text-white fa fa-envelope"></i>
                 <span class="text-white flex-1 ms-3 whitespace-nowrap">Liện hệ</span>
             </a>
          </li>
          <li>
-            <a href="#" class="border rounded-md border-gray-600 p-2 shadow-lg flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group">
+            <a href="#" class="border rounded-md border-gray-600 p-2 shadow-lg flex items-center px-2 py-1.5 text-body rounded-base hover:bg-[#2c5d6e] hover:shadow-xl hover:scale-[1.03] hover:border-[#3f7b8e]">
                <i class="text-white fa fa-user"></i>
                 <span class="text-white flex-1 ms-3 whitespace-nowrap">Thông tin cá nhân</span>
             </a>
