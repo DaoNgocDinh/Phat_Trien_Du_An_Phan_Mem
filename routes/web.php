@@ -13,3 +13,7 @@ Route::get('/test', function () {
 Route::get('/admin/quy-che', function () {
     return view('Admin.quyChe');
 });
+
+Route::get('/giangvien/quy-che', function () {
+    return view('Giangvien.quyChe');
+});
