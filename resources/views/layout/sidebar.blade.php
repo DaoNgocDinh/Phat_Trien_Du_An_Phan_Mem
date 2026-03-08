@@ -1,5 +1,5 @@
 <aside id="default-sidebar" class="bg-[#1D546D] fixed inset-y-0 left-0 z-40 w-64 transform -translate-x-full transition-transform duration-300 ease-in-out sm:translate-x-0" aria-label="Sidebar">
-    <div class="flex h-full flex-col pt-16">  <!-- pt-16 để nội dung bắt đầu dưới navbar -->
+    <div class="flex h-full flex-col pt-16">  
         <div class="flex-1 overflow-y-auto px-3 py-4">
             <ul class="space-y-2 font-medium">
                 <!-- Search bar -->

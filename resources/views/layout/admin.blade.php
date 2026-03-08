@@ -9,7 +9,6 @@
 </head>
 <body class="bg-gray-50 font-sans antialiased">
 
-    <!-- Navbar fixed -->
     @include('layout.navbar')
 
     <!-- Wrapper -->

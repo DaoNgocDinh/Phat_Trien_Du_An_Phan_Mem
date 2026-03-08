@@ -52,7 +52,6 @@
                 <h3 class="text-lg md:text-xl font-bold text-gray-800 group-hover:text-[#1D546D]">Hoạt động khoa học</h3>
             </a>
 
-            <!-- Tiếp tục cho các thẻ còn lại (copy pattern tương tự) -->
             <!-- Sự kiện -->
             <a href="#" class="group bg-white rounded-xl shadow hover:shadow-2xl hover:scale-105 transition-all duration-300 flex flex-col items-center justify-center aspect-square p-6 text-center border border-gray-200">
                 <div class="text-7xl md:text-8xl text-gray-700 mb-4">

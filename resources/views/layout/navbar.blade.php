@@ -1,7 +1,6 @@
 <nav class="fixed top-0 left-0 right-0 z-50 bg-[#071E28] border-b border-[#2c5d6e] shadow-sm">
     <div class="mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex h-16 items-center justify-between">
-            <!-- Left: Tên hệ thống (tùy chọn, có thể bỏ nếu không cần) -->
              
             <!-- Nút Đăng xuất -->
             <a {{-- href="{{ route('logout') }}"  --}}
