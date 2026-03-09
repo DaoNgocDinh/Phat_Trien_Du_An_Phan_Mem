@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title') - Quản trị Hệ thống Khoa học</title>
+    <title>@yield('title') - Hệ thống Nghiên cứu Khoa học (Sinh viên)</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
@@ -13,10 +13,10 @@
 
     <!-- Wrapper -->
     <div class="flex min-h-screen">
-        <!-- Sidebar -->
-        @include('layout.sidebarAdmin')
+        <!-- Sidebar cho sinh viên -->
+        @include('layout.sidebarSVien')
 
-        <!-- Main -->
+        <!-- Main content -->
         <main class="flex-1 sm:ml-64 pt-16 bg-gray-100 overflow-y-auto">
             @yield('content')
         </main>
