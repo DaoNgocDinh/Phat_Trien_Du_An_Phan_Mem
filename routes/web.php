@@ -34,3 +34,6 @@ Route::get('/admin/courses', function () {
 Route::get('/admin/courses/edit', function () {
     return view('Admin.khoahoc.edit');
 });
+Route::get('/admin/dashboard', function () {
+    return view('Admin.thongke.dashboard');
+});

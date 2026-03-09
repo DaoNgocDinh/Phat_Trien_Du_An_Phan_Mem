@@ -16,7 +16,7 @@
 <!-- Content -->
 <div class="ml-64 mt-5 p-8">
     <div class="mb-10">
-        <button class="ml-10 bg-[#1D546D] px-2 py-4 rounded-lg text-white font-semibold text-3xl shadow">Công bố khóa học</button>
+        <button class="ml-10 bg-[#1D546D] px-3 py-4 rounded-lg text-white font-semibold text-3xl shadow">Công bố khóa học</button>
     </div>
 
     <div class="flex justify-between items-center mb-6">
