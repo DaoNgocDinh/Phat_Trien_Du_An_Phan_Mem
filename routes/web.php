@@ -3,6 +3,7 @@
 use App\Http\Controllers\SinhvienController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CongBoController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -19,6 +20,7 @@ Route::get('/admin/quy-che', function () {
 Route::prefix('admin')->group(function () {
     Route::get('/trang-chu', [AdminController::class, 'dashBoard'])
         ->name('admin.trangChu');
+    Route::resource('congbo', CongBoController::class);
 });
 
 Route::prefix('sinhVien')->group(function () {
