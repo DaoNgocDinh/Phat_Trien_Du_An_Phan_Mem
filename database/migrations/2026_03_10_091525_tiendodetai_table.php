@@ -30,6 +30,7 @@ return new class extends Migration
             $table->integer('PhanTramTienDo')->nullable();
 
             $table->foreign('MaDeTai')->references('MaSo')->on('detai');
+            $table->timestamps();
         });
     }
 

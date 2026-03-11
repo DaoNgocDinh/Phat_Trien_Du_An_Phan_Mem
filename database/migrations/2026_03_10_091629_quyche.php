@@ -23,6 +23,7 @@ return new class extends Migration
 
             $table->string('LoaiVanBan')->nullable();
             $table->string('FilePDF')->nullable();
+            $table->timestamps();
         });
     }
 

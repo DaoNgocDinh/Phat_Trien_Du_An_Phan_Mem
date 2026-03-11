@@ -15,6 +15,7 @@ return new class extends Migration
             $table->integer('UserID')->primary();
             $table->string('MatKhau',100);
             $table->string('VaiTro',20);
+            $table->timestamps();
         });
     }
 

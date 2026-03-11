@@ -11,7 +11,6 @@ class Canbokhoahoc extends Model
 
     protected $table = 'canbokhoahoc';
     protected $primaryKey = 'MaCanBo_admin';
-    public $timestamps = false;
     public $incrementing = false;
     protected $keyType = 'int';
 

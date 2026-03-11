@@ -28,6 +28,7 @@ return new class extends Migration
             $table->string('FilePDF')->nullable();
 
             $table->text('NoiDungTomTat')->nullable();
+            $table->timestamps();
         });
     }
 

@@ -11,7 +11,6 @@ class Taikhoan extends Model
 
     protected $table = 'taikhoan';
     protected $primaryKey = 'UserID';
-    public $timestamps = false;
     public $incrementing = false;
     protected $keyType = 'int';
 

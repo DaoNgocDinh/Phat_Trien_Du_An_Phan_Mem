@@ -11,7 +11,6 @@ class Tiendodetai extends Model
 
     protected $table = 'tiendodetai';
     protected $primaryKey = 'MaTienDo';
-    public $timestamps = false;
     public $incrementing = false;
     protected $keyType = 'int';
 

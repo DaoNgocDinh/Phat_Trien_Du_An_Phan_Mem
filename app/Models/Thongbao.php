@@ -11,7 +11,6 @@ class Thongbao extends Model
 
     protected $table = 'thongbao';
     protected $primaryKey = 'MaThongBao';
-    public $timestamps = false;
     public $incrementing = false;
     protected $keyType = 'int';
 

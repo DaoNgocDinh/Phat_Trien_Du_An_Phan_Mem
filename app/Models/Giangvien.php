@@ -11,7 +11,6 @@ class Giangvien extends Model
 
     protected $table = 'giangvien';
     protected $primaryKey = 'MaGiangVien';
-    public $timestamps = false;
     public $incrementing = false;
     protected $keyType = 'int';
 

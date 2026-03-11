@@ -34,6 +34,7 @@ return new class extends Migration
 
             $table->string('FileSanPham')->nullable();
             $table->integer('KinhPhi')->nullable();
+            $table->timestamps();
         });
     }
 

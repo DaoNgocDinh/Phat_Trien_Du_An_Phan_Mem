@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('TrangThai')->nullable();
 
             $table->foreign('UserID')->references('UserID')->on('taikhoan');
+            $table->timestamps();
         });
     }
 

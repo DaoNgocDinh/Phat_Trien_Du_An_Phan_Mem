@@ -11,7 +11,6 @@ class CongBo extends Model
 
     protected $table = 'congbo';
     protected $primaryKey = 'MaCongBo';
-    public $timestamps = false;
     public $incrementing = false;
     protected $keyType = 'int';
 

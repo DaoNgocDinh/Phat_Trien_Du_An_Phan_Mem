@@ -11,7 +11,6 @@ class Nghiencuusinh extends Model
 
     protected $table = 'nghiencuusinh';
     protected $primaryKey = 'MaSinhVien';
-    public $timestamps = false;
     public $incrementing = false;
     protected $keyType = 'int';
 

@@ -24,6 +24,7 @@ return new class extends Migration
 
             $table->foreign('MaSuKien')->references('MaSuKien')->on('sukien');
             $table->foreign('UserID')->references('UserID')->on('taikhoan');
+            $table->timestamps();
         });
     }
 

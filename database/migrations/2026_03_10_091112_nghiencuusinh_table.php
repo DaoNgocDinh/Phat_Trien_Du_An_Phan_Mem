@@ -23,6 +23,7 @@ return new class extends Migration
             $table->date('NgaySinh')->nullable();
 
             $table->foreign('UserID')->references('UserID')->on('taikhoan');
+            $table->timestamps();
         });
     }
 

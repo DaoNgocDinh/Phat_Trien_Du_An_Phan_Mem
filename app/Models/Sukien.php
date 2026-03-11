@@ -11,7 +11,6 @@ class Sukien extends Model
 
     protected $table = 'sukien';
     protected $primaryKey = 'MaSuKien';
-    public $timestamps = false;
     public $incrementing = false;
     protected $keyType = 'int';
 

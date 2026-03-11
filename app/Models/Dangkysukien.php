@@ -11,7 +11,6 @@ class Dangkysukien extends Model
 
     protected $table = 'dangkysukien';
     protected $primaryKey = 'MaDangky';
-    public $timestamps = false;
     public $incrementing = false;
     protected $keyType = 'int';
 

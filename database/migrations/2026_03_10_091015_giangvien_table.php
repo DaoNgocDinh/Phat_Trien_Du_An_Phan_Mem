@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('CV')->nullable();
 
             $table->foreign('UserID')->references('UserID')->on('taikhoan');
+            $table->timestamps();
         });
     }
 

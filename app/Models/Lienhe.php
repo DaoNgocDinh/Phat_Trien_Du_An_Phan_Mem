@@ -11,7 +11,6 @@ class Lienhe extends Model
 
     protected $table = 'lienhe';
     protected $primaryKey = 'MaLienHe';
-    public $timestamps = false;
     public $incrementing = false;
     protected $keyType = 'int';
 

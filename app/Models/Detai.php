@@ -11,7 +11,6 @@ class Detai extends Model
 
     protected $table = 'detai';
     protected $primaryKey = 'MaSo';
-    public $timestamps = false;
     public $incrementing = false;
     protected $keyType = 'int';
 

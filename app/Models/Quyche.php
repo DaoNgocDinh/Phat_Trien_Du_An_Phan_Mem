@@ -11,7 +11,6 @@ class Quyche extends Model
 
     protected $table = 'quyche';
     protected $primaryKey = 'MaQuyChe';
-    public $timestamps = false;
     public $incrementing = false;
     protected $keyType = 'int';
 
