@@ -20,7 +20,8 @@ Route::get('/admin/quy-che', function () {
 Route::prefix('admin')->group(function () {
     Route::get('/trang-chu', [AdminController::class, 'dashBoard'])
         ->name('admin.trangChu');
-    Route::resource('congbo', CongBoController::class);
+    // Alias để tránh resource hiểu "index" là {id}
+    Route::get('congbo/index', [CongBoController::class, 'index'])->name('admin.congbo.index');
 });
 
 Route::prefix('sinhVien')->group(function () {

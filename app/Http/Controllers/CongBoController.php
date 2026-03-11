@@ -2,19 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Models\CongBo;  // Giả sử bạn đã tạo model CongBo
+use App\Models\CongBo;
 use Illuminate\Http\Request;
 
 class CongBoController extends Controller
 {
-    //
-    public function show()
+    public function index(Request $request)
     {
-        // Bảng `congbo` không có cột timestamps, sắp xếp theo năm xuất bản mới nhất
-        $congbos = CongBo::orderByDesc('NamXuatBan')->paginate(10);
+        $query = CongBo::query();
 
-        // Truyền dữ liệu sang view
-        return view('admin.congbo.index', compact('congbos'));
+        if ($request->string('filter')->lower()->toString() === 'pending') {
+            $query->where('TrangThai', 'Chờ duyệt');
+        }
+
+        $congbos = $query->orderByDesc('created_at')->paginate(10)->withQueryString();
+
+        return view('Admin.CongBo.index', compact('congbos'));
     }
 }

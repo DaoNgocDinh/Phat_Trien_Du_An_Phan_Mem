@@ -23,6 +23,7 @@ return new class extends Migration
 
             $table->string('NoiCongBo')->nullable();
             $table->string('LoaiCongBo')->nullable();
+            $table->string('TrangThai', 50)->nullable();
 
             $table->string('DOI')->nullable();
             $table->string('FilePDF')->nullable();
