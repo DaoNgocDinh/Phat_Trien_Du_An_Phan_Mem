@@ -15,18 +15,14 @@ class Authentication
      */
     public function handle(Request $request, Closure $next, $role): Response
     {
-          $user = $request->user();
+        $vaiTro = session('VaiTro');
 
-        if(!$user){
-            return response()->json([
-                'message' => 'Chưa đăng nhập'
-            ],401);
+        if (!$vaiTro) {
+            return redirect('/login');
         }
 
-        if($user->VaiTro != $role){
-            return response()->json([
-                'message' => 'Không có quyền truy cập'
-            ],403);
+        if ($vaiTro != $role) {
+            abort(403, 'Không có quyền truy cập');
         }
 
         return $next($request);

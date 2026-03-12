@@ -2,15 +2,20 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class CongBo extends Model
 {
-    protected $table = 'congbo';
+    use HasFactory;
 
+    protected $table = 'congbo';
     protected $primaryKey = 'MaCongBo';
+    public $incrementing = false;
+    protected $keyType = 'int';
 
     protected $fillable = [
+        'MaCongBo',
         'TenCongBo',
         'TacGia',
         'NamXuatBan',
@@ -19,6 +24,6 @@ class CongBo extends Model
         'DOI',
         'FilePDF',
         'NoiDungTomTat',
-        'TrangThai'
+        'TrangThai',
     ];
 }
