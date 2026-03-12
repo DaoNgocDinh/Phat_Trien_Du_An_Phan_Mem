@@ -2,6 +2,20 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\CongBoController;
+
+Route::prefix('admin')->group(function(){
+
+    Route::get('courses',[CongBoController::class,'index'])->name('khoahoc.khoahoc');
+
+    Route::post('courses/store',[CongBoController::class,'store'])->name('congbo.store');
+
+    Route::post('courses/update/{id}',[CongBoController::class,'update'])->name('congbo.update');
+
+    Route::get('courses/delete/{id}',[CongBoController::class,'destroy'])->name('congbo.delete');
+
+});
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -28,12 +42,15 @@ Route::get('/auth/forgot-password', function () {
 });
 
 // admin
-Route::get('/admin/courses', function () {
-    return view('Admin.khoahoc.khoahoc');
-});
+// Route::get('/admin/courses', function () {
+//     return view('Admin.khoahoc.khoahoc');
+// });
 Route::get('/admin/courses/edit', function () {
     return view('Admin.khoahoc.edit');
 });
-Route::get('/admin/dashboard', function () {
+Route::get('/admin/report/dashboard', function () {
     return view('Admin.thongke.dashboard');
+});
+Route::get('/admin/report/create', function () {
+    return view('Admin.thongke.create');
 });

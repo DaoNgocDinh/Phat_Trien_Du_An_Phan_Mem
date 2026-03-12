@@ -3,239 +3,163 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Báo cáo thống kê</title>
+    <title>Công bố khoa học</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 </head>
 
-<body class="bg-white">
+<body class="bg-gray-100">
 
     @include('layout.navbar')
     @include('layout.sidebar')
-    @include('layout.popup_report')
+    @include('layout.popup_delete')
 
-    <div class="ml-64 p-8">
+    <div class="ml-64 mt-5 p-8">
 
-        <!-- HEADER -->
+        <div class="mb-10">
+            <button class="ml-10 bg-[#1D546D] px-3 py-4 rounded-lg text-white font-semibold text-3xl shadow">
+                Công bố khoa học
+            </button>
+        </div>
+
+
         <div class="flex justify-between items-center mb-6">
 
-            <div class="bg-[#1D546D] text-white px-6 py-2 rounded font-semibold">
-                Báo cáo - Thống kê
-            </div>
+            <h1 class="text-3xl font-bold ml-10">
+                Danh sách công bố khoa học
+            </h1>
 
-            <button onclick="openModal()" class="bg-[#3498DB] text-white px-4 py-2 rounded flex items-center gap-2">
-                <i class="fa-solid fa-file-export"></i>
-                Xuất báo cáo
-            </button>
+            <a href="{{ route('congbo.create') }}"
+                class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded shadow">
+
+                <i class="fa fa-plus mr-2"></i>
+                Thêm công bố
+
+            </a>
+
+        </div>
+
+
+        <table class="w-full bg-white rounded shadow overflow-hidden">
+
+            <thead class="bg-gray-200 text-sm">
+
+                <tr>
+
+                    <th class="p-3 border">STT</th>
+                    <th class="p-3 border">Tên công bố</th>
+                    <th class="p-3 border">Tác giả</th>
+                    <th class="p-3 border">Lĩnh vực</th>
+                    <th class="p-3 border">Năm</th>
+                    <th class="p-3 border">Trạng thái</th>
+                    <th class="p-3 border">Hành động</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody class="text-center text-sm">
+
+                @foreach ($congbo as $index => $item)
+
+                    <tr class="border-t hover:bg-gray-50">
+
+                        <td class="p-3 border">
+                            {{ $congbo->firstItem() + $index }}
+                        </td>
+
+                        <td class="p-3 border">
+                            {{ $item->TieuDe }}
+                        </td>
+
+                        <td class="p-3 border">
+                            {{ $item->TacGia }}
+                        </td>
+
+                        <td class="p-3 border">
+                            {{ $item->LinhVuc }}
+                        </td>
+
+                        <td class="p-3 border">
+                            {{ $item->NamCongBo }}
+                        </td>
+
+
+                        <td class="p-3 font-semibold border">
+
+                            @if ($item->TrangThai == 'DaDuyet')
+
+                                <span class="text-green-500 text-xs font-bold">
+                                    Đã duyệt
+                                </span>
+
+                            @elseif ($item->TrangThai == 'ChoDuyet')
+
+                                <span class="text-yellow-500 text-xs font-bold">
+                                    Chờ duyệt
+                                </span>
+
+                            @else
+
+                                <span class="text-red-500 text-xs font-bold">
+                                    Từ chối
+                                </span>
+
+                            @endif
+
+                        </td>
+
+
+                        <td class="p-3 space-x-2 border">
+
+                            <a href="{{ route('congbo.edit', $item->id) }}"
+                                class="bg-[#7AB2B2] text-white px-3 py-1 rounded text-xs">
+                                Chỉnh sửa
+                            </a>
+
+
+                            <form action="{{ route('congbo.destroy', $item->id) }}" method="POST" class="inline">
+
+                                @csrf
+                                @method('DELETE')
+
+                                <button type="submit" class="bg-[#C65E40] text-white px-3 py-1 rounded text-xs">
+                                    Xóa
+                                </button>
+
+                            </form>
+
+
+                            <a href="{{ route('congbo.show', $item->id) }}"
+                                class="bg-[#1D546D] text-white px-3 py-1 rounded text-xs">
+
+                                Xem chi tiết
+
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                @endforeach
+
+            </tbody>
+
+        </table>
+
+
+        <div class="mt-6 flex justify-center">
+
+            {{ $congbo->links() }}
 
         </div>
 
-
-        <p class="text-sm text-black mb-4">
-            Chọn các tiêu chí để lọc và xem báo cáo thống kê
-        </p>
-
-
-        <div class="bg-[#EBF4F6] p-6 rounded-lg">
-
-            <div class="grid grid-cols-2 gap-3">
-
-                <!-- FILTER -->
-                <div class="space-y-4">
-
-                    <h3 class="font-semibold">Bộ lọc báo cáo</h3>
-
-                    <div>
-                        <label class="text-sm block mb-1">Thời gian</label>
-
-                        <div class="flex gap-5">
-                            <input type="date" class="bg-[#F3F4F4] border p-2 rounded w-full">
-                            <input type="date" class="bg-[#F3F4F4] border p-2 rounded w-full">
-                        </div>
-                    </div>
-
-                    <div>
-                        <label class="text-sm block mb-1">Loại dữ liệu</label>
-
-                        <select class="bg-[#F3F4F4] border p-2 rounded w-full">
-                            <option>Công bố khoa học</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label class="text-sm block mb-1">Khoa</label>
-
-                        <select class="bg-[#F3F4F4] border p-2 rounded w-full">
-                            <option>Công nghệ thông tin</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label class="text-sm block mb-1">Giảng viên</label>
-
-                        <select class="bg-[#F3F4F4] border p-2 rounded w-full">
-                            <option>Tất cả</option>
-                        </select>
-                    </div>
-
-                    <button
-                        class="bg-[#3498DB] text-white px-8 py-4 rounded-md mt-10 flex items-center justify-center gap-2 mx-auto hover:bg-[#2c80b4]">
-                        Tạo báo cáo
-                    </button>
-
-                </div>
-
-
-                <!-- CHART -->
-                <div class="bg-white p-4 rounded-md shadow-sm ">
-
-                    <div class="flex justify-between border-b pb-3 border-gray-300 mb-10">
-
-                        <p class="text-2xl font-bold">
-                            Tổng số công bố khoa học
-                        </p>
-
-                        <div class="flex items-center gap-2">
-                            <i class="fa fa-chart-bar"></i>
-                            <span class="font-bold">120</span>
-                        </div>
-
-                    </div>
-
-                    <div class="grid grid-cols-2 gap-8 items-start">
-                        <div>
-                            <p class="text-sm mb-2">Số lượng công bố khoa học theo năm</p>
-                            <div class="h-[330px]">
-                                <canvas id="barChart"></canvas>
-                            </div>
-                        </div>
-
-                        <div class="flex flex-col items-center">
-                            <p class="text-sm mb-3">Tỷ lệ công bố khoa học</p>
-                            <div class="max-w-[390px] max-h-[390px]">
-                                <canvas id="pieChart"></canvas>
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <!-- TABLE -->
-            <div class="">
-
-                <h3 class="font-bold mb-5">
-                    Bảng dữ liệu thống kê
-                </h3>
-
-                <table class="w-full border border-gray-400 text-sm">
-
-                    <thead class="bg-gray-300">
-                        <tr>
-                            <th class="border border-black p-2 text-left">Khoa</th>
-                            <th class="border border-black p-2 text-left">Loại công bố</th>
-                            <th class="border border-black p-2 text-left">Số lượng</th>
-                        </tr>
-                    </thead>
-
-                    <tbody class="bg-white">
-
-                        <tr>
-                            <td class="border border-black p-2" rowspan="3">Công nghệ thông tin</td>
-                            <td class="border border-black p-2">ISI</td>
-                            <td class="border border-black p-2">12</td>
-                        </tr>
-
-                        <tr>
-                            <td class="border border-black p-2">Bài báo</td>
-                            <td class="border border-black p-2">20</td>
-                        </tr>
-
-                        <tr>
-                            <td class="border border-black p-2">Hội thảo</td>
-                            <td class="border border-black p-2">88</td>
-                        </tr>
-
-                        <tr class="font-semibold bg-gray-200">
-                            <td class="border border-black p-2 font-bold" colspan="2">Tổng</td>
-                            <td class="border border-black p-2 font-bold">120</td>
-                        </tr>
-
-                    </tbody>
-                </table>
-
-            </div>
-
-        </div>
 
     </div>
-
-
-    <script>
-            // Hiển thị biểu đồ
-        new Chart(document.getElementById('barChart'), {
-
-            type: 'bar',
-
-            data: {
-                labels: ['2021', '2022', '2023', '2024'],
-                datasets: [{
-                    label: 'Công bố',
-                    data: [24, 30, 36, 45],
-                    backgroundColor: '#4C7EBB'
-                }]
-            },
-
-            options: {
-                responsive: true,
-                maintainAspectRatio: false
-            }
-
-        })
-
-
-        new Chart(document.getElementById('pieChart'), {
-
-            type: 'pie',
-
-            data: {
-                labels: ['ISI', 'Bài báo', 'Hội thảo'],
-                datasets: [{
-                    data: [15, 10, 75],
-                    backgroundColor: ['#4A90E2', '#5DA5DA', '#E29B32']
-                }]
-            },
-
-            options: {
-                responsive: true,
-                maintainAspectRatio: false
-            }
-
-        })
-
-
-
-            // popup báo cáo
-        function openModal() {
-            document.getElementById("reportModal").classList.remove("hidden")
-        }
-
-        function closeModal() {
-            document.getElementById("reportModal").classList.add("hidden")
-        }
-
-
-
-    </script>
-
 
 </body>
 
