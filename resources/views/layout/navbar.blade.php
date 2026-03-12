@@ -3,7 +3,7 @@
         <div class="flex h-16 items-center justify-between">
              
             <!-- Nút Đăng xuất -->
-            <a {{-- href="{{ route('logout') }}"  --}}
+            <a  href="{{ route('logout') }}" 
                 class="hidden sm:flex items-center px-4 py-2 text-sm font-medium text-white bg-red-600/90 hover:bg-red-700 rounded-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-red-500/50">
                 <i class="fas fa-sign-out-alt mr-2"></i>
                 Đăng xuất
@@ -25,7 +25,7 @@
                     <img class="h-8 w-8 rounded-full object-cover border-2 border-[#3f7b8e]" 
                          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" 
                          alt="Nguyễn Thị B" />
-                    <span class="text-white font-medium hidden md:block">Nguyễn Thị B</span>
+                    <span class="text-white font-medium hidden md:block">  {{ session('HoTen') }}</span>
                 </div>
 
 
