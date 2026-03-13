@@ -39,5 +39,6 @@ class Taikhoan extends Model
     {
         return $this->hasMany(Dangkysukien::class, 'UserID', 'UserID');
     }
+    
 }
 
