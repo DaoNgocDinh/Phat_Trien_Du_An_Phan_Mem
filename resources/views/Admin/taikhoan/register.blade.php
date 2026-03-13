@@ -123,12 +123,29 @@
                             <div class="grid grid-cols-[160px_1fr] items-center gap-3">
                                 <label>Chức vụ</label>
 
-                                <select name="ChucVu" class="bg-gray-200 p-2 rounded w-full">
+                                <select name="ChucVu" class="w-full bg-gray-200 rounded p-3">
 
                                     <option value="">-- Chọn chức vụ --</option>
 
+                                    @php
+                                        $chucvu = [
+                                            'Giảng viên',
+                                            'Giảng viên chính',
+                                            'Phó giáo sư',
+                                            'Giáo sư',
+                                            'Trưởng bộ môn',
+                                            'Phó trưởng bộ môn',
+                                            'Trưởng khoa',
+                                            'Phó trưởng khoa'
+                                        ];
+                                    @endphp
+
                                     @foreach($chucvu as $cv)
-                                        <option value="{{ $cv }}">{{ $cv }}</option>
+
+                                        <option value="{{ $cv }}" {{ ($user->giangvien->ChucVu ?? '') == $cv ? 'selected' : '' }}>
+                                            {{ $cv }}
+                                        </option>
+
                                     @endforeach
 
                                 </select>
