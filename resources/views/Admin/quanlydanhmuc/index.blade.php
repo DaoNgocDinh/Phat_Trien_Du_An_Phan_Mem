@@ -14,8 +14,8 @@
 <body class="bg-white">
     @include('layout.navbar')
 
-    @include('layout.sidebar')
-    <div class="ml-64 pt-8 p-8">
+    @include('layout.sidebarAdmin')
+    <div class="ml-64 pt-8 p-8 mt-20">
 
         <!-- Tiêu đề -->
         <div id="breadcrumb" class="bg-[#1D546D] text-white px-11 py-3 rounded-md inline-block font-semibold">
@@ -60,50 +60,39 @@
 
                     <tbody class="text-gray-700">
 
-                        <tr id="row1" class="h-12">
-                            <td>01</td>
-                            <td id="ten1" class="text-center text-black">Bài báo</td>
-                            <td class="text-center">
-                                <button onclick="moFormEdit('row1', 'ten1')" class="bg-[#7AB2B2] px-3 py-1 rounded text-black text-sm">Chỉnh sửa</button>
-                                <button onclick="moPopupXoa('row1', 'ten1')" class="bg-[#C65E40] px-4 py-1 rounded text-black text-sm ml-3 hover:bg-red-600">Xóa</button>
+                        @foreach($danhmuc as $index => $dm)
+
+                        <tr id="row{{$index}}" class="h-12">
+
+                            <td>{{ $index + 1 }}</td>
+
+                            <td id="ten{{$index}}" class="text-center text-black">
+                                {{ $dm->LoaiDeTai }}
                             </td>
+
+                            <td class="text-center">
+
+                                <button
+                                    onclick="moFormEdit('row{{$index}}','ten{{$index}}')"
+                                    class="bg-[#7AB2B2] px-3 py-1 rounded text-black text-sm">
+
+                                    Chỉnh sửa
+
+                                </button>
+
+                                <button
+                                    onclick="moPopupXoa('row{{$index}}','{{ $dm->LoaiDeTai }}')"
+                                    class="bg-[#C65E40] px-4 py-1 rounded text-black text-sm ml-3 hover:bg-red-600">
+
+                                    Xóa
+
+                                </button>
+
+                            </td>
+
                         </tr>
 
-                        <tr id="row2" class="h-12">
-                            <td>02</td>
-                            <td id="ten2" class="text-center text-black">Hội thảo</td>
-                            <td class="text-center">
-                                <button onclick="moFormEdit('row2', 'ten2')" class="bg-[#7AB2B2] px-3 py-1 rounded text-black text-sm">Chỉnh sửa</button>
-                                <button onclick="moPopupXoa('row2', 'ten2')" class="bg-[#C65E40] px-4 py-1 rounded text-black text-sm ml-3 hover:bg-red-600">Xóa</button>
-                            </td>
-                        </tr>
-
-                        <tr id="row3" class="h-12">
-                            <td>03</td>
-                            <td id="ten3" class="text-center text-black">Sách</td>
-                            <td class="text-center">
-                                <button onclick="moFormEdit('row3', 'ten3')" class="bg-[#7AB2B2] px-3 py-1 rounded text-black text-sm">Chỉnh sửa</button>
-                                <button onclick="moPopupXoa('row3', 'ten3')" class="bg-[#C65E40] px-4 py-1 rounded text-black text-sm ml-3 hover:bg-red-600">Xóa</button>
-                            </td>
-                        </tr>
-
-                        <tr id="row4" class="h-12">
-                            <td>04</td>
-                            <td id="ten4" class="text-center text-black">Tạp chí</td>
-                            <td class="text-center">
-                                <button onclick="moFormEdit('row4', 'ten4')" class="bg-[#7AB2B2] px-3 py-1 rounded text-black text-sm">Chỉnh sửa</button>
-                                <button onclick="moPopupXoa('row4', 'ten4')" class="bg-[#C65E40] px-4 py-1 rounded text-black text-sm ml-3 hover:bg-red-600">Xóa</button>
-                            </td>
-                        </tr>
-
-                        <tr id="row5" class="h-12">
-                            <td>05</td>
-                            <td id="ten5" class="text-center text-black">ISI</td>
-                            <td class="text-center">
-                                <button onclick="moFormEdit('row5', 'ten5')" class="bg-[#7AB2B2] px-3 py-1 rounded text-black text-sm">Chỉnh sửa</button>
-                                <button onclick="moPopupXoa('row5', 'ten5')" class="bg-[#C65E40] px-4 py-1 rounded text-black text-sm ml-3 hover:bg-red-600">Xóa</button>
-                            </td>
-                        </tr>
+                        @endforeach
 
                     </tbody>
 
@@ -291,7 +280,7 @@
 
     ////////CREATE
     function moFormCreate() {
-        
+
         dongTatCaForm()
         document.getElementById("popupForm").classList.remove("hidden")
 
