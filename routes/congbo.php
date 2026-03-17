@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CongBoController;
 
-Route::prefix('admin')->middleware('role:admin')->group(function () {
+Route::prefix('admin')->middleware('roles:admin')->group(function () {
 
     Route::get('/congbo', [CongBoController::class, 'index'])
         ->name('admin.congbo.index');

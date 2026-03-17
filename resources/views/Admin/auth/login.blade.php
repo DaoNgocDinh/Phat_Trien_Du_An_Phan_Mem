@@ -45,7 +45,7 @@
                     Nhớ mật khẩu
                 </label>
 
-                <a href="/forgot-password" class="text-blue-600 hover:underline">
+                <a href="{{ route('forgotPassword') }}" class="text-blue-600 hover:underline">
                     Quên mật khẩu?
                 </a>
             </div>

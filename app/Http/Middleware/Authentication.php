@@ -13,7 +13,7 @@ class Authentication
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next, $role): Response
+    public function handle(Request $request, Closure $next, ...$roles): Response
     {
         $vaiTro = session('VaiTro');
 
@@ -21,7 +21,7 @@ class Authentication
             return redirect('/login');
         }
 
-        if ($vaiTro != $role) {
+        if (!in_array($vaiTro, $roles)) {
             abort(403, 'Không có quyền truy cập');
         }
 

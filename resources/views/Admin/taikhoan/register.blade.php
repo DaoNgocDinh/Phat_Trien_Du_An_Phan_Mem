@@ -6,13 +6,11 @@
 
     <div class="flex flex-col">
 
-        {{-- Tiêu đề --}}
         <div class="bg-[#1D546D] text-white text-2xl font-semibold px-7 py-3 rounded-md w-fit mb-8 ml-20 mt-10">
             Quản lý tài khoản > Tạo tài khoản
         </div>
 
 
-        {{-- THÔNG BÁO --}}
         @if(session('success'))
             <div class="bg-green-500 text-white p-3 rounded mx-20 mb-5">
                 {{ session('success') }}
@@ -25,7 +23,6 @@
             </div>
         @endif
 
-        {{-- LỖI VALIDATE --}}
         @if ($errors->any())
             <div class="bg-red-500 text-white p-3 rounded mx-20 mb-5">
                 <ul>
@@ -37,7 +34,6 @@
         @endif
 
 
-        {{-- FORM --}}
         <div class="flex-1 mt-10">
 
             <form action="{{ route('admin.register') }}" method="POST">
@@ -46,7 +42,6 @@
 
                 <div class="grid grid-cols-2 gap-12 mx-20 border border-gray-300 p-10 rounded-md shadow-sm bg-white">
 
-                    {{-- LEFT --}}
                     <div class="space-y-8">
 
                         <div class="grid grid-cols-[160px_1fr] items-center gap-3">
@@ -170,6 +165,11 @@
                         <div id="nghiencuusinh" class="space-y-5 hidden">
 
                             <div class="grid grid-cols-[160px_1fr] items-center gap-3">
+                                <label>Email</label>
+                                <input type="text" name="Email" class="bg-gray-200 p-2 rounded w-full">
+                            </div>
+
+                            <div class="grid grid-cols-[160px_1fr] items-center gap-3">
                                 <label>Lớp</label>
                                 <input type="text" name="Lop" class="bg-gray-200 p-2 rounded w-full">
                             </div>
@@ -187,7 +187,6 @@
                 </div>
 
 
-                {{-- BUTTON --}}
                 <div class="flex justify-end gap-4 mt-10 mr-20">
 
                     <button type="submit" class="bg-[#1D8E8E] text-white px-5 py-2 rounded hover:bg-[#187979] transition">

@@ -21,6 +21,7 @@ class Nghiencuusinh extends Model
         'Khoa',
         'Lop',
         'NgaySinh',
+        'Email',
     ];
 
     public function taikhoan()
