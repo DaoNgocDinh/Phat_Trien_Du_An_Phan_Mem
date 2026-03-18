@@ -60,7 +60,7 @@
                 <a href="#"
                     class="border rounded-md border-gray-600 p-2 shadow-lg flex items-center px-2 py-1.5 text-body rounded-base hover:bg-[#2c5d6e] hover:shadow-xl hover:scale-[1.03] hover:border-[#3f7b8e]">
                     <i class="text-white fa fa-envelope"></i>
-                    <span class="text-white flex-1 ms-3 whitespace-nowrap">Liện hệ</span>
+                    <span class="text-white flex-1 ms-3 whitespace-nowrap">Liên hệ</span>
                 </a>
             </li>
             <li>
