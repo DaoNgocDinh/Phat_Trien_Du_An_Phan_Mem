@@ -24,5 +24,6 @@ class CongBo extends Model
         'DOI',
         'FilePDF',
         'NoiDungTomTat',
+        'TrangThai',
     ];
 }

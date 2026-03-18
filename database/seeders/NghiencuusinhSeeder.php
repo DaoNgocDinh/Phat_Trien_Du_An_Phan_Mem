@@ -16,6 +16,7 @@ class NghiencuusinhSeeder extends Seeder
                 'HoTen' => 'Nguyễn Văn Bình',
                 'Khoa' => 'CNTT',
                 'Lop' => 'KTPM01',
+                'Email' => 'caothaituan@gmail.com',
                 'NgaySinh' => '2000-05-10',
             ],
             [
@@ -24,6 +25,7 @@ class NghiencuusinhSeeder extends Seeder
                 'HoTen' => 'Trần Thị Mai',
                 'Khoa' => 'CNTT',
                 'Lop' => 'KTPM02',
+                'Email' => 'tranthimai@gmail.com',
                 'NgaySinh' => '2000-06-11',
             ],
             [
@@ -32,6 +34,8 @@ class NghiencuusinhSeeder extends Seeder
                 'HoTen' => 'Lê Hoàng Nam',
                 'Khoa' => 'HTTT',
                 'Lop' => 'HTTT01',
+                'Email' => 'tranthimai@gmail.com',
+
                 'NgaySinh' => '1999-11-11',
             ],
             [
@@ -40,6 +44,8 @@ class NghiencuusinhSeeder extends Seeder
                 'HoTen' => 'Phạm Minh Tuấn',
                 'Khoa' => 'Khoa học máy tính',
                 'Lop' => 'KHMT01',
+                'Email' => 'tranthimai@gmail.com',
+
                 'NgaySinh' => '2001-02-02',
             ],
             [
@@ -48,6 +54,8 @@ class NghiencuusinhSeeder extends Seeder
                 'HoTen' => 'Đỗ Lan Anh',
                 'Khoa' => 'CNTT',
                 'Lop' => 'KTPM03',
+                'Email' => 'tranthimai@gmail.com',
+
                 'NgaySinh' => '2000-12-12',
             ],
             [
@@ -56,6 +64,8 @@ class NghiencuusinhSeeder extends Seeder
                 'HoTen' => 'Hoàng Đức Anh',
                 'Khoa' => 'CNTT',
                 'Lop' => 'KTPM01',
+                'Email' => 'tranthimai@gmail.com',
+
                 'NgaySinh' => '2001-03-03',
             ],
             [
@@ -64,6 +74,8 @@ class NghiencuusinhSeeder extends Seeder
                 'HoTen' => 'Nguyễn Khánh Linh',
                 'Khoa' => 'HTTT',
                 'Lop' => 'HTTT02',
+                'Email' => 'tranthimai@gmail.com',
+
                 'NgaySinh' => '2000-08-08',
             ],
             [
@@ -72,6 +84,8 @@ class NghiencuusinhSeeder extends Seeder
                 'HoTen' => 'Trần Văn Phúc',
                 'Khoa' => 'AI',
                 'Lop' => 'AI01',
+                'Email' => 'tranthimai@gmail.com',
+
                 'NgaySinh' => '1999-04-04',
             ],
             [
@@ -80,6 +94,8 @@ class NghiencuusinhSeeder extends Seeder
                 'HoTen' => 'Lê Minh Nhật',
                 'Khoa' => 'CNTT',
                 'Lop' => 'KTPM04',
+                'Email' => 'tranthimai@gmail.com',
+
                 'NgaySinh' => '2000-07-07',
             ],
             [
@@ -88,6 +104,8 @@ class NghiencuusinhSeeder extends Seeder
                 'HoTen' => 'Phạm Thảo Vy',
                 'Khoa' => 'CNTT',
                 'Lop' => 'KTPM05',
+                'Email' => 'tranthimai@gmail.com',
+
                 'NgaySinh' => '2001-09-09',
             ],
             [
@@ -96,6 +114,8 @@ class NghiencuusinhSeeder extends Seeder
                 'HoTen' => 'Đặng Minh Hiếu',
                 'Khoa' => 'AI',
                 'Lop' => 'AI02',
+                'Email' => 'tranthimai@gmail.com',
+
                 'NgaySinh' => '2000-01-01',
             ],
             [
@@ -104,6 +124,8 @@ class NghiencuusinhSeeder extends Seeder
                 'HoTen' => 'Nguyễn Thu Trang',
                 'Khoa' => 'HTTT',
                 'Lop' => 'HTTT03',
+                'Email' => 'tranthimai@gmail.com',
+
                 'NgaySinh' => '1999-02-02',
             ],
             [
@@ -112,6 +134,8 @@ class NghiencuusinhSeeder extends Seeder
                 'HoTen' => 'Lý Văn Huy',
                 'Khoa' => 'CNTT',
                 'Lop' => 'KTPM02',
+                'Email' => 'tranthimai@gmail.com',
+
                 'NgaySinh' => '2001-05-05',
             ],
             [
@@ -120,6 +144,8 @@ class NghiencuusinhSeeder extends Seeder
                 'HoTen' => 'Trần Anh Tuấn',
                 'Khoa' => 'KHMT',
                 'Lop' => 'KHMT02',
+                'Email' => 'tranthimai@gmail.com',
+
                 'NgaySinh' => '2000-06-06',
             ],
             [
@@ -128,6 +154,8 @@ class NghiencuusinhSeeder extends Seeder
                 'HoTen' => 'Phạm Văn Hoàng',
                 'Khoa' => 'CNTT',
                 'Lop' => 'KTPM03',
+                'Email' => 'tranthimai@gmail.com',
+
                 'NgaySinh' => '2001-07-07',
             ],
         ]);
