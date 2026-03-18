@@ -76,7 +76,7 @@ public function register(Request $request)
 
         DB::commit();
 
-        return redirect()->route('admin.trangChu')
+        return redirect()->route('admin.users.index')
             ->with('success', 'Tạo tài khoản thành công');
 
     } catch (\Exception $e) {

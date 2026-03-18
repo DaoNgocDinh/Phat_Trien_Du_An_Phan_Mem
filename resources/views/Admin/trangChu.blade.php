@@ -30,7 +30,7 @@
             </a>
 
             <!-- Thẻ 3: Công bố khoa học -->
-            <a href="#" class="group bg-white rounded-xl shadow hover:shadow-2xl hover:scale-105 transition-all duration-300 flex flex-col items-center justify-center aspect-square p-6 text-center border border-gray-200">
+            <a href="{{ route('admin.congbo.index') }}" class="group bg-white rounded-xl shadow hover:shadow-2xl hover:scale-105 transition-all duration-300 flex flex-col items-center justify-center aspect-square p-6 text-center border border-gray-200">
                 <div class="text-7xl md:text-8xl text-gray-700 mb-4">
                     <svg class="w-24 h-24 mx-auto" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <rect x="20" y="20" width="60" height="60" rx="8" stroke="currentColor" stroke-width="6"/>
@@ -95,7 +95,7 @@
             </a>
 
             <!-- Quản lý người dùng -->
-            <a href="#" class="group bg-white rounded-xl shadow hover:shadow-2xl hover:scale-105 transition-all duration-300 flex flex-col items-center justify-center aspect-square p-6 text-center border border-gray-200">
+            <a href="{{ route('admin.users.index') }}" class="group bg-white rounded-xl shadow hover:shadow-2xl hover:scale-105 transition-all duration-300 flex flex-col items-center justify-center aspect-square p-6 text-center border border-gray-200">
                 <div class="text-7xl md:text-8xl text-gray-700 mb-4">
                     <svg class="w-24 h-24 mx-auto" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <rect x="20" y="20" width="60" height="60" rx="8" stroke="currentColor" stroke-width="6"/>

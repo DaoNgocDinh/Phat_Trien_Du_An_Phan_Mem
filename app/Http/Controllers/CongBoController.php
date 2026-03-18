@@ -82,11 +82,32 @@ class CongBoController extends Controller
         return view('Admin.CongBo.edit', compact('congbo'));
     }
 
-    public function show($id)
+    public function chiTietCongBo($id)
     {
         $congbo = CongBo::findOrFail($id);
 
-        return view('Admin.CongBo.show', compact('congbo'));
+        return view('Admin.CongBo.showpublication', compact('congbo'));
 
     }
+
+    public function danhSachCongBo(Request $request)
+    {
+        $congbos = CongBo::where('TrangThai', 'Chờ Duyệt')->orderBy('created_at', 'desc')
+            ->paginate(10);
+
+
+        return view('Admin.CongBo.publication', compact('congbos'));
+    }
+    public function capNhatTrangThai(Request $request, $id)
+    {
+        $congbo = Congbo::findOrFail($id);
+
+        $congbo->TrangThai = $request->TrangThai;
+        $congbo->save();
+
+        return redirect()->route('admin.congbo.pheduyet.danhsach')
+            ->with('success', 'Cập nhật trạng thái thành công');
+    }
+
+
 }

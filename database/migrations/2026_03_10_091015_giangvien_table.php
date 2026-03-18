@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('ChucVu')->nullable();
             $table->string('Khoa')->nullable();
             $table->string('Email')->nullable();
-            $table->string('Sdt',12)->nullable();
+            $table->string('Sdt', 12)->nullable();
             $table->string('AnhDaiDien')->nullable();
             $table->string('CV')->nullable();
 
