@@ -40,7 +40,6 @@ class AuthController extends Controller
 
             $userID = (Taikhoan::max('UserID') ?? 0) + 1;
 
-            // tạo tài khoản
             Taikhoan::create([
                 'UserID' => $userID,
                 'MatKhau' => Hash::make($request->MatKhau),
@@ -70,7 +69,6 @@ class AuthController extends Controller
                     'Khoa' => $request->Khoa,
                     'Lop' => $request->Lop,
                     'Email' => $request->Email,
-
                     'NgaySinh' => $request->NgaySinh
                 ]);
 

@@ -7,8 +7,6 @@
     <div class="p-6 bg-white min-h-screen">
 
         <div class="max-w-[1200px] mx-auto">
-
-            <!-- HEADER -->
             <div class="flex items-center justify-between">
 
                 <div class="inline-flex items-center rounded-lg bg-[#1D546D] px-4 py-2 text-white font-semibold text-lg">
@@ -27,8 +25,6 @@
             <div class="mt-6 text-lg font-bold text-gray-900">
                 Danh sách người dùng
             </div>
-
-            <!-- TABLE -->
             <div class="mt-6 overflow-hidden rounded-xl border border-gray-200 shadow-sm">
 
                 <table class="w-full text-sm">
@@ -51,31 +47,22 @@
                         @forelse($users as $index => $user)
 
                                         <tr class="hover:bg-gray-50 transition duration-150">
-
-                                            <!-- STT -->
                                             <td class="px-4 py-4 text-center font-medium">
                                                 {{ $index + 1 + ($users->currentPage() - 1) * $users->perPage() }}
                                             </td>
-
-                                            <!-- USERID -->
                                             <td class="px-4 py-4 text-center">
                                                 {{ $user->UserID }}
                                             </td>
-
-                                            <!-- TÊN -->
                                             <td class="px-4 py-4">
                                                 {{ $user->giangvien->HoTen
                             ?? $user->nghiencuusinh->HoTen
                             ?? 'Admin' }}
                                             </td>
-
-                                            <!-- EMAIL -->
                                             <td class="px-4 py-4">
                                                 {{ $user->giangvien->Email
-                            ?? " "}}
+                            ?? $user->nghiencuusinh->Email
+                            ?? 'Email không có' }}
                                             </td>
-
-                                            <!-- VAI TRÒ -->
                                             <td class="px-4 py-4 text-center">
 
                                                 @php
@@ -97,21 +84,21 @@
 
                                             @if($user->VaiTro != 'admin')
                                                 <td class="px-4 py-4">
-                                                <div class="flex justify-center">
-                                                    <form action="{{ route('admin.users.destroy', $user->UserID) }}" method="POST"
-                                                        onsubmit="return confirm('Bạn có chắc muốn xóa người dùng này không?')">
+                                                    <div class="flex justify-center">
+                                                        <form action="{{ route('admin.users.destroy', $user->UserID) }}" method="POST"
+                                                            onsubmit="return confirm('Bạn có chắc muốn xóa người dùng này không?')">
 
-                                                        @csrf
-                                                        @method('DELETE')
+                                                            @csrf
+                                                            @method('DELETE')
 
-                                                        <button
-                                                            class="inline-flex items-center rounded-md bg-[#D06B55] px-3 py-1.5 text-white hover:bg-[#c45f4a] transition">
-                                                            Xóa
-                                                        </button>
+                                                            <button
+                                                                class="inline-flex items-center rounded-md bg-[#D06B55] px-3 py-1.5 text-white hover:bg-[#c45f4a] transition">
+                                                                Xóa
+                                                            </button>
 
-                                                    </form>
-                                                </div>
-                                            </td>
+                                                        </form>
+                                                    </div>
+                                                </td>
                                             @endif
 
                                         </tr>
@@ -131,8 +118,6 @@
                 </table>
 
             </div>
-
-            <!-- PAGINATION -->
             <div class="mt-10 flex items-center justify-between">
 
                 <div class="text-sm font-bold text-gray-800">

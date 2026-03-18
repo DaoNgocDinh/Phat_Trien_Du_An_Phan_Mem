@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\CongBo;
-
+use Illuminate\Support\Facades\DB;
 class CongBoController extends Controller
 {
     public function index()
@@ -107,6 +107,40 @@ class CongBoController extends Controller
 
         return redirect()->route('admin.congbo.pheduyet.danhsach')
             ->with('success', 'Cập nhật trạng thái thành công');
+    }
+
+    public function baocao(Request $request)
+    {
+        $from = $request->from;
+        $to = $request->to;
+
+        $query = CongBo::query();
+
+        // lọc theo năm
+        if ($from && $to) {
+            $query->whereBetween('NamXuatBan', [$from, $to]);
+        }
+
+        // thống kê theo năm
+        $byYear = $query->select(
+            'NamXuatBan',
+            DB::raw('count(*) as total')
+        )
+            ->groupBy('NamXuatBan')
+            ->orderBy('NamXuatBan')
+            ->get();
+
+        // thống kê theo loại
+        $byType = CongBo::select(
+            'LoaiCongBo',
+            DB::raw('count(*) as total')
+        )
+            ->groupBy('LoaiCongBo')
+            ->get();
+
+        $total = $query->count();
+
+        return view('Admin.thongke.dashboard', compact('byYear', 'byType', 'total'));
     }
 
 

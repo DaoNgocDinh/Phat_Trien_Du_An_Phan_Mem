@@ -8,6 +8,8 @@ Route::prefix('admin')->middleware('roles:admin')->group(function () {
     Route::get('/congbo', [CongBoController::class, 'index'])
         ->name('admin.congbo.index');
 
+    Route::get('/congbo/bao-cao', [CongBoController::class, 'baocao'])->name('admin.congbo.baocao');
+
     Route::get('/congbo/{id}', [CongBoController::class, 'show'])
         ->name('admin.congbo.show');
 
@@ -25,5 +27,6 @@ Route::prefix('admin')->middleware('roles:admin')->group(function () {
     Route::get('/congbo/pheduyet/{id}/chitiet', [CongBoController::class, 'chiTietCongBo'])->name('admin.congbo.pheduyet.chitiet');
 
     Route::post('/congbo/{id}/trangthai', [CongBoController::class, 'capNhatTrangThai'])->name('admin.congbo.trangthai');
+
 
 });
