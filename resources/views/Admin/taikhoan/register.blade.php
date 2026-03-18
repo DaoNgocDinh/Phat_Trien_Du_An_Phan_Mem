@@ -159,6 +159,10 @@
                             </div>
 
                         </div>
+                        <div class="grid grid-cols-[160px_1fr] items-center gap-3">
+                            <label>Ngày sinh</label>
+                            <input type="date" name="NgaySinh" class="bg-gray-200 p-2 rounded w-full">
+                        </div>
 
 
                         {{-- NGHIÊN CỨU SINH --}}

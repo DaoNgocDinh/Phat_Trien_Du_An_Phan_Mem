@@ -114,8 +114,8 @@ class AuthController extends Controller
             session(['HoTen' => $sv->HoTen]);
             return redirect()->route('sinhVien.trangChu');
         }
-
-        if ($user->VaiTro == 'giangvien') {
+            // may chỉnh thêm login cho giảng viên ở đây
+        if ($user->VaiTro == 'giangvien') { 
             $gv = Giangvien::where('UserID', $user->UserID)->first();
             session(['HoTen' => $gv->HoTen]);
             return redirect('/giangvien/trang-chu');

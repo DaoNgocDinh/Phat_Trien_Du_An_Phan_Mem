@@ -20,6 +20,7 @@ class GiangvienSeeder extends Seeder
                 'Sdt' => '0911111111',
                 'AnhDaiDien' => 'gv1.jpg',
                 'CV' => 'cv1.pdf',
+                'NgaySinh' => '1980-01-01',
             ],
             [
                 'MaGiangVien' => 2,
@@ -31,6 +32,7 @@ class GiangvienSeeder extends Seeder
                 'Sdt' => '0911111112',
                 'AnhDaiDien' => 'gv2.jpg',
                 'CV' => 'cv2.pdf',
+                'NgaySinh' => '1985-05-15',
             ],
             [
                 'MaGiangVien' => 3,
@@ -42,6 +44,7 @@ class GiangvienSeeder extends Seeder
                 'Sdt' => '0911111113',
                 'AnhDaiDien' => 'gv3.jpg',
                 'CV' => 'cv3.pdf',
+                'NgaySinh' => '1978-09-20',
             ],
             [
                 'MaGiangVien' => 4,
@@ -53,6 +56,7 @@ class GiangvienSeeder extends Seeder
                 'Sdt' => '0911111114',
                 'AnhDaiDien' => 'gv4.jpg',
                 'CV' => 'cv4.pdf',
+                'NgaySinh' => '1982-12-10',
             ],
             [
                 'MaGiangVien' => 5,
@@ -64,6 +68,7 @@ class GiangvienSeeder extends Seeder
                 'Sdt' => '0911111115',
                 'AnhDaiDien' => 'gv5.jpg',
                 'CV' => 'cv5.pdf',
+                'NgaySinh' => '1988-03-25',
             ],
             [
                 'MaGiangVien' => 6,
@@ -75,6 +80,7 @@ class GiangvienSeeder extends Seeder
                 'Sdt' => '0911111116',
                 'AnhDaiDien' => 'gv6.jpg',
                 'CV' => 'cv6.pdf',
+                'NgaySinh' => '1990-07-30',
             ],
             [
                 'MaGiangVien' => 7,
@@ -86,6 +92,7 @@ class GiangvienSeeder extends Seeder
                 'Sdt' => '0911111117',
                 'AnhDaiDien' => 'gv7.jpg',
                 'CV' => 'cv7.pdf',
+                'NgaySinh' => '1983-11-05',
             ],
             [
                 'MaGiangVien' => 8,
@@ -97,6 +104,7 @@ class GiangvienSeeder extends Seeder
                 'Sdt' => '0911111118',
                 'AnhDaiDien' => 'gv8.jpg',
                 'CV' => 'cv8.pdf',
+                'NgaySinh' => '1987-02-18',
             ],
             [
                 'MaGiangVien' => 9,
@@ -108,6 +116,7 @@ class GiangvienSeeder extends Seeder
                 'Sdt' => '0911111119',
                 'AnhDaiDien' => 'gv9.jpg',
                 'CV' => 'cv9.pdf',
+                'NgaySinh' => '1984-06-12',
             ],
             [
                 'MaGiangVien' => 10,
@@ -119,6 +128,7 @@ class GiangvienSeeder extends Seeder
                 'Sdt' => '0999999999',
                 'AnhDaiDien' => 'admin.jpg',
                 'CV' => 'admincv.pdf',
+                'NgaySinh' => '1975-01-01',
             ],
         ]);
     }
