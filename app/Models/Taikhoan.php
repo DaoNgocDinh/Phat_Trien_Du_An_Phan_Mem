@@ -2,21 +2,42 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Laravel\Sanctum\HasApiTokens;
-class TaiKhoan extends Model
+
+class Taikhoan extends Model
 {
-    use HasApiTokens;
+    use HasFactory;
 
-    protected $table = 'TAIKHOAN';
-
+    protected $table = 'taikhoan';
     protected $primaryKey = 'UserID';
-
-    public $timestamps = false;
+    public $incrementing = false;
+    protected $keyType = 'int';
 
     protected $fillable = [
         'UserID',
         'MatKhau',
-        'VaiTro'
+        'VaiTro',
     ];
+
+    public function giangvien()
+    {
+        return $this->hasOne(Giangvien::class, 'UserID', 'UserID');
+    }
+
+    public function nghiencuusinh()
+    {
+        return $this->hasOne(Nghiencuusinh::class, 'UserID', 'UserID');
+    }
+
+    public function canbokhoahoc()
+    {
+        return $this->hasOne(Canbokhoahoc::class, 'UserID', 'UserID');
+    }
+
+    public function dangkysukien()
+    {
+        return $this->hasMany(Dangkysukien::class, 'UserID', 'UserID');
+    }
+    
 }
