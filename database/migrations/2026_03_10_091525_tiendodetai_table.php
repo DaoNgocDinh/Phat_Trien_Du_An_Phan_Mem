@@ -31,6 +31,8 @@ return new class extends Migration
 
             $table->foreign('MaDeTai')->references('MaSo')->on('detai');
             $table->timestamps();
+
+
         });
     }
 

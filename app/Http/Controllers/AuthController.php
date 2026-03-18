@@ -40,7 +40,6 @@ class AuthController extends Controller
 
             $userID = (Taikhoan::max('UserID') ?? 0) + 1;
 
-            // tạo tài khoản
             Taikhoan::create([
                 'UserID' => $userID,
                 'MatKhau' => Hash::make($request->MatKhau),
@@ -70,7 +69,6 @@ class AuthController extends Controller
                     'Khoa' => $request->Khoa,
                     'Lop' => $request->Lop,
                     'Email' => $request->Email,
-
                     'NgaySinh' => $request->NgaySinh
                 ]);
 
@@ -116,8 +114,8 @@ class AuthController extends Controller
             session(['HoTen' => $sv->HoTen]);
             return redirect()->route('sinhVien.trangChu');
         }
-
-        if ($user->VaiTro == 'giangvien') {
+            // may chỉnh thêm login cho giảng viên ở đây
+        if ($user->VaiTro == 'giangvien') { 
             $gv = Giangvien::where('UserID', $user->UserID)->first();
             session(['HoTen' => $gv->HoTen]);
             return redirect()->route('giangvien.trangChu');

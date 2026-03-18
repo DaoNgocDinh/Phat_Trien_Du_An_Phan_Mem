@@ -24,6 +24,7 @@ class Giangvien extends Model
         'Sdt',
         'AnhDaiDien',
         'CV',
+        'NgaySinh',
     ];
 
     public function taikhoan()
