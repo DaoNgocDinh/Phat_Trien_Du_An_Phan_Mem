@@ -16,7 +16,7 @@ class QuycheController extends Controller
         }
         $quyches = $query->paginate(10)->withQueryString();
 
-        return view('Admin.quyChe.quyChe', compact('quyches'));
+        return view('Admin.quyChe.index', compact('quyches'));
     }
     public function index_giangvien(Request $request)
     {
@@ -27,7 +27,12 @@ class QuycheController extends Controller
         }
         $quyches = $query->paginate(10)->withQueryString();
 
-        return view('Giangvien.quyChe.quyChe', compact('quyches'));
+        return view('Giangvien.quyChe.index', compact('quyches'));
+    }
+
+    public function create()
+    {
+        return view('Admin.quyChe.create');
     }
 
     public function destroy($id)
@@ -41,5 +46,20 @@ class QuycheController extends Controller
         $quyche->delete();
 
         return response()->json(['success' => true]);
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'TenVanBan' => 'required|string|max:255',
+            'NoiDung' => 'required|string',
+        ]);
+
+        Quyche::create([
+            'TenVanBan' => $request->TenVanBan,
+            'NoiDung' => $request->NoiDung,
+        ]);
+
+        return redirect()->route('admin.quyChe.index')->with('success', 'Quy chế khoa học đã được tạo thành công.');
     }
 }
