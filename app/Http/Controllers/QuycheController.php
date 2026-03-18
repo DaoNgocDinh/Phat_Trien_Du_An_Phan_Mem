@@ -16,7 +16,7 @@ class QuycheController extends Controller
         }
         $quyches = $query->paginate(10)->withQueryString();
 
-        return view('Admin.quyChe', compact('quyches'));
+        return view('Admin.quyChe.quyChe', compact('quyches'));
     }
     public function index_giangvien(Request $request)
     {
@@ -27,7 +27,7 @@ class QuycheController extends Controller
         }
         $quyches = $query->paginate(10)->withQueryString();
 
-        return view('Giangvien.quyChe', compact('quyches'));
+        return view('Giangvien.quyChe.quyChe', compact('quyches'));
     }
 
     public function destroy($id)

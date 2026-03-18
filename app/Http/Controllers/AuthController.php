@@ -120,7 +120,7 @@ class AuthController extends Controller
         if ($user->VaiTro == 'giangvien') {
             $gv = Giangvien::where('UserID', $user->UserID)->first();
             session(['HoTen' => $gv->HoTen]);
-            return redirect('/giangvien/trang-chu');
+            return redirect()->route('giangvien.trangChu');
         }
 
         if ($user->VaiTro == 'admin') {

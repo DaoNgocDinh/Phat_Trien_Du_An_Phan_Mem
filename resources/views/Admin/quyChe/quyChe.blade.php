@@ -13,8 +13,7 @@
 
 
 <body>
-   @include('layout.navbar')
-   @include('layout.sidebar')
+   @extends('layout.admin')
    <div class="ml-64 p-6">
 
       <form method="GET" action="{{ request()->url() }}" class="max-w-md flex items-center">

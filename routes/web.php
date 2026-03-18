@@ -23,11 +23,6 @@ Route::prefix('sinhVien')->group(function () {
 
 });
 
-// auth
-
-Route::get('/admin/quyche', [QuycheController::class, 'index_admin']);
-
-Route::get('/giangvien/quyche', [QuycheController::class, 'index_giangvien']);
 
 Route::delete('/admin/destroyquyche/{id}', [QuycheController::class,'destroy'])->name('quyche.destroy');
 
