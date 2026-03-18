@@ -60,7 +60,7 @@
                             <th>Tên đề tài</th>
                             <th>Chủ nhiệm</th>
                             <th>Thời gian</th>
-                            <th>Trạng thái</th>
+                            <th>Trạng thái tiến độ</th>
                         </tr>
                     </thead>
 
@@ -83,19 +83,24 @@
 
                             <td>
 
-                                @if($dt->TrangThai == 'Đúng tiến độ')
+                                @if($dt->TrangThaiTienDo == 'Đúng tiến độ')
                                 <span class="bg-green-600 text-white px-3 py-1 rounded text-xs">
-                                    {{ $dt->TrangThai }}
+                                    {{ $dt->TrangThaiTienDo }}
                                 </span>
 
-                                @elseif($dt->TrangThai == 'Trễ hạn')
+                                @elseif($dt->TrangThaiTienDo == 'Trễ hạn')
                                 <span class="bg-red-500 text-white px-3 py-1 rounded text-xs">
-                                    {{ $dt->TrangThai }}
+                                    {{ $dt->TrangThaiTienDo }}
+                                </span>
+
+                                @elseif($dt->TrangThaiTienDo == 'Hoàn thành')
+                                <span class="bg-blue-500 text-white px-3 py-1 rounded text-xs">
+                                    {{ $dt->TrangThaiTienDo }}
                                 </span>
 
                                 @else
                                 <span class="bg-gray-400 text-white px-3 py-1 rounded text-xs">
-                                    {{ $dt->TrangThai }}
+                                    {{ $dt->TrangThaiTienDo ?? 'Chưa có dữ liệu' }}
                                 </span>
                                 @endif
 
@@ -127,6 +132,7 @@
 
     <script>
         function xemChiTiet(id, row) {
+            window.currentMaDeTai = id;
 
             fetch('/admin/theodoitiendo/' + id)
 
@@ -148,12 +154,12 @@
                     // trạng thái hiện tại
                     if (data.ganNhat) {
                         document.getElementById("trangThai").innerText =
-                            data.ganNhat.TrangThai
+                            data.ganNhat.TienDoHienTai
 
                         document.getElementById("lanGanNhat").value =
-                            data.ganNhat.TrangThai
+                            data.ganNhat.TienDoHienTai
 
-                        capNhatProgress(data.ganNhat.TrangThai)
+                        capNhatProgress(data.ganNhat.TienDoHienTai)
 
                     } else {
                         document.getElementById("trangThai").innerText =
@@ -215,64 +221,31 @@
         }
 
         function capNhatTienDo() {
-            alert("Cập nhật tiến độ thành công!");
+            let trangThai = document.getElementById("lanGanNhat").value
+            let maDeTai = window.currentMaDeTai
 
-            // đóng form chi tiết
-            document.getElementById("chiTietBox").classList.add("hidden");
+            fetch('/admin/theodoitiendo/capnhat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        MaDeTai: maDeTai,
+                        TrangThai: trangThai
+                    })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    alert("Cập nhật thành công!");
 
-            // bỏ highlight dòng bảng
-            let rows = document.querySelectorAll("tbody tr");
-            rows.forEach(row => {
-                row.classList.remove("bg-gray-200");
-                row.classList.remove("bg-blue-100");
-            });
-        }
+                    // đóng box
+                    document.getElementById("chiTietBox").classList.add("hidden")
 
-        /// Cập nhật màu sắc tiến độ
-        function capNhatProgress(trangThai) {
+                    // reload lại trang (cách đơn giản nhất)
+                    location.reload()
 
-            let dot1 = document.getElementById("dot1")
-            let dot2 = document.getElementById("dot2")
-            let dot3 = document.getElementById("dot3")
-
-            // reset
-            dot1.classList.remove("bg-green-500")
-            dot2.classList.remove("bg-green-500")
-            dot3.classList.remove("bg-green-500")
-
-            dot1.classList.add("bg-gray-400")
-            dot2.classList.add("bg-gray-400")
-            dot3.classList.add("bg-gray-400")
-
-            if (trangThai === "Chờ phê duyệt") {
-
-                dot1.classList.remove("bg-gray-400")
-                dot1.classList.add("bg-green-500")
-
-            }
-
-            if (trangThai === "Đang thực hiện") {
-
-                dot1.classList.remove("bg-gray-400")
-                dot2.classList.remove("bg-gray-400")
-
-                dot1.classList.add("bg-green-500")
-                dot2.classList.add("bg-green-500")
-
-            }
-
-            if (trangThai === "Hoàn thành") {
-
-                dot1.classList.remove("bg-gray-400")
-                dot2.classList.remove("bg-gray-400")
-                dot3.classList.remove("bg-gray-400")
-
-                dot1.classList.add("bg-green-500")
-                dot2.classList.add("bg-green-500")
-                dot3.classList.add("bg-green-500")
-
-            }
-
+                })
         }
     </script>
 

@@ -12,7 +12,20 @@ class TienDoDeTaiController extends Controller
     //// Danh sách đề tài
     public function index()
     {
-        $detai = DeTai::all();
+        $detai = DB::table('detai')
+            ->leftJoin('tiendodetai as td', function ($join) {
+                $join->on('detai.MaSo', '=', 'td.MaDeTai')
+                    ->whereRaw('td.ThoiGianCapNhat = (
+                    SELECT MAX(t2.ThoiGianCapNhat)
+                    FROM tiendodetai t2
+                    WHERE t2.MaDeTai = detai.MaSo
+                )');
+            })
+            ->select(
+                'detai.*',
+                'td.TienDoHienTai as TrangThaiTienDo'
+            )
+            ->get();
 
         return view('Admin.theodoitiendo.index', compact('detai'));
     }
@@ -57,11 +70,27 @@ class TienDoDeTaiController extends Controller
     // Cập nhật tiến độ
     public function capNhatTienDo(Request $request)
     {
-        $tiendo = Tiendodetai::create([
-            'MaDeTai' => $request->MaSo,
-            'TrangThai' => $request->TrangThai,
-            'ThoiGianCapNhat' => now()
-        ]);
+        // tìm bản ghi tiến độ của đề tài
+        $tiendo = Tiendodetai::where('MaDeTai', $request->MaDeTai)->first();
+
+        if ($tiendo) {
+            // ✅ đã có → update
+            $tiendo->update([
+                'TienDoHienTai' => $request->TrangThai,
+                'ThoiGianCapNhat' => now()
+            ]);
+        } else {
+            // ❗ chưa có → tạo mới (lần đầu)
+            $maxId = Tiendodetai::max('MaTienDo');
+            $newId = $maxId ? $maxId + 1 : 1;
+
+            $tiendo = Tiendodetai::create([
+                'MaTienDo' => $newId,
+                'MaDeTai' => $request->MaDeTai,
+                'TienDoHienTai' => $request->TrangThai,
+                'ThoiGianCapNhat' => now()
+            ]);
+        }
 
         return response()->json([
             'message' => 'Cập nhật thành công',

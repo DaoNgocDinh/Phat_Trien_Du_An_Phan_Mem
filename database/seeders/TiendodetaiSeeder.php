@@ -20,7 +20,7 @@ class TiendodetaiSeeder extends Seeder
                 'NoiDungBaoCao' => 'Hoàn thành khảo sát bài toán và thu thập bộ dữ liệu thử nghiệm.',
                 'KetQua' => 'Xây dựng được bộ dữ liệu chuẩn hoá ban đầu.',
                 'KhoKhan' => 'Dữ liệu thực tế còn nhiễu, cần thêm bước tiền xử lý.',
-                'TienDoHienTai' => 'Hoàn thành giai đoạn 1',
+                'TienDoHienTai' => 'Đúng tiến độ',/// sửa thành đúng tiến độ, trễ hạn, hoàn thành
                 'PhanTramTienDo' => 30,
             ],
             [
@@ -33,7 +33,7 @@ class TiendodetaiSeeder extends Seeder
                 'NoiDungBaoCao' => 'Xây dựng mô hình học máy cho bài toán dự báo.',
                 'KetQua' => 'Mô hình baseline hoạt động ổn định trên tập dữ liệu thử nghiệm.',
                 'KhoKhan' => 'Cần tối ưu thêm siêu tham số để cải thiện độ chính xác.',
-                'TienDoHienTai' => 'Hoàn thành giai đoạn 2',
+                'TienDoHienTai' => 'Đúng tiến độ',
                 'PhanTramTienDo' => 60,
             ],
             [
@@ -46,7 +46,7 @@ class TiendodetaiSeeder extends Seeder
                 'NoiDungBaoCao' => 'Triển khai cụm Hadoop và Spark phục vụ xử lý dữ liệu lớn.',
                 'KetQua' => 'Cụm xử lý hoạt động ổn định, hỗ trợ chạy thử các job phân tán.',
                 'KhoKhan' => 'Tối ưu chi phí lưu trữ và tài nguyên tính toán.',
-                'TienDoHienTai' => 'Khởi động hệ thống',
+                'TienDoHienTai' => 'Đúng tiến độ',
                 'PhanTramTienDo' => 25,
             ],
             [
@@ -59,7 +59,7 @@ class TiendodetaiSeeder extends Seeder
                 'NoiDungBaoCao' => 'Hoàn thiện mô hình CNN và đánh giá trên bộ dữ liệu kiểm thử.',
                 'KetQua' => 'Độ chính xác đạt trên 95% với tập kiểm thử độc lập.',
                 'KhoKhan' => 'Thời gian huấn luyện mô hình lớn, yêu cầu GPU.',
-                'TienDoHienTai' => 'Nghiệm thu đề tài',
+                'TienDoHienTai' => 'Hoàn thành',
                 'PhanTramTienDo' => 100,
             ],
             [
@@ -72,7 +72,7 @@ class TiendodetaiSeeder extends Seeder
                 'NoiDungBaoCao' => 'Hoàn thành phân tích yêu cầu và thiết kế kiến trúc hệ thống LMS.',
                 'KetQua' => 'Biểu đồ use case, kiến trúc lớp và cơ sở dữ liệu cho hệ thống LMS.',
                 'KhoKhan' => 'Cần tích hợp với hệ thống quản lý sinh viên hiện hữu.',
-                'TienDoHienTai' => 'Thiết kế hệ thống',
+                'TienDoHienTai' => 'Trễ hạn',
                 'PhanTramTienDo' => 40,
             ],
         ]);
