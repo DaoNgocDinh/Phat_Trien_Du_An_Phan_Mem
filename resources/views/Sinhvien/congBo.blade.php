@@ -1,4 +1,4 @@
-@extends('layout.giangVien')
+@extends('layout.sinhVien')
 
 @section('title', 'Công bố Khoa học')
 

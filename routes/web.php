@@ -25,12 +25,16 @@ Route::prefix('admin')->group(function () {
     Route::get('congbo/index', [CongBoController::class, 'index'])->name('admin.congbo.index');
 });
 
-Route::prefix('sinhVien')->group(function () {
+Route::prefix('sinhvien')->group(function () {
     Route::get('/trang-chu', [SinhvienController::class, 'dashBoard'])
-        ->name('sinhVien.trangChu');
+        ->name('sinhvien.trangChu');
+    Route::get('/cong-bo', [SinhvienController::class, 'CongBo'])
+        ->name('sinhvien.congBo');
 });
 
-Route::prefix('giangVien')->group(function () {
-    Route::get('/congBo', [GiangVienController::class, 'index'])
-        ->name('giangVien.congBo');
+Route::prefix('giangvien')->group(function () {
+    Route::get('/trang-chu', [GiangVienController::class, 'dashBoard'])
+        ->name('giangvien.trangChu');
+    Route::get('/cong-bo', [GiangVienController::class, 'CongBo'])
+        ->name('giangvien.congBo');
 });

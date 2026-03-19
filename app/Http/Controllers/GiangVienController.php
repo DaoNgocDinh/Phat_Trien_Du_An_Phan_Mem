@@ -9,7 +9,11 @@ use App\Models\CongBo;
 class GiangVienController extends Controller
 {
     //
-    public function index()
+    public function dashBoard()
+    {
+        return view('Giangvien.trangChu');
+    }
+    public function CongBo()
     {
         $congbos = CongBo::latest()->paginate(10); // hoặc lọc theo trạng thái 'Đã duyệt' nếu cần
         return view('Giangvien.congBo', compact('congbos'));
