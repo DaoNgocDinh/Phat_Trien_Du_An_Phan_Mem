@@ -4,6 +4,7 @@ use App\Http\Controllers\SinhvienController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CongBoController;
+use App\Http\Controllers\GiangVienController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -27,4 +28,9 @@ Route::prefix('admin')->group(function () {
 Route::prefix('sinhVien')->group(function () {
     Route::get('/trang-chu', [SinhvienController::class, 'dashBoard'])
         ->name('sinhVien.trangChu');
+});
+
+Route::prefix('giangVien')->group(function () {
+    Route::get('/congBo', [GiangVienController::class, 'index'])
+        ->name('giangVien.congBo');
 });
