@@ -37,4 +37,6 @@ Route::prefix('giangvien')->group(function () {
         ->name('giangvien.trangChu');
     Route::get('/cong-bo', [GiangVienController::class, 'CongBo'])
         ->name('giangvien.congBo');
+    Route::get('/de-tai', [GiangVienController::class, 'DeTai'])
+        ->name('giangvien.deTai');
 });
