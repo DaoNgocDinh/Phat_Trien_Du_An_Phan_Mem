@@ -131,4 +131,23 @@ class QuycheController extends Controller
         $quyche = QuyChe::findOrFail($MaQuyChe);
         return view('admin.quyche.view', compact('quyche'));
     }
+
+    public function view_giangvien($MaQuyChe)
+    {
+        $quyche = QuyChe::findOrFail($MaQuyChe);
+        return view('Giangvien.quyChe.view', compact('quyche'));
+    }
+
+    public function download($file)
+    {
+        $path = public_path('uploads/pdf/' . $file);
+
+        if (!file_exists($path)) {
+            abort(404);
+        }
+
+        $originalName = explode('_', $file, 2)[1] ?? $file;
+
+        return response()->download($path, $originalName);
+    }
 }
