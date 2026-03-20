@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\SinhvienController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\QuycheController;
 
 
 require __DIR__.'/auth.php';
@@ -24,55 +25,16 @@ Route::prefix('sinhVien')->group(function () {
         ->name('sinhVien.trangChu');
 });
 
-Route::get('/admin/quy-che', function () {
-    return view('Admin.quyChe');
+Route::get('/admin/quyche', [QuycheController::class, 'index_admin']);
+
+Route::get('/giangvien/quyche', [QuycheController::class, 'index_giangvien']);
+
+Route::delete('/admin/destroyquyche/{id}', [QuycheController::class,'destroy'])->name('quyche.destroy');
+
+Route::get('/guiyeucaulienhe', function () {
+    return view('Sinhvien.guiYeuCaulienHe');
 });
 
-
-
-
-//// Dăng
-
-// auth
-
-// admin
-// Route::get('/admin/courses', function () {
-//     return view('Admin.khoahoc.khoahoc');
-// });
-Route::get('/admin/courses/edit', function () {
-    return view('Admin.khoahoc.edit');
+Route::get('/dexuatTNKH', function () {
+    return view('Sinhvien.deXuatThemtnKH');
 });
-Route::get('/admin/report/dashboard', function () {
-    return view('Admin.thongke.dashboard');
-});
-Route::get('/admin/report/create', function () {
-    return view('Admin.thongke.create');
-});
-
-#QUANLYDANHMUC
-Route::get('/admin/danhmuc', function () {
-    return view('Admin.quanlydanhmuc.index');
-});
-
-Route::get('/admin/danhmuc/create', function () {
-    return view('Admin.quanlydanhmuc.create');
-});
-
-Route::get('/admin/danhmuc/edit', function () {
-    return view('Admin.quanlydanhmuc.edit');
-});
-
-///CHỈNH SỬA HỒ SƠ CÁ NHÂN
-Route::get('/hoso/chinhsua', function () {
-    return view('Giangvien.hosocanhan.edit');
-});
-
-///PHÊ DUYỆT ĐỀ XUẤT
-Route::get('/pheduyetdexuat', function () {
-    return view('Admin.pheduyetdexuat.index');
-});
-
-//THEO DÕI TIẾN ĐỒ ĐỀ TÀI
-// Route::get('/theodoitiendo', function () {
-//     return view('Admin.theodoitiendo.index');
-// });

@@ -44,8 +44,6 @@ class NghiencuusinhSeeder extends Seeder
                 'HoTen' => 'Phạm Minh Tuấn',
                 'Khoa' => 'Khoa học máy tính',
                 'Lop' => 'KHMT01',
-                'Email' => 'tranthimai@gmail.com',
-
                 'NgaySinh' => '2001-02-02',
             ],
             [

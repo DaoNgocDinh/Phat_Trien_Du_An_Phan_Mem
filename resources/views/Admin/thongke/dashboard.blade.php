@@ -1,136 +1,209 @@
 @extends('layout.admin')
 @section('title', 'Báo cáo - Thống kê')
-    <div class="ml-64 p-8">
 
-        <!-- HEADER -->
-        <div class="flex justify-between items-center mb-6">
-            <div class="bg-[#1D546D] text-white px-6 py-2 rounded font-semibold">
-                Báo cáo - Thống kê
-            </div>
+@section('content')
+@include('layout.popup_report')
+
+<div class="ml-64 p-8 pt-20 sm:ml-0">
+
+    <!-- HEADER -->
+    <div class="flex justify-between items-center mb-6">
+
+        <div class="bg-[#1D546D] text-white px-6 py-2 rounded font-semibold">
+            Báo cáo - Thống kê
         </div>
 
-        <!-- FILTER -->
-        <form method="GET" action="{{ route('admin.congbo.baocao') }}" class="bg-white p-6 rounded shadow mb-6">
+        <button onclick="openModal()" class="bg-[#3498DB] text-white px-4 py-2 rounded flex items-center gap-2">
+            <i class="fa-solid fa-file-export"></i>
+            Xuất báo cáo
+        </button>
 
-            <h3 class="font-semibold mb-4">Bộ lọc</h3>
+    </div>
 
-            <div class="grid grid-cols-4 gap-4">
+    <p class="text-sm text-black mb-4">
+        Chọn các tiêu chí để lọc và xem báo cáo thống kê
+    </p>
+
+    <div class="bg-[#EBF4F6] p-6 rounded-lg">
+
+        <div class="grid grid-cols-2 gap-6 items-start">
+
+            <!-- FILTER -->
+            <div class="space-y-4">
+
+                <h3 class="font-semibold">Bộ lọc báo cáo</h3>
 
                 <div>
-                    <label class="text-sm block mb-1">Từ năm</label>
-                    <input type="number" name="from" value="{{ request('from') }}"
-                        class="w-full border p-2 rounded">
+                    <label class="text-sm block mb-1">Thời gian</label>
+
+                    <div class="flex gap-5">
+                        <input type="date" class="bg-[#F3F4F4] border p-2 rounded w-full">
+                        <input type="date" class="bg-[#F3F4F4] border p-2 rounded w-full">
+                    </div>
                 </div>
 
                 <div>
-                    <label class="text-sm block mb-1">Đến năm</label>
-                    <input type="number" name="to" value="{{ request('to') }}"
-                        class="w-full border p-2 rounded">
+                    <label class="text-sm block mb-1">Loại dữ liệu</label>
+
+                    <select class="bg-[#F3F4F4] border p-2 rounded w-full">
+                        <option>Công bố khoa học</option>
+                    </select>
                 </div>
 
-                <div class="flex items-end">
-                    <button class="bg-blue-500 text-white px-4 py-2 rounded w-full">
-                        Lọc dữ liệu
-                    </button>
+                <div>
+                    <label class="text-sm block mb-1">Khoa</label>
+
+                    <select class="bg-[#F3F4F4] border p-2 rounded w-full">
+                        <option>Công nghệ thông tin</option>
+                    </select>
                 </div>
+
+                <div>
+                    <label class="text-sm block mb-1">Giảng viên</label>
+
+                    <select class="bg-[#F3F4F4] border p-2 rounded w-full">
+                        <option>Tất cả</option>
+                    </select>
+                </div>
+
+                <button
+                    class="bg-[#3498DB] text-white px-8 py-4 rounded-md mt-10 flex items-center justify-center gap-2 mx-auto hover:bg-[#2c80b4]">
+                    Tạo báo cáo
+                </button>
 
             </div>
-        </form>
 
-        <!-- TỔNG -->
-        <div class="bg-white p-4 rounded shadow mb-6">
-            <p class="text-xl font-bold">
-                Tổng số công bố: {{ $byYear->sum('total') }}
-            </p>
-        </div>
+            <!-- CHART -->
+            <div class="bg-white p-4 rounded-md shadow-sm">
 
-        <!-- CHART -->
-        <div class="grid grid-cols-2 gap-6">
+                <div class="flex justify-between border-b pb-3 border-gray-300 mb-6">
 
-            <!-- BAR -->
-            <div class="bg-white p-4 rounded shadow">
-                <h3 class="font-semibold mb-4">Công bố theo năm</h3>
-                <div class="h-[300px]">
-                    <canvas id="barChart"></canvas>
+                    <p class="text-xl font-bold">
+                        Tổng số công bố khoa học
+                    </p>
+
+                    <div class="flex items-center gap-2">
+                        <i class="fa fa-chart-bar"></i>
+                        <span class="font-bold">120</span>
+                    </div>
+
                 </div>
-            </div>
 
-            <!-- PIE -->
-            <div class="bg-white p-4 rounded shadow">
-                <h3 class="font-semibold mb-4">Theo loại công bố</h3>
-                <div class="h-[300px]">
-                    <canvas id="pieChart"></canvas>
+                <div class="grid grid-cols-2 gap-6 items-start">
+
+                    <!-- BAR -->
+                    <div>
+                        <p class="text-sm mb-2">Số lượng công bố khoa học theo năm</p>
+                        <div class="h-[280px]">
+                            <canvas id="barChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- PIE -->
+                    <div class="flex flex-col items-center justify-center">
+                        <p class="text-sm mb-3">Tỷ lệ công bố khoa học</p>
+                        <div class="max-w-[300px] max-h-[300px]">
+                            <canvas id="pieChart"></canvas>
+                        </div>
+                    </div>
+
                 </div>
+
             </div>
 
         </div>
 
         <!-- TABLE -->
-        <div class="bg-white p-6 rounded shadow mt-6">
+        <div class="mt-6">
 
-            <h3 class="font-semibold mb-4">Bảng thống kê</h3>
+            <h3 class="font-bold mb-5">
+                Bảng dữ liệu thống kê
+            </h3>
 
-            <table class="w-full border text-sm text-center">
+            <table class="w-full border border-gray-400 text-sm">
 
-                <thead class="bg-gray-200">
+                <thead class="bg-gray-300">
                     <tr>
-                        <th class="p-2 border">Năm</th>
-                        <th class="p-2 border">Số lượng</th>
+                        <th class="border border-black p-2 text-left">Khoa</th>
+                        <th class="border border-black p-2 text-left">Loại công bố</th>
+                        <th class="border border-black p-2 text-left">Số lượng</th>
                     </tr>
                 </thead>
 
-                <tbody>
-                    @foreach ($byYear as $item)
-                        <tr>
-                            <td class="border p-2">{{ $item->NamCongBo }}</td>
-                            <td class="border p-2">{{ $item->total }}</td>
-                        </tr>
-                    @endforeach
-                </tbody>
+                <tbody class="bg-white">
 
+                    <tr>
+                        <td class="border border-black p-2" rowspan="3">Công nghệ thông tin</td>
+                        <td class="border border-black p-2">ISI</td>
+                        <td class="border border-black p-2">12</td>
+                    </tr>
+
+                    <tr>
+                        <td class="border border-black p-2">Bài báo</td>
+                        <td class="border border-black p-2">20</td>
+                    </tr>
+
+                    <tr>
+                        <td class="border border-black p-2">Hội thảo</td>
+                        <td class="border border-black p-2">88</td>
+                    </tr>
+
+                    <tr class="font-semibold bg-gray-200">
+                        <td class="border border-black p-2 font-bold" colspan="2">Tổng</td>
+                        <td class="border border-black p-2 font-bold">120</td>
+                    </tr>
+
+                </tbody>
             </table>
 
         </div>
 
     </div>
 
-    <!-- CHART SCRIPT -->
-    <script>
-        // BAR CHART
-        const yearLabels = @json($byYear->pluck('NamCongBo'));
-        const yearData = @json($byYear->pluck('total'));
+</div>
 
-        new Chart(document.getElementById('barChart'), {
-            type: 'bar',
-            data: {
-                labels: yearLabels,
-                datasets: [{
-                    label: 'Số công bố',
-                    data: yearData
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false
-            }
-        });
+<!-- CHART -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+<script>
+    new Chart(document.getElementById('barChart'), {
+        type: 'bar',
+        data: {
+            labels: ['2021', '2022', '2023', '2024'],
+            datasets: [{
+                label: 'Công bố',
+                data: [24, 30, 36, 45],
+                backgroundColor: '#4C7EBB'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
 
-        // PIE CHART
-        const typeLabels = @json($byType->pluck('LoaiCongBo'));
-        const typeData = @json($byType->pluck('total'));
+    new Chart(document.getElementById('pieChart'), {
+        type: 'pie',
+        data: {
+            labels: ['ISI', 'Bài báo', 'Hội thảo'],
+            datasets: [{
+                data: [15, 10, 75],
+                backgroundColor: ['#4A90E2', '#5DA5DA', '#E29B32']
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
 
-        new Chart(document.getElementById('pieChart'), {
-            type: 'pie',
-            data: {
-                labels: typeLabels,
-                datasets: [{
-                    data: typeData
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false
-            }
-        });
-    </script>
+    function openModal() {
+        document.getElementById("reportModal").classList.remove("hidden")
+    }
+
+    function closeModal() {
+        document.getElementById("reportModal").classList.add("hidden")
+    }
+</script>
+
+@endsection
