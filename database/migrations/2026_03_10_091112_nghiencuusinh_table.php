@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('Khoa')->nullable();
             $table->string('Lop')->nullable();
             $table->date('NgaySinh')->nullable();
+            $table->string('Email')->nullable();
 
             $table->foreign('UserID')->references('UserID')->on('taikhoan');
             $table->timestamps();
