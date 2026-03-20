@@ -10,7 +10,6 @@ class TaikhoanSeeder extends Seeder
     public function run(): void
     {
         DB::table('taikhoan')->insert([
-            ['UserID' => 1, 'MatKhau' => '123456', 'VaiTro' => 'giangvien'],
             ['UserID' => 2, 'MatKhau' => '123456', 'VaiTro' => 'giangvien'],
             ['UserID' => 3, 'MatKhau' => '123456', 'VaiTro' => 'giangvien'],
             ['UserID' => 4, 'MatKhau' => '123456', 'VaiTro' => 'giangvien'],

@@ -5,6 +5,8 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use App\Models\Taikhoan;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Lienhe;
+use Illuminate\Support\Facades\View;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -32,7 +34,6 @@ class AppServiceProvider extends ServiceProvider
             ]);
 
             echo "Admin default created: 99999 / admin123";
-
         }
     }
 }

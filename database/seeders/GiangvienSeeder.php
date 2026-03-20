@@ -118,18 +118,6 @@ class GiangvienSeeder extends Seeder
                 'CV' => 'cv9.pdf',
                 'NgaySinh' => '1984-06-12',
             ],
-            [
-                'MaGiangVien' => 10,
-                'UserID' => 1,
-                'HoTen' => 'Admin Hệ Thống',
-                'ChucVu' => 'Quản trị',
-                'Khoa' => 'Phòng khoa học',
-                'Email' => 'admin@uni.edu',
-                'Sdt' => '0999999999',
-                'AnhDaiDien' => 'admin.jpg',
-                'CV' => 'admincv.pdf',
-                'NgaySinh' => '1975-01-01',
-            ],
         ]);
     }
 }

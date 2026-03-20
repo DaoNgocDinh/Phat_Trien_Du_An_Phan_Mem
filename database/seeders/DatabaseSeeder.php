@@ -28,21 +28,6 @@ class DatabaseSeeder extends Seeder
             LienheSeeder::class,
             ThongbaoSeeder::class,
         ]);
-    
-        $this->call([
-            TaikhoanSeeder::class,
-            GiangvienSeeder::class,
-            NghiencuusinhSeeder::class,
-            CanbokhoahocSeeder::class,
-            DetaiSeeder::class,
-            TiendodetaiSeeder::class,
-            SukienSeeder::class,
-            DangkysukienSeeder::class,
-            CongboSeeder::class,
-            QuycheSeeder::class,
-            LienheSeeder::class,
-            ThongbaoSeeder::class,
-        ]);
         
     }
 }

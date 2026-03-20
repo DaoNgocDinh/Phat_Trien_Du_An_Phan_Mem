@@ -15,7 +15,7 @@
 
 <body class="bg-gray-50 font-sans antialiased">
 
-    @include('layout.navbar')
+    @include('layout.navbar_giangvien')
 
     <div class="flex min-h-screen">
 
