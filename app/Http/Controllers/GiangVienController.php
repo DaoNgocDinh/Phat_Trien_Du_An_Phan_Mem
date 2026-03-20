@@ -23,7 +23,6 @@ class GiangVienController extends Controller
     public function DeTai()
     {
         $detais = Detai::latest()->paginate(10);
-        // $deTaiCuaToi = DeTai::where('ChuNhiem', auth()->user()->name)->orWhereJsonContains('ThanhVien', auth()->user()->name)->paginate(10); // đề tài của tôi
         return view('Giangvien.deTai', compact('detais'));
     }
 
