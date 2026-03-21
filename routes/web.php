@@ -12,6 +12,7 @@ require __DIR__.'/user.php';
 require __DIR__.'/detai.php';
 require __DIR__.'/tiendodetai.php';
 require __DIR__.'/hoso.php';
+require __DIR__.'/pheduyetdexuat.php';
 
 
 
@@ -68,9 +69,9 @@ Route::get('/hoso/chinhsua', function () {
 });
 
 ///PHÊ DUYỆT ĐỀ XUẤT
-Route::get('/pheduyetdexuat', function () {
-    return view('Admin.pheduyetdexuat.index');
-});
+// Route::get('/pheduyetdexuat', function () {
+//     return view('Admin.pheduyetdexuat.index');
+// });
 
 //THEO DÕI TIẾN ĐỒ ĐỀ TÀI
 // Route::get('/theodoitiendo', function () {

@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use App\Models\Taikhoan;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Pagination\Paginator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -21,6 +22,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Paginator::useTailwind(); 
         $admin = Taikhoan::where('VaiTro', 'admin')->first();
 
         if (!$admin) {

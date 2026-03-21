@@ -64,7 +64,7 @@
 
                         <tr id="row{{$index}}" class="h-12">
 
-                            <td>{{ $index + 1 }}</td>
+                            <td>{{ $danhmuc->firstItem() + $index }}</td>
 
                             <td id="ten{{$index}}" class="text-center text-black">
                                 {{ $dm->LoaiDeTai }}
@@ -97,27 +97,15 @@
                     </tbody>
 
                 </table>
-
-                <!-- Footer -->
-                <div class="flex justify-evenly items-center mt-20 text-sm text-black">
-
-                    <p class="font-bold">Hiển thị 05 danh mục</p>
-
-                    <div class="flex gap-2">
-                        <button class="bg-gray-200 px-2 py-1 rounded">&lt;</button>
-                        <button class="bg-gray-300 px-3 py-1 rounded">1</button>
-                        <button class="bg-gray-200 px-2 py-1 rounded">&gt;</button>
-                    </div>
-
+                <div class="mt-10">
+                    {{ $danhmuc->links() }}
                 </div>
-
             </div>
             <div id="formCreate" class="w1/3">
                 @include('Admin.quanlydanhmuc.create')
                 @include('Admin.quanlydanhmuc.edit')
             </div>
         </div>
-
     </div>
 
     <!-- Popup Xóa -->
@@ -300,16 +288,50 @@
 
     function luuDanhMuc() {
 
-        let ten = document.getElementById("tenDanhMuc").value
+    let ten = document.getElementById("tenDanhMuc").value;
 
-        if (ten === "") {
-            alert("Vui lòng nhập thông tin!")
-            return
-        }
-
-        document.getElementById("popupSuccess").classList.remove("hidden")
-
+    if (ten === "") {
+        alert("Vui lòng nhập thông tin!");
+        return;
     }
+
+    // 🔥 lấy tbody
+    let tbody = document.querySelector("tbody");
+
+    // 🔥 tạo index mới (STT)
+    let soDong = tbody.querySelectorAll("tr").length + 1;
+
+    // 🔥 tạo row mới
+    let newRow = document.createElement("tr");
+    newRow.classList.add("h-12");
+
+    newRow.innerHTML = `
+        <td>${soDong}</td>
+        <td class="text-center text-black">${ten}</td>
+        <td class="text-center">
+            <button class="bg-[#7AB2B2] px-3 py-1 rounded text-black text-sm">
+                Chỉnh sửa
+            </button>
+
+            <button class="bg-[#C65E40] px-4 py-1 rounded text-black text-sm ml-3">
+                Xóa
+            </button>
+        </td>
+    `;
+
+    // 🔥 thêm vào bảng
+    tbody.appendChild(newRow);
+
+    // reset input
+    document.getElementById("tenDanhMuc").value = "";
+
+    // đóng form
+    document.getElementById("popupForm").classList.add("hidden");
+
+    document.getElementById("breadcrumb").innerHTML = "Quản lý danh mục";
+
+    alert("Thêm thành công!");
+}
 
     function dongPopup() {
 

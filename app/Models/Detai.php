@@ -30,6 +30,7 @@ class Detai extends Model
         'KetQua',
         'FileSanPham',
         'KinhPhi',
+        'LyDoTuChoi'
     ];
 
     public function tiendodetai()

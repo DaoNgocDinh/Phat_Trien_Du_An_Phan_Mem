@@ -5,31 +5,31 @@
         Chi tiết đề xuất
     </h2>
 
-    <h3 class="font-semibold mb-6">
+    <h3 id="ten" class="font-semibold mb-6">
         Xây dựng hệ thống quản lý học tập
     </h3>
 
-    <p class="text-sm text-gray-600 mb-6">
+    <p id="nguoi" class="text-sm text-gray-600 mb-6">
         Nguyễn Văn C
     </p>
 
-    <p class="text-sm mb-4">
+    <p id="mota" class="text-sm mb-4">
         Nghiên cứu phát triển hệ thống hỗ trợ quản lý môn học,
         theo dõi kết quả học tập của sinh viên
     </p>
 
     <div class="bg-[#F3F4F4] p-2 rounded flex items-center justify-between mb-4">
-        <span>Bai_nghien_cuu_khoa_hoc.pdf</span>
+        <span id="file">Bai_nghien_cuu_khoa_hoc.pdf</span>
         <i class="fa fa-file"></i>
     </div>
 
     <div class="mt-6 mb-3">
         <span class="text-sm font-semibold">Trạng thái:</span>
-        <span class="bg-orange-400 text-white text-xs px-3 py-1 rounded">
+        <span id="trangthai" class="bg-orange-400 text-white text-xs px-3 py-1 rounded">
             Chờ duyệt
         </span>
     </div>
-
+    <p id="lydo" class="text-red-500 text-sm mt-2"></p>
     <p class="text-sm mb-3">
         Vui lòng chọn 1 trong 3 lựa chọn
     </p>
