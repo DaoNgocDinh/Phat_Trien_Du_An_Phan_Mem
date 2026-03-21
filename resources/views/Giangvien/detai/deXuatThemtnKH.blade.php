@@ -6,7 +6,7 @@
 <div class="p-6" style="margin-top: 60px; margin-left: 260px;">
     <button type="submit"
         class="text-xl flex gap-2 text-white bg-[#2c5d6e] px-4 py-2 rounded-md hover:bg-[#3f7b8e] hover:shadow-xl hover:border-gray-600">
-        Đề tài > Đề xuất đề tài
+        Đề xuất đề tài
     </button>
     <form id="formDeTai" method="POST" action="{{ route('giangvien.detai.store') }}" enctype="multipart/form-data">
         @csrf
@@ -118,10 +118,6 @@
             <button type="button" onclick="window.history.back()"
                 class="px-6 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400">
                 Hủy
-            </button>
-
-            <button type="button" class="px-6 py-2 bg-[#98D3D3] text-white rounded-lg hover:bg-[#99E4E4]">
-                Lưu nháp
             </button>
 
             <button type="submit" class="px-6 py-2 bg-[#1D546D] text-white rounded-lg hover:bg-[#174454]">

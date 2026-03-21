@@ -17,4 +17,6 @@ Route::prefix('giangvien')->middleware('roles:giangvien')->group(function () {
 
     Route::get('/lienhe', [LienHeController::class, 'index'])->name('giangvien.lienhe.index');
     Route::post('/lienhe', [LienHeController::class, 'store'])->name('giangvien.lienhe.store');
+
+    Route::get('/search', [GiangvienController::class, 'search'])->name('giangvien.search');
 });

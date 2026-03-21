@@ -18,4 +18,6 @@ Route::prefix('admin')->middleware('roles:admin')->group(function () {
 
     Route::get('/lienhe', [LienHeController::class,'index_admin'])->name('admin.lienhe.index');
     Route::get('/lienhe/{MaLienHe}', [LienHeController::class, 'detail'])->name('admin.lienhe.detail');
+
+    Route::get('/search', [AdminController::class, 'search'])->name('admin.search');
 });
