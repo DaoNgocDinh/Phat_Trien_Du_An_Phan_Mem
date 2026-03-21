@@ -73,8 +73,8 @@
                         <input type="text"
                             name="ChucVu"
                             value="{{ $hoso->ChucVu ?? '' }}"
-                            class="border border-black rounded px-3 py-2 w-full"
-                            disabled>
+                            class="border border-black rounded px-3 py-2 w-full bg-gray-200"
+                            readonly>
                     </div>
                     <div>
                         <label>Số điện thoại :</label>
@@ -90,13 +90,11 @@
                     <div>
                         <label>Khoa :</label>
 
-                        <select name="Khoa"
-                            class="border border-black rounded px-3 py-2 w-full"
-                            disabled>
-
-                            <option>{{ $hoso->Khoa ?? '' }}</option>
-
-                        </select>
+                        <input type="text"
+                            name="Khoa"
+                            value="{{ $hoso->Khoa ?? '' }}"
+                            class="border border-black rounded px-3 py-2 w-full bg-gray-200"
+                            readonly>
                     </div>
 
 
@@ -107,6 +105,7 @@
                             name="CV"
                             class="border border-black rounded px-3 py-2 w-full"
                             disabled>
+
                     </div>
 
 
@@ -205,11 +204,13 @@
 
         inputs.forEach(input => {
 
-            input.disabled = false;
+            // bỏ dòng này nếu là readonly
+            if (!input.hasAttribute("readonly")) {
+                input.disabled = false;
 
-            input.classList.remove("bg-gray-200");
-            input.classList.add("bg-white");
-
+                input.classList.remove("bg-gray-200");
+                input.classList.add("bg-white");
+            }
         });
 
 
@@ -226,7 +227,11 @@
 
         inputs.forEach(input => {
 
-            input.disabled = true;
+            if (!input.hasAttribute("readonly")) {
+                input.disabled = true;
+            }
+            input.classList.remove("bg-white");
+            input.classList.add("bg-gray-200");
 
         });
 
@@ -251,7 +256,9 @@
         let inputs = document.querySelectorAll("input, select");
         inputs.forEach(input => {
 
-            input.disabled = true;
+            if (!input.hasAttribute("readonly")) {
+                input.disabled = true;
+            }
 
         });
         // Hiện lại nút chỉnh sửa

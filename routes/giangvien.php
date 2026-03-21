@@ -1,13 +1,21 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\GiangvienController;
-use App\Http\Controllers\QuycheController;
+use App\Http\Controllers\GiangVienController;
+use App\Http\Controllers\QuyCheController;
 use App\Http\Controllers\DeTaiController;
 use App\Http\Controllers\LienHeController;
-Route::prefix('giangvien')->middleware('roles:giangvien')->group(function () {
-    Route::get('/trang-chu',[GiangvienController::class,'index'])->name('giangvien.trangChu');
-    Route::get('/quyche',[QuycheController::class,'index_giangvien'])->name('giangvien.quyChe.index');
+
+Route::prefix('giangvien')->group(function () {
+    Route::get('/trang-chu', [GiangVienController::class, 'dashBoard'])
+        ->name('giangvien.trangChu');
+    Route::get('/cong-bo', [GiangVienController::class, 'CongBo'])
+        ->name('giangvien.congBo');
+    Route::get('/de-tai', [GiangVienController::class, 'DeTai'])
+        ->name('giangvien.deTai');
+    Route::get('/su-kien', [GiangVienController::class, 'SuKien'])
+        ->name('giangvien.suKien');
+    Route::get('/quyche',[QuyCheController::class,'index_giangvien'])->name('giangvien.quyChe.index');
     Route::get('/quyche/{MaQuyChe}', [QuyCheController::class, 'view_giangvien'])->name('giangvien.quyChe.view');
     Route::get('/download/{file}', [QuyCheController::class, 'download'])->name('download.pdf');
 
@@ -19,4 +27,9 @@ Route::prefix('giangvien')->middleware('roles:giangvien')->group(function () {
     Route::post('/lienhe', [LienHeController::class, 'store'])->name('giangvien.lienhe.store');
 
     Route::get('/search', [GiangvienController::class, 'search'])->name('giangvien.search');
+});
+
+Route::prefix('giangvien')->middleware('auth')->group(function () {
+    Route::get('/de-tai-cua-toi', [GiangVienController::class, 'DeTaiCuaToi'])
+        ->name('giangvien.deTaiCuaToi');
 });

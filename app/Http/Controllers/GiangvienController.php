@@ -9,10 +9,11 @@ use App\Models\DeTai;
 use App\Models\Sukien;
 use App\Models\Thongbao;
 
-class GiangvienController extends Controller
+
+class GiangVienController extends Controller
 {
     //
-    public function index()
+    public function dashBoard()
     {
         return view('Giangvien.trangChu');
     }
@@ -98,5 +99,21 @@ class GiangvienController extends Controller
         );
 
         return view('giangvien.search.index', ['results' => $paginated]);
+    }
+    public function CongBo()
+    {
+        $congbos = CongBo::latest()->paginate(10);
+        return view('Giangvien.congBo', compact('congbos'));
+    }
+    public function DeTai()
+    {
+        $detais = Detai::latest()->paginate(10);
+        return view('Giangvien.deTai', compact('detais'));
+    }
+
+    public function SuKien()
+    {
+        $sukiens = Sukien::latest()->paginate(10);
+        return view('Giangvien.suKien', compact('sukiens'));
     }
 }

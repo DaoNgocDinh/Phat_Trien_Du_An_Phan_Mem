@@ -27,9 +27,9 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#"
-                        class="flex items-center px-3 py-2.5 text-white rounded-md hover:bg-[#2c5d6e] hover:shadow-md transition-all duration-200 
-                       {{ request()->routeIs('#') ? 'bg-[#2c5d6e] shadow-md border-l-4 border-white text-white font-semibold' : '' }}">
+                    <a href="{{ route('giangvien.deTai') }}"
+                       class="flex items-center px-3 py-2.5 text-white rounded-md hover:bg-[#2c5d6e] hover:shadow-md transition-all duration-200 
+                       {{ request()->routeIs('giangvien.deTai') ? 'bg-[#2c5d6e] shadow-md border-l-4 border-white text-white font-semibold' : '' }}">
                         <i class="fas fa-flask w-6 text-lg"></i>
                         <span class="ml-3">Đề tài nghiên cứu</span>
                     </a>
@@ -43,9 +43,9 @@
                     </a>
                 </li>
                 <li>
-                    <a {{-- href="{{ route('giangvien.cong-bo.index') }}" --}}
-                        class="flex items-center px-3 py-2.5 text-white rounded-md hover:bg-[#2c5d6e] hover:shadow-md transition-all duration-200 
-                       {{ request()->routeIs('giangvien.cong-bo.*') ? 'bg-[#2c5d6e] shadow-md border-l-4 border-white text-white font-semibold' : '' }}">
+                    <a href="{{ route('giangvien.congBo') }}"
+                       class="flex items-center px-3 py-2.5 text-white rounded-md hover:bg-[#2c5d6e] hover:shadow-md transition-all duration-200 
+                       {{ request()->routeIs('giangvien.congBo') ? 'bg-[#2c5d6e] shadow-md border-l-4 border-white text-white font-semibold' : '' }}">
                         <i class="fas fa-book w-6 text-lg"></i>
                         <span class="ml-3">Công bố khoa học</span>
                     </a>

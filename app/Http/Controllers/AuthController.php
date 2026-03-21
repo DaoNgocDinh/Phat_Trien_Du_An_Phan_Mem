@@ -112,7 +112,7 @@ class AuthController extends Controller
         if ($user->VaiTro == 'nghiencuusinh') {
             $sv = Nghiencuusinh::where('UserID', $user->UserID)->first();
             session(['HoTen' => $sv->HoTen]);
-            return redirect()->route('sinhVien.trangChu');
+            return redirect('/sinhvien/trang-chu');
         }
             // may chỉnh thêm login cho giảng viên ở đây
         if ($user->VaiTro == 'giangvien') { 
