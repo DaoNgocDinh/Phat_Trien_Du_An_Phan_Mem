@@ -28,5 +28,6 @@ class DatabaseSeeder extends Seeder
             LienheSeeder::class,
             ThongbaoSeeder::class,
         ]);
+        
     }
 }

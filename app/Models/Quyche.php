@@ -23,4 +23,3 @@ class Quyche extends Model
         'FilePDF',
     ];
 }
-

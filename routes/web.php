@@ -28,6 +28,15 @@ Route::get('/admin/quy-che', function () {
 
 // auth
 
+Route::delete('/admin/destroyquyche/{id}', [QuycheController::class,'destroy'])->name('quyche.destroy');
+
+Route::get('/guiyeucaulienhe', function () {
+    return view('Sinhvien.guiYeuCaulienHe');
+});
+
+Route::get('/dexuatTNKH', function () {
+    return view('Sinhvien.deXuatThemtnKH');
+});
 // admin
 // Route::get('/admin/courses', function () {
 //     return view('Admin.khoahoc.khoahoc');

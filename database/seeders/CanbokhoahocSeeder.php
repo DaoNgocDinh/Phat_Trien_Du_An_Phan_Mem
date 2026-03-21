@@ -11,14 +11,6 @@ class CanbokhoahocSeeder extends Seeder
     {
         DB::table('canbokhoahoc')->insert([
             [
-                'MaCanBo_admin' => 1,
-                'UserID' => 1,
-                'PhongBan' => 'Phòng Quản lý Khoa học',
-                'ChucVu' => 'Trưởng phòng',
-                'HocVi' => 'TS',
-                'TrangThai' => 'Đang công tác',
-            ],
-            [
                 'MaCanBo_admin' => 2,
                 'UserID' => 2,
                 'PhongBan' => 'Phòng Quản lý Khoa học',

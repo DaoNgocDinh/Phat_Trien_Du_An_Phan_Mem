@@ -22,7 +22,7 @@ return new class extends Migration
 
             $table->text('NoiDung')->nullable();
 
-            $table->date('ThoiGianGui')->nullable();
+            $table->string('TrangThai')->default('Chưa đọc');
             $table->timestamps();
         }); 
     }

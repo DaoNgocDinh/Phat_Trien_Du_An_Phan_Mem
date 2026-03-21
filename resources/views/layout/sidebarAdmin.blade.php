@@ -36,7 +36,7 @@
 
                 <!-- Quy chế -->
                 <li>
-                    <a href="#"
+                    <a href="{{ route('admin.quyChe.index') }}"
                        class="flex items-center px-3 py-2.5 text-white rounded-md hover:bg-[#2c5d6e] transition">
                         <i class="fas fa-pen w-6"></i>
                         <span class="ml-3">Quy chế khoa học</span>
@@ -73,7 +73,7 @@
 
                 <!-- Liên hệ -->
                 <li>
-                    <a href="#"
+                    <a href="{{ route('admin.lienhe.index') }}"
                        class="flex items-center px-3 py-2.5 text-white rounded-md hover:bg-[#2c5d6e] transition">
                         <i class="fas fa-envelope w-6"></i>
                         <span class="ml-3">Liên hệ</span>

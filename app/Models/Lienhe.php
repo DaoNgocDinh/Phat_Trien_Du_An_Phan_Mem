@@ -20,7 +20,7 @@ class Lienhe extends Model
         'Email',
         'ChuDe',
         'NoiDung',
-        'ThoiGianGui',
+        'TrangThai',
     ];
 }
 
