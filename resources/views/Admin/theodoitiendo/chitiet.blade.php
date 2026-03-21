@@ -17,26 +17,6 @@
         Chọn đề tài để xem chi tiết
     </h3>
 
-
-    <!-- Progress -->
-    <div class="flex items-center mb-4">
-
-        <div class="w-full h-2 bg-gray-300 rounded relative">
-
-            <div id="dot1"
-                class="absolute left-[10%] top-[-6px] w-4 h-4 bg-gray-400 rounded-full"></div>
-
-            <div id="dot2"
-                class="absolute left-[50%] top-[-6px] w-4 h-4 bg-gray-400 rounded-full"></div>
-
-            <div id="dot3"
-                class="absolute right-[10%] top-[-6px] w-4 h-4 bg-gray-400 rounded-full"></div>
-
-        </div>
-
-    </div>
-
-
     <!-- Chủ nhiệm -->
     <div class="text-sm mb-3">
         <span id="chuNhiem"></span>
@@ -51,6 +31,7 @@
 
     <!-- Trạng thái -->
     <div class="text-sm mb-4">
+        <span>Trạng thái: </span>
         <span id="trangThai" class="text-green-600"></span>
     </div>
 
@@ -58,7 +39,7 @@
     <!-- Dropdown cập nhật -->
     <div class="mt-2 text-sm">
 
-        <label class="font-semibold">Cập nhật gần nhất:</label>
+        <label class="font-semibold">Cập nhật tiến độ:</label>
 
         <select id="lanGanNhat"
             class="border rounded px-2 py-1 ml-2 w-40 relative z-50">
