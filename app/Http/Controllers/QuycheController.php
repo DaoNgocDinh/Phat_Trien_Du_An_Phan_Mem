@@ -5,7 +5,7 @@ use App\Models\Quyche;
 
 use Illuminate\Http\Request;
 
-class QuycheController extends Controller
+class QuyCheController extends Controller
 {
     public function index_admin(Request $request)
     {

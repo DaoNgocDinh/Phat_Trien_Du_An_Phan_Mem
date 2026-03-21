@@ -26,21 +26,6 @@ class GiangVienController extends Controller
         return view('Giangvien.deTai', compact('detais'));
     }
 
-    public function DeTaiCuaToi()
-    {
-        if (!auth()->check()) {
-        return redirect()->route('login')->with('error', 'Vui lòng đăng nhập để xem đề tài.');
-            }
-            
-            $user = auth('giangvien')->user();
-            $maGiangVien = optional($user->giangvien)->MaGiangVien;
-
-            $deTaiCuaToi = Detai::where('MaGiangVien', $maGiangVien)
-                                ->latest()
-                                ->paginate(10);
-        return view('Giangvien.deTaiCuaToi', compact('deTaiCuaToi'));
-    }
-
     public function SuKien()
     {
         $sukiens = Sukien::latest()->paginate(10);

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CongBoController;
 use App\Http\Controllers\GiangVienController;
+use App\Http\Controllers\QuyCheController;
 
 
 require __DIR__.'/auth.php';
@@ -28,7 +29,7 @@ Route::get('/admin/quy-che', function () {
 
 // auth
 
-Route::delete('/admin/destroyquyche/{id}', [QuycheController::class,'destroy'])->name('quyche.destroy');
+Route::delete('/admin/destroyquyche/{id}', [QuyCheController::class,'destroy'])->name('quyche.destroy');
 
 Route::get('/guiyeucaulienhe', function () {
     return view('Sinhvien.guiYeuCaulienHe');
