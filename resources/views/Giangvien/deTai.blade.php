@@ -246,7 +246,7 @@
 
             const fileLink = document.getElementById('modalFile');
             fileLink.textContent = fileSanPham ? fileSanPham.split('/').pop() : 'Không có file';
-            fileLink.href = fileSanPham ? '{{ asset('storage/') }}' + fileSanPham : '#';
+            fileLink.href = fileSanPham ? '{{ asset('uploads/pdf') }}/' + fileSanPham : '#';
 
             const modal = document.getElementById('deTaiModal');
             console.log('Modal element:', modal);

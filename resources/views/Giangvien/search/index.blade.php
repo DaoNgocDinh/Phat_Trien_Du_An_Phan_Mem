@@ -9,6 +9,8 @@
                 Kết quả tìm kiếm
             </div>
             <form method="GET" action="{{ route('giangvien.search') }}">
+
+                <input type="hidden" name="search" value="{{ request('search') }}">
                 <select name="filter" onchange="this.form.submit()"
                     class="bg-gray-200 text-black px-3 py-2 rounded-md backdrop-blur-sm focus:outline-none">
                     <option value="">Tất cả</option>
@@ -49,7 +51,7 @@
 
             <!-- Pagination -->
             <div class="mt-4">
-                {{ $results->links() }}
+                {{ $results->appends(request()->query())->links() }}
             </div>
         </div>
     </div>

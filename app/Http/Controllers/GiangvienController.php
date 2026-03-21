@@ -58,7 +58,7 @@ class GiangVienController extends Controller
         $sukien = Sukien::select(
             'MaSuKien as Ma',
             'TenSuKien as Ten',
-            CongBo::raw("'Sự kiện' as Loai")
+            Sukien::raw("'Sự kiện' as Loai")
         );
 
         if ($search) {
@@ -84,7 +84,9 @@ class GiangVienController extends Controller
 
         // Thêm filter thực sự
         if ($filter) {
-            $results = $results->filter(fn($item) => $item->Loai === $filter);
+            $results = $results->filter(function ($item) use ($filter) {
+                return strtolower($item->Loai) === strtolower($filter);
+            });
         }
 
         // Phân trang thủ công
