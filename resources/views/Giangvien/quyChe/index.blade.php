@@ -40,7 +40,7 @@
                     </th>
                 </tr>
             </thead>
-            <tbody class="divide-y">
+            <tbody id="quycheTableBody" class="divide-y">
                 @foreach($quyches as $quyche)
                     <tr class="bg-neutral-primary border-b border-default">
                         <th scope="row" class="px-6 py-4 font-medium text-heading whitespace-nowrap">
@@ -106,3 +106,25 @@
         </div>
     </div>
 </div>
+
+<script>
+    let timeout;
+
+    document.getElementById('search').addEventListener('input', function (e) {
+        clearTimeout(timeout);
+
+        const keyword = e.target.value.toLowerCase();
+
+        timeout = setTimeout(() => {
+            document.querySelectorAll('#quycheTableBody tr').forEach(row => {
+
+                const nameCell = row.querySelector('td:nth-child(2)');
+                if (!nameCell) return;
+
+                const text = nameCell.textContent.toLowerCase();
+
+                row.style.display = text.includes(keyword) ? '' : 'none';
+            });
+        }, 200);
+    });
+</script>

@@ -143,5 +143,49 @@ class CongBoController extends Controller
         return view('Admin.thongke.dashboard', compact('byYear', 'byType', 'total'));
     }
 
+    public function suggest(Request $request)
+    {
 
+        $request->validate([
+            'TenCongBo' => 'required|string|max:255',
+            'LoaiCongBo' => 'required|string|max:255',
+            'TacGia' => 'required|string|max:255',
+            'NoiCongBo' => 'required|string|max:255',
+            'NamXuatBan' => 'required',
+            'FilePDF' => 'required|file|mimes:pdf|max:10240',
+        ]);
+
+        if ($request->hasFile('FilePDF')) {
+            $file = $request->file('FilePDF');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('uploads/pdf'), $fileName);
+        }
+
+        $MaCongBo = CongBo::max('MaCongBo') + 1;
+
+        $namXuatBan = $request->input('NamXuatBan');
+        if (preg_match('/^\d{4}-\d{2}-\d{2}$/', $namXuatBan)) {
+            $namXuatBan = date('Y', strtotime($namXuatBan));
+        }
+
+        CongBo::create([
+            'MaCongBo' => $MaCongBo,
+            'TenCongBo' => $request->TenCongBo,
+            'TacGia' => $request->TacGia,
+            'NamXuatBan' => (int) $namXuatBan,
+            'NoiCongBo' => $request->NoiCongBo,
+            'LoaiCongBo' => $request->LoaiCongBo,
+            'DOI' => 'Có',
+            'FilePDF' => $fileName ?? null,
+            'TrangThai' => 'ChoDuyet',
+            'NoiDungTomTat' => $request->NoiDungTomTat,
+        ]);
+
+        return redirect()->route('giangvien.congBo')->with('success', 'Thêm thành công');
+    }
+
+    public function showSuggest()
+    {
+        return view('giangvien.congbo.suggest');
+    }
 }

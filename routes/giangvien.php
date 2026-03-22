@@ -5,6 +5,7 @@ use App\Http\Controllers\GiangVienController;
 use App\Http\Controllers\QuyCheController;
 use App\Http\Controllers\DeTaiController;
 use App\Http\Controllers\LienHeController;
+use App\Http\Controllers\CongBoController;
 
 Route::prefix('giangvien')->group(function () {
     Route::get('/trang-chu', [GiangVienController::class, 'dashBoard'])
@@ -15,7 +16,7 @@ Route::prefix('giangvien')->group(function () {
         ->name('giangvien.deTai');
     Route::get('/su-kien', [GiangVienController::class, 'SuKien'])
         ->name('giangvien.suKien');
-    Route::get('/quyche',[QuyCheController::class,'index_giangvien'])->name('giangvien.quyChe.index');
+    Route::get('/quyche', [QuyCheController::class, 'index_giangvien'])->name('giangvien.quyChe.index');
     Route::get('/quyche/{MaQuyChe}', [QuyCheController::class, 'view_giangvien'])->name('giangvien.quyChe.view');
     Route::get('/download/{file}', [QuyCheController::class, 'download'])->name('download.pdf');
 
@@ -27,6 +28,9 @@ Route::prefix('giangvien')->group(function () {
     Route::post('/lienhe', [LienHeController::class, 'store'])->name('giangvien.lienhe.store');
 
     Route::get('/search', [GiangvienController::class, 'search'])->name('giangvien.search');
+
+    Route::get('/congbo/dexuat', [CongBoController::class, 'showSuggest'])->name('giangvien.congbo.suggest');
+    Route::post('/congbo/dexuat', [CongBoController::class, 'suggest']);
 });
 
 Route::prefix('giangvien')->middleware('auth')->group(function () {

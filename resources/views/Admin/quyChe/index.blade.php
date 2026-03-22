@@ -46,7 +46,7 @@
                </th>
             </tr>
          </thead>
-         <tbody class="divide-y">
+         <tbody id="quycheTableBody" class="divide-y">
             @foreach ($quyches as $quyche)
                <tr class="bg-neutral-primary border-b border-default">
                   <th scope="row" class="px-6 py-4 font-medium text-heading whitespace-nowrap">
@@ -63,14 +63,14 @@
                   </td>
                   <td class="px-6 py-4">
                      <div class="flex items-center gap-3">
-                        <a href="{{ route('admin.quyChe.view', $quyche->MaQuyChe) }}" >
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                           class="size-8 p-1 rounded-full hover:bg-gray-200 text-blue-500 cursor-pointer">
-                           <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
-                           <path fill-rule="evenodd"
-                              d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 0 1 0-1.113ZM17.25 12a5.25 5.25 0 1 1-10.5 0 5.25 5.25 0 0 1 10.5 0Z"
-                              clip-rule="evenodd" />
-                        </svg>
+                        <a href="{{ route('admin.quyChe.view', $quyche->MaQuyChe) }}">
+                           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                              class="size-8 p-1 rounded-full hover:bg-gray-200 text-blue-500 cursor-pointer">
+                              <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
+                              <path fill-rule="evenodd"
+                                 d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 0 1 0-1.113ZM17.25 12a5.25 5.25 0 1 1-10.5 0 5.25 5.25 0 0 1 10.5 0Z"
+                                 clip-rule="evenodd" />
+                           </svg>
                         </a>
                         <a href="{{ route('admin.quyChe.edit', $quyche->MaQuyChe) }}">
                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
@@ -111,7 +111,7 @@
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                stroke="currentColor"
                class="hover:bg-[#2c5d6e] hover:shadow-xl bg-[#7AB2B2] text-white size-6 cursor-pointer rotate-180">
-               <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+               <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
             </svg>
          </a>
       </div>
@@ -155,4 +155,24 @@
 
       });
    }
+</script>
+<script>
+   let timeout;
+
+   document.getElementById('search').addEventListener('input', function (e) {
+      clearTimeout(timeout);
+
+      const keyword = e.target.value.toLowerCase();
+
+      timeout = setTimeout(() => {
+         document.querySelectorAll('#quycheTableBody tr').forEach(row => {
+            const nameCell = row.querySelector('td:nth-child(2)');
+            if (!nameCell) return;
+
+            const text = nameCell.textContent.toLowerCase();
+
+            row.style.display = text.includes(keyword) ? '' : 'none';
+         });
+      }, 200);
+   });
 </script>
