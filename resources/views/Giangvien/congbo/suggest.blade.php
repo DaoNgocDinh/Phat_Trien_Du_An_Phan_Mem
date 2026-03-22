@@ -5,7 +5,7 @@
 @section('content')
 <div class="p-6" style="margin-top: 60px; margin-left: 260px;">
     <button type="button"
-        class="text-xl flex gap-2 text-white bg-[#1D546D] px-4 py-2 rounded-md hover:bg-[#3f7b8e] hover:shadow-xl hover:border-gray-600 cursor-pointer">
+        class="text-2xl flex gap-2 text-white bg-[#1D546D] px-4 py-2 rounded-md hover:bg-[#3f7b8e] hover:shadow-xl hover:border-gray-600 cursor-pointer">
         Đề xuất công bố
     </button>
     <form id="formCongBo" method="POST" action="{{ route('giangvien.congbo.suggest') }}" enctype="multipart/form-data">
@@ -26,6 +26,30 @@
                 {{ session('success') }}
             </div>
         @endif
+
+        <div class="flex flex-col md:flex-row items-start md:items-center mb-6 gap-4 mt-6">
+            <a href="{{ route('giangvien.congBo') }}">
+                <button type="button"
+                    class="bg-gray-500 hover:bg-[#2c5d6e] text-black px-6 py-2.5 shadow-md transition flex items-center gap-2 font-medium">
+                    <!-- <i class="fas fa-plus-circle"></i> -->
+                    Tất cả công bố
+                </button>
+            </a>
+            <a href="#">
+                <button type="button"
+                    class="bg-gray-500 hover:bg-[#2c5d6e] text-black px-6 py-2.5 shadow-md transition flex items-center gap-2 font-medium">
+                    <!-- <i class="fas fa-plus-circle"></i> -->
+                    Công bố của tôi
+                </button>
+            </a>
+            <a>
+                <button
+                    class="bg-[#1D546D] text-white px-6 py-2.5 shadow-md transition flex items-center gap-2 font-medium">
+                    <!-- <i class="fas fa-plus-circle"></i> -->
+                    Đề xuất công bố
+                </button>
+            </a>
+        </div>
 
         <!-- GRID 2 CỘT -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">

@@ -25,10 +25,24 @@
             </div>
 
             <!-- Header + Nút khai báo mới (placeholder cho sinh viên) -->
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+            <div class="flex flex-col md:flex-row items-start md:items-center mb-6 gap-4">
+                <a>
+                    <button
+                        class="bg-[#1D546D] text-white px-6 py-2.5 shadow-md transition flex items-center gap-2 font-medium">
+                        <!-- <i class="fas fa-plus-circle"></i> -->
+                        Tất cả công bố
+                    </button>
+                </a>
+                <a href="#">
+                    <button
+                        class="bg-gray-500 hover:bg-[#2c5d6e] text-black px-6 py-2.5 shadow-md transition flex items-center gap-2 font-medium">
+                        <!-- <i class="fas fa-plus-circle"></i> -->
+                        Công bố của tôi
+                    </button>
+                </a>
                 <a href="{{ route('giangvien.congbo.suggest') }}">
                     <button
-                        class="bg-[#1D546D] hover:bg-[#2c5d6e] text-white px-6 py-2.5 shadow-md transition flex items-center gap-2 font-medium">
+                        class="bg-gray-500 hover:bg-[#2c5d6e] text-black px-6 py-2.5 shadow-md transition flex items-center gap-2 font-medium">
                         <!-- <i class="fas fa-plus-circle"></i> -->
                         Đề xuất công bố
                     </button>
