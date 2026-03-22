@@ -110,7 +110,14 @@ class GiangVienController extends Controller
     public function DeTai()
     {
         $detais = Detai::latest()->paginate(10);
-        return view('Giangvien.deTai', compact('detais'));
+        return view('Giangvien.detai.deTai', compact('detais'));
+    }
+
+    public function DeTaiCuaToi()
+    {
+        $hoTen = session('HoTen');
+        $deTaiCuaToi = Detai::where('ChuNhiem', $hoTen)->latest()->paginate(10);
+        return view('Giangvien.detai.deTaiCuaToi', compact('deTaiCuaToi'));
     }
 
     public function SuKien()

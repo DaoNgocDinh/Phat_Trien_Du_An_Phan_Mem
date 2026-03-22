@@ -62,7 +62,7 @@
                                 <th class="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">Tác giả</th>
                                 <th class="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">Nơi Đăng</th>
                                 <th class="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">Năm</th>
-                                <th class="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">Hành động
+                                <th class="px-6 py-4 text-center text-sm font-semibold uppercase tracking-wider">Hành động
                                 </th>
                             </tr>
                         </thead>

@@ -33,7 +33,7 @@
                     </button>
                 </a>
                 <a href="{{ route('giangvien.deTaiCuaToi') }}">
-                    <button class="bg-[#1D546D] hover:bg-[#2c5d6e] text-white px-6 py-2.5 shadow-md transition flex items-center gap-2 font-medium">
+                    <button class="bg-[#6B727F] hover:bg-[#2c5d6e] text-white px-6 py-2.5 shadow-md transition flex items-center gap-2 font-medium">
                         <!-- <i class="fas fa-plus-circle"></i> -->
                         Đề xuất của tôi
                     </button>
@@ -43,14 +43,14 @@
             <!-- Bảng danh sách -->
             <div class="bg-white rounded-xl shadow overflow-hidden border border-gray-200">
                 <div class="overflow-x-auto">
-                    <table class="w-full divide-y divide-gray-200">
+                    <table class="w-full divide-y divide-gray-200 text-center">
                         <thead style="background-color: #EBF4F6 !important; color: black !important; font-weight: bold !important;">
                             <tr>
-                                <th class="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">STT</th>
-                                <th class="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">Tên đề tài</th>
-                                <th class="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">Năm</th>
-                                <th class="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">Trạng thái</th>
-                                <th class="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">Hành động</th>
+                                <th class="px-6 py-4 text-center text-sm font-semibold uppercase tracking-wider">STT</th>
+                                <th class="px-6 py-4 text-center text-sm font-semibold uppercase tracking-wider">Tên đề tài</th>
+                                <th class="px-6 py-4 text-center text-sm font-semibold uppercase tracking-wider">Năm</th>
+                                <th class="px-6 py-4 text-center text-sm font-semibold uppercase tracking-wider">Trạng thái</th>
+                                <th class="px-6 py-4 text-center text-sm font-semibold uppercase tracking-wider">Hành động</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200" id="deTaiListBody">

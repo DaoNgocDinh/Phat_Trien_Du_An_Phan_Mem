@@ -32,8 +32,8 @@
                             <tr>
                                 <th class="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">STT</th>
                                 <th class="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">Tên sự kiện</th>
-                                <th class="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">Trạng thái</th>
-                                <th class="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">Xem chi tiết</th>
+                                <th class="px-6 py-4 text-center text-sm font-semibold uppercase tracking-wider">Trạng thái</th>
+                                <th class="px-6 py-4 text-center text-sm font-semibold uppercase tracking-wider">Xem chi tiết</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200" id="eventListBody">
@@ -49,7 +49,7 @@
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                                         {{ $event->TenSuKien }}
                                     </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                    <td class="px-6 py-4 whitespace-nowrap text-center text-sm">
                                         <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold" data-status="{{ $status }}">
                                             {{ $status }}
                                         </span>

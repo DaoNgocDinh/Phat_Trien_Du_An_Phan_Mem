@@ -13,7 +13,7 @@ class TaikhoanSeeder extends Seeder
         DB::table('taikhoan')->insert([
             ['UserID' => 1, 'MatKhau' => Hash::make('123456'), 'VaiTro' => 'giangvien'],
             ['UserID' => 2, 'MatKhau' => Hash::make('123456'), 'VaiTro' => 'giangvien'],
-            ['UserID' => 3, 'MatKhau' => Hash::make('123456'), 'VaiTro' => 'giangvien'],
+            ['UserID' => 3, 'MatKhau' => Hash::make('123456'), 'VaiTro' => 'admin'],
             ['UserID' => 4, 'MatKhau' => Hash::make('123456'), 'VaiTro' => 'giangvien'],
             ['UserID' => 5, 'MatKhau' => Hash::make('123456'), 'VaiTro' => 'giangvien'],
             ['UserID' => 6, 'MatKhau' => Hash::make('123456'), 'VaiTro' => 'giangvien'],

@@ -121,7 +121,7 @@
             </button>
 
             <button type="submit" class="px-6 py-2 bg-[#1D546D] text-white rounded-lg hover:bg-[#174454]">
-                Lưu quy chế
+                Gửi đề xuất
             </button>
         </div>
     </form>
