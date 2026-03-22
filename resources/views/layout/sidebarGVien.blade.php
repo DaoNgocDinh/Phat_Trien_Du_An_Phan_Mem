@@ -18,65 +18,65 @@
 
                 <!-- Menu items dành cho sinh viên, với active state -->
                 <li>
-                    <a href="{{ route('sinhvien.trangChu') }}"
+                    <a href="{{ route('giangvien.trangChu') }}"
                        class="flex items-center px-3 py-2.5 text-white rounded-md hover:bg-[#2c5d6e] hover:shadow-md transition-all duration-200 
-                       {{ request()->routeIs('sinhvien.trangChu') ? 'bg-[#2c5d6e] shadow-md border-l-4 border-white text-white font-semibold' : '' }}">
+                       {{ request()->routeIs('giangvien.trangChu') ? 'bg-[#2c5d6e] shadow-md border-l-4 border-white text-white font-semibold' : '' }}">
                         <i class="fas fa-home w-6 text-lg"></i>
                         <span class="ml-3">Trang chủ</span>
                     </a>
                 </li>
                 <li>
-                    <a {{-- href="{{ route('sinhvien.de-tai.index') }}" --}}
+                    <a href="{{ route('giangvien.deTai') }}"
                        class="flex items-center px-3 py-2.5 text-white rounded-md hover:bg-[#2c5d6e] hover:shadow-md transition-all duration-200 
-                       {{ request()->routeIs('sinhvien.de-tai.*') ? 'bg-[#2c5d6e] shadow-md border-l-4 border-white text-white font-semibold' : '' }}">
+                       {{ request()->routeIs('giangvien.deTai.*') ? 'bg-[#2c5d6e] shadow-md border-l-4 border-white text-white font-semibold' : '' }}">
                         <i class="fas fa-flask w-6 text-lg"></i>
                         <span class="ml-3">Đề tài nghiên cứu</span>
                     </a>
                 </li>
                 <li>
-                    <a {{-- href="{{ route('sinhvien.quy-che.index') }}" --}}
+                    <a {{-- href="{{ route('giangvien.quy-che.index') }}" --}}
                        class="flex items-center px-3 py-2.5 text-white rounded-md hover:bg-[#2c5d6e] hover:shadow-md transition-all duration-200 
-                       {{ request()->routeIs('sinhvien.quy-che.*') ? 'bg-[#2c5d6e] shadow-md border-l-4 border-white text-white font-semibold' : '' }}">
+                       {{ request()->routeIs('giangvien.quy-che.*') ? 'bg-[#2c5d6e] shadow-md border-l-4 border-white text-white font-semibold' : '' }}">
                         <i class="fas fa-file-alt w-6 text-lg"></i>
                         <span class="ml-3">Quy chế khoa học</span>
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('sinhvien.congBo') }}"
+                    <a href="{{ route('giangvien.congBo') }}"
                        class="flex items-center px-3 py-2.5 text-white rounded-md hover:bg-[#2c5d6e] hover:shadow-md transition-all duration-200 
-                       {{ request()->routeIs('sinhvien.congbo.*') ? 'bg-[#2c5d6e] shadow-md border-l-4 border-white text-white font-semibold' : '' }}">
+                       {{ request()->routeIs('giangvien.congbo.*') ? 'bg-[#2c5d6e] shadow-md border-l-4 border-white text-white font-semibold' : '' }}">
                         <i class="fas fa-book w-6 text-lg"></i>
                         <span class="ml-3">Công bố khoa học</span>
                     </a>
                 </li>
                 <li>
-                    <a {{-- href="{{ route('sinhvien.hoat-dong.index') }}" --}}
+                    <a {{-- href="{{ route('giangvien.hoat-dong.index') }}" --}}
                        class="flex items-center px-3 py-2.5 text-white rounded-md hover:bg-[#2c5d6e] hover:shadow-md transition-all duration-200 
-                       {{ request()->routeIs('sinhvien.hoat-dong.*') ? 'bg-[#2c5d6e] shadow-md border-l-4 border-white text-white font-semibold' : '' }}">
+                       {{ request()->routeIs('giangvien.hoat-dong.*') ? 'bg-[#2c5d6e] shadow-md border-l-4 border-white text-white font-semibold' : '' }}">
                         <i class="fas fa-calendar-alt w-6 text-lg"></i>
                         <span class="ml-3">Hoạt động khoa học</span>
                     </a>
                 </li>
                 <li>
-                    <a {{-- href="{{ route('sinhvien.su-kien.index') }}" --}}
+                    <a href="{{ route('giangvien.suKien') }}"
                        class="flex items-center px-3 py-2.5 text-white rounded-md hover:bg-[#2c5d6e] hover:shadow-md transition-all duration-200 
-                       {{ request()->routeIs('sinhvien.su-kien.*') ? 'bg-[#2c5d6e] shadow-md border-l-4 border-white text-white font-semibold' : '' }}">
+                       {{ request()->routeIs('giangvien.suKien.*') ? 'bg-[#2c5d6e] shadow-md border-l-4 border-white text-white font-semibold' : '' }}">
                         <i class="fas fa-calendar-check w-6 text-lg"></i>
                         <span class="ml-3">Sự kiện</span>
                     </a>
                 </li>
                 <li>
-                    <a {{-- href="{{ route('sinhvien.lien-he') }}" --}}
+                    <a {{-- href="{{ route('giangvien.lien-he') }}" --}}
                        class="flex items-center px-3 py-2.5 text-white rounded-md hover:bg-[#2c5d6e] hover:shadow-md transition-all duration-200 
-                       {{ request()->routeIs('sinhvien.lien-he') ? 'bg-[#2c5d6e] shadow-md border-l-4 border-white text-white font-semibold' : '' }}">
+                       {{ request()->routeIs('giangvien.lien-he') ? 'bg-[#2c5d6e] shadow-md border-l-4 border-white text-white font-semibold' : '' }}">
                         <i class="fas fa-envelope w-6 text-lg"></i>
                         <span class="ml-3">Liên hệ</span>
                     </a>
                 </li>
                 <li>
-                    <a {{-- href="{{ route('sinhvien.ho-so.index') }}" --}}
+                    <a {{-- href="{{ route('giangvien.ho-so.index') }}" --}}
                        class="flex items-center px-3 py-2.5 text-white rounded-md hover:bg-[#2c5d6e] hover:shadow-md transition-all duration-200 
-                       {{ request()->routeIs('sinhvien.ho-so.*') ? 'bg-[#2c5d6e] shadow-md border-l-4 border-white text-white font-semibold' : '' }}">
+                       {{ request()->routeIs('giangvien.ho-so.*') ? 'bg-[#2c5d6e] shadow-md border-l-4 border-white text-white font-semibold' : '' }}">
                         <i class="fas fa-user w-6 text-lg"></i>
                         <span class="ml-3">Hồ sơ cá nhân</span>
                     </a>
