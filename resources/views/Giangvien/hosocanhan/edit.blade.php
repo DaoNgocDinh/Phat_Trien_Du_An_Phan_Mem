@@ -23,7 +23,7 @@
         <div class="bg-[#D9E2E6] rounded-lg p-8 mt-2">
 
             <p class="text-red-500 text-center mb-3">
-                Vui lòng sửa các thông tin muốn thay đổi
+                Vui lòng sửa các thông tin muốn thay đổi !
             </p>
 
 
@@ -55,16 +55,22 @@
                             name="HoTen"
                             value="{{ $hoso->HoTen ?? '' }}"
                             class="border border-black rounded px-3 py-2 w-full">
+                        @error('HoTen')
+                        <p class="text-red-500 text-sm">{{ $message }}</p>
+                        @enderror
                     </div>
 
 
                     <div>
-                        <label>Ngày sinh :</label>
 
+                        <label>Ngày sinh :</label>
                         <input type="date"
                             name="NgaySinh"
-                            value="{{ isset($hoso->NgaySinh) ? \Carbon\Carbon::parse($hoso->NgaySinh)->format('Y-m-d') : '' }}"
+                            value="{{ $hoso->NgaySinh ? $hoso->NgaySinh->format('Y-m-d') : '' }}"
                             class="border border-black rounded px-3 py-2 w-full">
+                        @error('NgaySinh')
+                        <p class="text-red-500 text-sm">{{ $message }}</p>
+                        @enderror
                     </div>
 
                     <div>
@@ -147,10 +153,10 @@
 
                 <div id="editButtons" class="hidden flex gap-4">
 
-                    <button type="submit"
+                    <button id="btnSave" type="submit"
                         class="bg-[#1D8E8E] text-white px-6 py-2 rounded">
                         <i class="fa fa-check"></i>
-                        Cập nhật
+                        Lưu thay đổi
                     </button>
 
 
@@ -160,7 +166,6 @@
 
                         <i class="fa fa-times"></i>
                         Hủy
-
                     </button>
 
                 </div>
@@ -276,6 +281,43 @@
     });
 </script>
 @endif
+
+<!-- xử lý validate -->
+<script>
+    document.querySelector("form").addEventListener("submit", function(e) {
+
+        let hoTen = document.querySelector("input[name='HoTen']");
+        let ngaySinh = document.querySelector("input[name='NgaySinh']");
+        let isValid = true;
+
+        // Reset lỗi cũ
+        document.querySelectorAll(".error-msg").forEach(el => el.remove());
+
+        if (hoTen.value.trim() === "") {
+            showError(hoTen, "Vui lòng nhập đầy đủ thông tin");
+            isValid = false;
+        }
+        s
+
+        if (ngaySinh.value.trim() === "") {
+            showError(ngaySinh, "Vui lòng nhập ngày sinh");
+            isValid = false;
+        }
+
+        if (!isValid) {
+            e.preventDefault(); // ❌ chặn submit
+        }
+
+    });
+
+    function showError(input, message) {
+        let error = document.createElement("p");
+        error.className = "text-red-500 text-sm error-msg";
+        error.innerText = message;
+        input.parentElement.appendChild(error);
+    }
+</script>
+
 </body>
 
 </html>

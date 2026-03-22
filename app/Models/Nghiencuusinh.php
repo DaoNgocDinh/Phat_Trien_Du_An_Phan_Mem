@@ -23,6 +23,11 @@ class Nghiencuusinh extends Model
         'NgaySinh',
     ];
 
+    protected $casts = [
+        'NgaySinh' => 'date',
+    ];
+
+
     public function taikhoan()
     {
         return $this->belongsTo(Taikhoan::class, 'UserID', 'UserID');
