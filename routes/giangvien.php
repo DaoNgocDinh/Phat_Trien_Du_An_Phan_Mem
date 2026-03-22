@@ -14,6 +14,7 @@ Route::prefix('giangvien')->middleware('roles:giangvien')->group(function () {
 
     Route::get('/cong-bo', [GiangVienController::class, 'CongBo'])
         ->name('giangvien.congBo');
+    Route::get('/giangvien/cong-bo-cua-toi', [CongBoController::class, 'congBoCuaToi'])->name('giangvien.congBoCuaToi');
 
     Route::get('/de-tai', [GiangVienController::class, 'DeTai'])
         ->name('giangvien.deTai');

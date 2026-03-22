@@ -188,4 +188,21 @@ class CongBoController extends Controller
     {
         return view('giangvien.congbo.suggest');
     }
+
+    public function congBoCuaToi()
+    {
+        // Lấy họ tên giảng viên đang đăng nhập
+        $hoTen = session('HoTen');
+
+        if (!$hoTen) {
+            return redirect()->route('login')->with('error', 'Vui lòng đăng nhập.');
+        }
+
+        // Lấy danh sách công bố có tên của giảng viên này (Tìm tương đối trong cột TacGia)
+        $congBoCuaToi = Congbo::where('TacGia', 'LIKE', '%' . $hoTen . '%')
+            // ->orderBy('NamXuatBan', 'desc') // Mở comment dòng này nếu bạn có cột Năm xuất bản và muốn sắp xếp mới nhất lên đầu
+            ->paginate(10);
+
+        return view('giangvien.congbo.congBoCuaToi', compact('congBoCuaToi'));
+    }
 }

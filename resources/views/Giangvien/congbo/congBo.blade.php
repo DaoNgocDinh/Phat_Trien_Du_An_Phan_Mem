@@ -33,7 +33,7 @@
                         Tất cả công bố
                     </button>
                 </a>
-                <a href="#">
+                <a href="{{ route('giangvien.congBoCuaToi') }}">
                     <button
                         class="bg-gray-500 hover:bg-[#2c5d6e] text-black px-6 py-2.5 shadow-md transition flex items-center gap-2 font-medium">
                         <!-- <i class="fas fa-plus-circle"></i> -->

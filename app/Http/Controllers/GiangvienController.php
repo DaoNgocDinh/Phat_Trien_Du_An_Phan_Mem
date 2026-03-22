@@ -105,7 +105,7 @@ class GiangVienController extends Controller
     public function CongBo()
     {
         $congbos = CongBo::latest()->paginate(10);
-        return view('Giangvien.congBo', compact('congbos'));
+        return view('Giangvien.congbo.congBo', compact('congbos'));
     }
     public function DeTai()
     {
