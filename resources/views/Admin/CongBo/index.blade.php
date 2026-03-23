@@ -83,22 +83,24 @@
                                         {{ $trangThai }}
                                     </span>
                                 </td>
-                                <td class="px-4 py-4">
+                                <td class="px-4 py-4 text-center">
                                     <div class="flex items-center justify-center gap-2">
+                                        
                                         <a href="{{ route('admin.congbo.edit', $item->MaCongBo) }}"
-                                            class="inline-flex items-center rounded-md bg-[#7FB0B0] px-3 py-1.5 text-sm text-white hover:bg-[#6ea3a3] transition">
-                                            Chỉnh sửa
+                                            class="inline-flex items-center justify-center gap-1.5 rounded-md bg-[#7FB0B0] px-3 py-1.5 text-sm font-medium text-white hover:bg-[#6ea3a3] transition shadow-sm whitespace-nowrap min-w-[80px]">
+                                            <i class="fas fa-edit"></i> Sửa
                                         </a>
+                                        
                                         <button onclick="openDeleteModal({{ $item->MaCongBo }})"
-                                            class="inline-flex items-center rounded-md bg-[#D06B55] px-3 py-1.5 text-white hover:bg-[#c45f4a] transition">
-
-                                            Xóa
-
+                                            class="inline-flex items-center justify-center gap-1.5 rounded-md bg-[#D06B55] px-3 py-1.5 text-sm font-medium text-white hover:bg-[#c45f4a] transition shadow-sm whitespace-nowrap min-w-[80px]">
+                                            <i class="fas fa-trash-alt"></i> Xóa
                                         </button>
+                                        
                                         <a href="{{ route('admin.congbo.pheduyet.chitiet', $item->MaCongBo) }}"
-                                            class="inline-flex items-center rounded-md bg-[#1D546D] px-3 py-1.5 text-white hover:bg-[#1a4a60] transition">
-                                            Xem chi tiết
+                                            class="inline-flex items-center justify-center gap-1.5 rounded-md bg-[#1D546D] px-3 py-1.5 text-sm font-medium text-white hover:bg-[#1a4a60] transition shadow-sm whitespace-nowrap min-w-[80px]">
+                                            <i class="fas fa-eye"></i> Xem
                                         </a>
+                                        
                                     </div>
                                 </td>
                             </tr>

@@ -79,3 +79,22 @@ Route::get('/admin/report/create', function () {
 // Route::get('/theodoitiendo', function () {
 //     return view('Admin.theodoitiendo.index');
 // });
+
+// ROUTE CHO SINH VIÊN (GUEST)
+Route::prefix('guest')->group(function () {
+    Route::get('/trang-chu', [SinhvienController::class, 'dashBoard'])
+        ->name('guest.trangChu');
+        
+    Route::get('/cong-bo', [SinhvienController::class, 'CongBo'])
+        ->name('guest.congBo');
+    Route::get('/de-tai', [SinhvienController::class, 'DeTai'])
+        ->name('guest.deTai');
+    Route::get('/quy-che', [QuyCheController::class, 'index_guest'])->name('guest.quyChe.index');
+    Route::get('/su-kien', [SinhvienController::class, 'SuKien'])->name('guest.suKien');
+    
+    // Trang hiển thị form liên hệ của Sinh viên
+    Route::get('/lien-he', [SinhvienController::class, 'lienHe'])->name('guest.lienhe');
+    
+    // Tận dụng luôn hàm store của LienHeController để xử lý lưu data
+    Route::post('/lien-he', [\App\Http\Controllers\LienHeController::class, 'store'])->name('guest.lienhe.store');
+});

@@ -163,7 +163,7 @@ public function login(Request $request)
 
         session()->flush();
 
-        return redirect('/login');
+        return redirect()->route('guest.trangChu');
 
     }
 
