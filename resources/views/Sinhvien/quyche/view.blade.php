@@ -1,4 +1,4 @@
-@extends('layout.giangvien')
+@extends('layout.sinhvien')
 
 @section('title', 'Chi tiết quy chế')
 

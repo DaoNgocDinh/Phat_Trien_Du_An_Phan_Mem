@@ -3,7 +3,7 @@
 @section('title', 'Đăng tải quy chế mới')
 
 @section('content')
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <div class="p-6 mt-16 ml-64">
     <div class="bg-[#1D546D] text-white text-xl font-semibold px-7 py-3 rounded-md w-96 mb-6">
         Quy chế > Đăng tải quy chế mới
@@ -97,7 +97,7 @@
                 class="text-white px-6 py-2 bg-gray-300 text-gray-700 rounded-lg shadow hover:bg-gray-400 transition mr-4">
                 Hủy
             </button>
-            <button type="submit"
+            <button type="button" onclick="confirmCreate()"
                 class="px-6 py-2 bg-[#1D546D] text-white rounded-lg shadow hover:bg-[#174454] transition">
                 Lưu quy chế
             </button>
@@ -117,7 +117,49 @@
     </script>
 
     <script>
-        const form = document.getElementById('formQuyChe');
-        const input = document.getElementById('FilePDF');
+        function confirmCreate() {
+            const tenVanBan = document.querySelector('input[name="TenVanBan"]').value.trim();
+            const ngayPhatHanh = document.querySelector('input[name="NgayPhatHanh"]').value;
+            const loaiVanBan = document.querySelector('select[name="LoaiVanBan"]').value;
+            const filePDF = document.getElementById('FilePDF').files[0];
+
+            if (!tenVanBan) {
+                Swal.fire("Thiếu thông tin", "Vui lòng nhập tên văn bản", "warning");
+                return;
+            }
+
+            if (!ngayPhatHanh) {
+                Swal.fire("Thiếu thông tin", "Vui lòng chọn ngày ban hành", "warning");
+                return;
+            }
+
+            if (!loaiVanBan) {
+                Swal.fire("Thiếu thông tin", "Vui lòng chọn cấp", "warning");
+                return;
+            }
+
+            if (!filePDF) {
+                Swal.fire("Thiếu file", "Vui lòng chọn file PDF", "warning");
+                return;
+            }
+            if (filePDF.type !== "application/pdf") {
+                Swal.fire("Sai định dạng", "Chỉ chấp nhận file PDF", "error");
+                return;
+            }
+
+
+            Swal.fire({
+                title: "Xác nhận đăng tải",
+                text: "Bạn có chắc chắn muốn đăng tải quy chế này?",
+                icon: "question",
+                showCancelButton: true,
+                confirmButtonText: "Lưu",
+                cancelButtonText: "Hủy"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('formQuyChe').submit();
+                }
+            });
+        }
     </script>
 </div>

@@ -24,17 +24,28 @@
 
             <!-- Tab buttons -->
             <div class="flex flex-row justify-start items-center mb-6 gap-2">
-                <a href="{{ route('giangvien.detai.sugget') }}">
-                    <button class="bg-[#6B727F] hover:bg-[#2c5d6e] text-white px-6 py-2.5 shadow-md transition flex items-center gap-2 font-medium">
-                        Đề xuất đề tài
-                    </button>
-                </a>
-                <a href="{{ route('giangvien.deTaiCuaToi') }}">
-                    <button class="bg-[#1D546D] hover:bg-[#2c5d6e] text-white px-6 py-2.5 shadow-md transition flex items-center gap-2 font-medium">
-                        Đề xuất của tôi
-                    </button>
-                </a>
-            </div>
+            <a href="{{ route('giangvien.deTai') }}">
+                <button
+                    class="bg-[#6B727F] hover:bg-[#2c5d6e] text-white px-6 py-2.5 shadow-md transition flex items-center gap-2 font-medium">
+                    <!-- <i class="fas fa-plus-circle"></i> -->
+                    Tất cả đề tài
+                </button>
+            </a>
+            <a href="#">
+                <button
+                    class="bg-[#1D546D] text-white px-6 py-2.5 shadow-md transition flex items-center gap-2 font-medium">
+                    <!-- <i class="fas fa-plus-circle"></i> -->
+                    Đề xuất của tôi
+                </button>
+            </a>
+            <a href="{{ route('giangvien.detai.sugget') }}">
+                <button
+                    class="bg-[#6B727F] hover:bg-[#2c5d6e] text-white px-6 py-2.5 shadow-md transition flex items-center gap-2 font-medium">
+                    <!-- <i class="fas fa-plus-circle"></i> -->
+                    Đề xuất đề tài
+                </button>
+            </a>
+        </div>
 
             <!-- Bảng danh sách -->
             <div class="bg-white rounded-xl shadow overflow-hidden border border-gray-200 flex-1 flex flex-col min-h-[600px]">

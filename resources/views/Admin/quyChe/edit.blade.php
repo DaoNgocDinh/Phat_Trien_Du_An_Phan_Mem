@@ -3,7 +3,7 @@
 @section('title', 'Đăng tải quy chế mới')
 
 @section('content')
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <div class="p-6 mt-4">
         <div class="bg-[#1D546D] text-white text-xl font-semibold px-7 py-3 rounded-md w-96 mb-6">
             Quy chế > Chỉnh sửa quy chế
@@ -61,7 +61,7 @@
 
             <!-- Upload file -->
             <div class="mt-8">
-                <label class="block text-sm font-semibold text-gray-600 mb-2">File PDF (không bắt buộc)</label>
+                <label class="block text-sm font-semibold text-gray-600 mb-2">File PDF</label>
 
                 <label for="FilePDF"
                     class="relative flex flex-col items-center justify-center w-full h-40 border-2 border-dashed border-gray-300 rounded-xl cursor-pointer bg-gray-50 hover:bg-gray-100 transition group">
@@ -99,12 +99,29 @@
                     class="text-white px-6 py-2 bg-gray-300 text-gray-700 rounded-lg shadow hover:bg-gray-400 transition mr-4">
                     Hủy
                 </button>
-                <button type="submit"
+                <button type="button" onclick="confirmUpdate()"
                     class="px-6 py-2 bg-[#1D546D] text-white rounded-lg shadow hover:bg-[#174454] transition">
                     Cập nhật
                 </button>
             </div>
         </form>
+
+        <script>
+            function confirmUpdate() {
+                Swal.fire({
+                    title: "Xác nhận chỉnh sửa",
+                    text: "Bạn có chắc chắn muốn cập nhật quy chế này?",
+                    icon: "question",
+                    showCancelButton: true,
+                    confirmButtonText: "Cập nhật",
+                    cancelButtonText: "Hủy"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        document.getElementById('formQuyChe').submit();
+                    }
+                });
+            }
+        </script>
 
         <script>
             const input = document.getElementById('FilePDF');
