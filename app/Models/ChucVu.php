@@ -21,4 +21,13 @@ class ChucVu extends Model
     {
         return $this->hasMany(Giangvien::class, 'MaChucVu', 'MaChucVu');
     }
+    public function chucVu()
+    {
+        return $this->belongsTo(ChucVu::class, 'MaChucVu');
+    }
+
+    public function khoa()
+    {
+        return $this->belongsTo(Khoa::class, 'MaKhoa');
+    }
 }

@@ -1,4 +1,4 @@
-@extends('layout.sinhVien')
+@extends('layout.giangvien')
 <div class="ml-64 p-9 mt-10">
 
     <!-- TITLE -->
@@ -78,7 +78,7 @@
 
                         <input type="text"
                             name="ChucVu"
-                            value="{{ $hoso->ChucVu ?? '' }}"
+                            value="{{ $hoso->chucVu->TenChucVu ?? '' }}"
                             class="border border-black rounded px-3 py-2 w-full bg-gray-200"
                             readonly>
                     </div>
@@ -89,7 +89,7 @@
                             name="SoDienThoai"
                             value="{{ $hoso->Sdt ?? '' }}"
                             class="border border-black rounded px-3 py-2 w-full"
-                            disabled>
+                            readonly>
                     </div>
 
 
@@ -98,7 +98,7 @@
 
                         <input type="text"
                             name="Khoa"
-                            value="{{ $hoso->Khoa ?? '' }}"
+                            value="{{ $hoso->khoa->TenKhoa ?? '' }}"
                             class="border border-black rounded px-3 py-2 w-full bg-gray-200"
                             readonly>
                     </div>
@@ -123,7 +123,7 @@
                             name="Email"
                             value="{{ $hoso->Email ?? '' }}"
                             class="border border-black rounded px-3 py-2 w-full"
-                            disabled>
+                            readonly>
 
                     </div>
 
@@ -205,12 +205,14 @@
 <script>
     function batCheDoChinhSua() {
 
-        let inputs = document.querySelectorAll("input, select");
+        let inputs = document.querySelectorAll("input");
 
         inputs.forEach(input => {
 
-            // bỏ dòng này nếu là readonly
-            if (!input.hasAttribute("readonly")) {
+            // chỉ bỏ qua những field không cho sửa thật
+            if (input.name !== "ChucVu" && input.name !== "Khoa") {
+
+                input.removeAttribute("readonly");
                 input.disabled = false;
 
                 input.classList.remove("bg-gray-200");
@@ -218,33 +220,28 @@
             }
         });
 
-
         document.getElementById("btnEdit").classList.add("hidden");
-
         document.getElementById("editButtons").classList.remove("hidden");
-
     }
 
 
     function huyChinhSua() {
 
-        let inputs = document.querySelectorAll("input, select");
+        let inputs = document.querySelectorAll("input");
 
         inputs.forEach(input => {
 
-            if (!input.hasAttribute("readonly")) {
-                input.disabled = true;
+            if (input.name !== "ChucVu" && input.name !== "Khoa") {
+
+                input.setAttribute("readonly", true);
             }
+
             input.classList.remove("bg-white");
             input.classList.add("bg-gray-200");
-
         });
 
-
         document.getElementById("btnEdit").classList.remove("hidden");
-
         document.getElementById("editButtons").classList.add("hidden");
-
     }
 
     // Hàm hiển thị popup thành công
@@ -287,12 +284,11 @@
     const form = document.querySelector("form");
     const hoTen = document.querySelector("input[name='HoTen']");
     const ngaySinh = document.querySelector("input[name='NgaySinh']");
+    const sdt = document.querySelector("input[name='SoDienThoai']");
+    const email = document.querySelector("input[name='Email']");
     const btnSave = document.getElementById("btnSave");
 
-    // ===== VALIDATE REALTIME =====
-    hoTen.addEventListener("input", () => validateHoTen());
-    ngaySinh.addEventListener("input", () => validateNgaySinh());
-
+    // ===== VALIDATE =====
     function validateHoTen() {
         if (hoTen.value.trim() === "") {
             showError(hoTen, "Vui lòng nhập họ tên");
@@ -303,12 +299,11 @@
     }
 
     function validateNgaySinh() {
-        if (ngaySinh.value.trim() === "") {
+        if (!ngaySinh.value) {
             showError(ngaySinh, "Vui lòng chọn ngày sinh");
             return false;
         }
 
-        // check ngày hợp lệ (không lớn hơn hôm nay)
         let today = new Date().toISOString().split('T')[0];
         if (ngaySinh.value > today) {
             showError(ngaySinh, "Ngày sinh không hợp lệ");
@@ -319,21 +314,69 @@
         return true;
     }
 
+    function validateSDT() {
+        let value = sdt.value.trim();
+
+        if (value === "") {
+            showError(sdt, "Vui lòng nhập số điện thoại");
+            return false;
+        }
+
+        if (!/^[0-9]{10}$/.test(value)) {
+            showError(sdt, "Số điện thoại phải 10 chữ số");
+            return false;
+        }
+
+        clearError(sdt);
+        return true;
+    }
+
+    function validateEmail() {
+        let value = email.value.trim();
+
+        if (value === "") {
+            showError(email, "Vui lòng nhập email");
+            return false;
+        }
+
+        // regex email chuẩn
+        let regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!regex.test(value)) {
+            showError(email, "Email không hợp lệ");
+            return false;
+        }
+
+        clearError(email);
+        return true;
+    }
+
+    // ===== CHECK ALL =====
+    function validateAll() {
+        let v1 = validateHoTen();
+        let v2 = validateNgaySinh();
+        let v3 = validateSDT();
+        let v4 = validateEmail();
+
+        return v1 && v2 && v3 && v4;
+    }
+
+    // ===== REALTIME =====
+    hoTen.addEventListener("input", validateAll);
+    ngaySinh.addEventListener("input", validateAll);
+    sdt.addEventListener("input", validateAll);
+    email.addEventListener("input", validateEmail);
+
     // ===== SUBMIT =====
     form.addEventListener("submit", function(e) {
-
-        let isHoTenValid = validateHoTen();
-        let isNgaySinhValid = validateNgaySinh();
-
-        if (!isHoTenValid || !isNgaySinhValid) {
-            e.preventDefault(); // ❌ chặn submit
+        if (!validateAll()) {
+            e.preventDefault();
         }
     });
 
-    // ===== HIỂN THỊ LỖI =====
+    // ===== UI ERROR =====
     function showError(input, message) {
-
-        clearError(input); // xóa lỗi cũ trước
+        clearError(input);
 
         input.classList.add("border-red-500");
 
