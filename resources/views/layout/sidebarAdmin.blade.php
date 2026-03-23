@@ -50,7 +50,7 @@
                 <li>
                     <a href="{{ route('admin.congbo.index') }}"
                         class="flex items-center px-3 py-2.5 text-white rounded-md hover:bg-[#2c5d6e] transition
-                       {{ request()->routeIs('admin.congbo.*') ? 'bg-[#2c5d6e] border-l-4 border-white font-semibold' : '' }}">
+                       {{ request()->routeIs('admin.congbo.index') ? 'bg-[#2c5d6e] border-l-4 border-white font-semibold' : '' }}">
                         <i class="fas fa-book w-6"></i>
                         <span class="ml-3">Công bố khoa học</span>
                     </a>
@@ -95,8 +95,9 @@
 
                 <!-- Báo cáo -->
                 <li>
-                    <a href="#"
-                        class="flex items-center px-3 py-2.5 text-white rounded-md hover:bg-[#2c5d6e] transition">
+                    <a href="{{ route('admin.congbo.baocao') }}"
+                        class="flex items-center px-3 py-2.5 text-white rounded-md hover:bg-[#2c5d6e] transition
+                        {{ request()->routeIs('admin.congbo.baocao') ? 'bg-[#2c5d6e] border-l-4 border-white font-semibold' : '' }}">
                         <i class="fas fa-chart-bar w-6"></i>
                         <span class="ml-3">Báo cáo</span>
                     </a>

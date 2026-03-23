@@ -95,18 +95,13 @@
 
             <form method="POST" action="{{ route('admin.congbo.trangthai', $congbo->MaCongBo) }}">
                 @csrf
-                <input type="hidden" name="TrangThai" value="Đã Duyệt">
 
-                <button class="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700">
+                <button name="TrangThai" value="Đã Duyệt"
+                    class="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700">
                     Phê duyệt
                 </button>
-            </form>
 
-            <form method="POST" action="{{ route('admin.congbo.trangthai', $congbo->MaCongBo) }}">
-                @csrf
-                <input type="hidden" name="TrangThai" value="Từ chối">
-
-                <button class="bg-red-600 text-white px-6 py-2 rounded hover:bg-red-700">
+                <button name="TrangThai" value="Từ chối" class="bg-red-600 text-white px-6 py-2 rounded hover:bg-red-700">
                     Từ chối
                 </button>
             </form>

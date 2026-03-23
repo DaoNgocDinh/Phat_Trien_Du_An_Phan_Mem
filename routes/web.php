@@ -2,10 +2,7 @@
 
 use App\Http\Controllers\SinhvienController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\CongBoController;
-use App\Http\Controllers\GiangVienController;
-use App\Http\Controllers\QuyCheController;
+use App\Http\Controllers\QuycheController;
 
 
 require __DIR__.'/auth.php';
@@ -17,6 +14,7 @@ require __DIR__.'/detai.php';
 require __DIR__.'/tiendodetai.php';
 require __DIR__.'/hoso.php';
 
+use App\Http\Controllers\GiangVienController;
 
 Route::get('/admin/quy-che', function () {
     return view('Admin.quyChe');

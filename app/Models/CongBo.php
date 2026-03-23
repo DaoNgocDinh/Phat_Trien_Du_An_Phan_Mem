@@ -25,5 +25,7 @@ class CongBo extends Model
         'FilePDF',
         'NoiDungTomTat',
         'TrangThai',
+        'GiangVienID',
+        'KhoaID',
     ];
 }

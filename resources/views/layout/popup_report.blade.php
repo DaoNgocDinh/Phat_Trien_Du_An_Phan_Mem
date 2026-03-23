@@ -15,40 +15,47 @@ class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center hid
         <!-- Body -->
         <div class="p-4 text-sm">
 
-            <p class="mb-3">Chọn định dạng xuất file</p>
+            <form id="exportForm" method="POST" action="{{ route('admin.congbo.export') }}">
+                @csrf
+                <input type="hidden" name="from" id="exportFrom">
+                <input type="hidden" name="to" id="exportTo">
+                <input type="hidden" name="type" id="exportType">
 
-            <div class="flex gap-6 mb-5">
-                <label class="flex items-center gap-2">
-                    <input type="radio" name="type" checked>
-                    PDF
-                </label>
+                <p class="mb-3">Chọn định dạng xuất file</p>
 
-                <label class="flex items-center gap-2">
-                    <input type="radio" name="type">
-                    Excel
-                </label>
-            </div>
+                <div class="flex gap-6 mb-5">
+                    <label class="flex items-center gap-2">
+                        <input type="radio" name="format" value="pdf" checked>
+                        PDF
+                    </label>
 
-            <p class="text-center mb-6">
-                Bạn có chắc chắn muốn xuất báo cáo <br>
-                theo tiêu chí đã chọn?
-            </p>
+                    <label class="flex items-center gap-2">
+                        <input type="radio" name="format" value="excel">
+                        Excel
+                    </label>
+                </div>
 
-            <!-- BUTTON -->
-            <div class="flex justify-center gap-4">
+                <p class="text-center mb-6">
+                    Bạn có chắc chắn muốn xuất báo cáo <br>
+                    theo tiêu chí đã chọn?
+                </p>
 
-                <button class="bg-[#6FA9A9] px-4 py-2 rounded flex items-center gap-2">
-                    <i class="fa fa-check"></i>
-                    Xác nhận
-                </button>
+                <!-- BUTTON -->
+                <div class="flex justify-center gap-4">
 
-                <button onclick="closeModal()"
-                class="bg-gray-300 px-4 py-2 rounded flex items-center gap-2">
-                    <i class="fa fa-xmark"></i>
-                    Hủy
-                </button>
+                    <button type="submit" class="bg-[#6FA9A9] px-4 py-2 rounded flex items-center gap-2">
+                        <i class="fa fa-check"></i>
+                        Xác nhận
+                    </button>
 
-            </div>
+                    <button type="button" onclick="closeModal()"
+                    class="bg-gray-300 px-4 py-2 rounded flex items-center gap-2">
+                        <i class="fa fa-xmark"></i>
+                        Hủy
+                    </button>
+
+                </div>
+            </form>
 
         </div>
 
