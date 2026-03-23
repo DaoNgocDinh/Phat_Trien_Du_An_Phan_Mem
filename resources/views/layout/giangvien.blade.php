@@ -6,6 +6,7 @@
     <title>@yield('title') - Hệ thống Nghiên cứu Khoa học (Giảng viên)</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-50 font-sans antialiased">
 
@@ -14,7 +15,7 @@
     <!-- Wrapper -->
     <div class="flex min-h-screen">
         <!-- Sidebar cho sinh viên -->
-        @include('layout.sidebarGVien')
+        @include('layout.sidebarGiangVien')
 
         <!-- Main content -->
         <main class="flex-1 sm:ml-64 pt-16 bg-gray-100 overflow-y-auto">
