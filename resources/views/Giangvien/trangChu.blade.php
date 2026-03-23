@@ -1,6 +1,6 @@
 @extends('layout.giangVien') 
 
-@section('title', 'Trang chủ Sinh viên')
+@section('title', 'Trang chủ Giảng viên')
 
 @section('content')
     <div class="p-4 md:p-6 lg:p-8 bg-gray-50 min-h-screen">
