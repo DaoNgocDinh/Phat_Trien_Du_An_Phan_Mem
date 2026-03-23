@@ -21,7 +21,11 @@ class SinhvienController extends Controller
 
     public function DeTai()
     {
-        $detais = DeTai::latest()->paginate(10); // hoặc lọc theo trạng thái 'Đã duyệt' nếu cần
+        // Lọc chỉ lấy các đề tài có trạng thái 'Đang thực hiện' hoặc 'Hoàn thành'
+        $detais = DeTai::whereIn('TrangThai', ['Đang thực hiện', 'Hoàn thành'])
+                       ->latest()
+                       ->paginate(10);
+                       
         return view('Sinhvien.deTai', compact('detais'));
     }
     public function SuKien()

@@ -69,18 +69,23 @@
                                 <td class="px-4 py-4 text-center">
                                     @php
                                         $trangThai = $item->TrangThai ?? '';
-                                        $style = 'background:#f3f4f6;color:#4b5563;'; // default gray
-                                        if ($trangThai === 'Từ chối') {
-                                            $style = 'background:#fee2e2;color:#b91c1c;';
-                                        } elseif ($trangThai === 'Chờ duyệt') {
-                                            $style = 'background:#fef3c7;color:#b45309;';
-                                        } elseif ($trangThai === 'Đã duyệt') {
-                                            $style = 'background:#dcfce7;color:#15803d;';
+                                        $checkStatus = mb_strtolower(trim($trangThai), 'UTF-8');
+                                        
+                                        $statusClass = 'bg-gray-100 text-gray-700 border border-gray-200'; // Mặc định (Xám)
+                                        
+                                        if (str_contains($checkStatus, 'từ chối')) {
+                                            $statusClass = 'bg-red-100 text-red-700 border border-red-200';
+                                        } elseif (str_contains($checkStatus, 'chờ')) { 
+                                            // Bắt cả "Chờ duyệt", "Chờ phê duyệt"...
+                                            $statusClass = 'bg-yellow-100 text-yellow-700 border border-yellow-200';
+                                        } elseif (str_contains($checkStatus, 'duyệt') || str_contains($checkStatus, 'thành công')) {
+                                            // Bắt "Đã duyệt", "Phê duyệt"...
+                                            $statusClass = 'bg-green-100 text-green-700 border border-green-200';
                                         }
                                     @endphp
-                                    <span
-                                        style="{{ $style }} padding:4px 10px; border-radius:9999px; font-size:12px; font-weight:600; display:inline-block;">
-                                        {{ $trangThai }}
+                                    
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold {{ $statusClass }}">
+                                        {{ $trangThai !== '' ? $trangThai : 'Chưa cập nhật' }}
                                     </span>
                                 </td>
                                 <td class="px-4 py-4 text-center">
