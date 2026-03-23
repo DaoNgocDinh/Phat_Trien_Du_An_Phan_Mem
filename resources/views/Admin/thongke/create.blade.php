@@ -33,7 +33,7 @@
                 <div class="space-y-4 bg-white p-4 rounded-md shadow-sm">
                     <h3 class="font-semibold">Bộ lọc báo cáo</h3>
 
-                    <form method="GET" action="{{ route('admin.congbo.baocao') }}" class="space-y-4 flex flex-col">
+                    <form method="GET" action="{{ route('admin.congbo.baocao.timkiem') }}" class="space-y-4 flex flex-col">
 
                         <div>
                             <label class="text-sm block mb-1">Thời gian</label>
