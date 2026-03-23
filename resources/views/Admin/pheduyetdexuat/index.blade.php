@@ -37,7 +37,7 @@
 
             <div class="col-span-2 bg-[#EBF4F6] rounded-lg p-6">
 
-                <h2 class="font-semibold mb-4">
+                <!-- <h2 class="font-semibold mb-4">
                     Bộ lọc đề xuất
                 </h2>
 
@@ -51,21 +51,12 @@
                             <option>Đề tài</option>
                         </select>
                     </div>
-
-
-                    <!-- <div>
-                        <label class="text-sm">Thời gian</label>
-
-                        <input type="date"
-                            class="border rounded px-3 py-1 block">
-                    </div> -->
-
-                </div>
+                </div> -->
 
 
                 <!-- TABLE -->
 
-                <h2 class="font-semibold mb-3">
+                <h2 class="font-semibold mb-10 border-b border-gray-300 pb-2">
                     Danh sách đề xuất
                 </h2>
 
@@ -88,12 +79,12 @@
                     <tbody>
 
                         @forelse($detais as $index => $dt)
-                        <tr class="border-b">
+                        <tr class="border-b hover:bg-gray-50 transition-colors">
 
-                            <td>{{ $detais->firstItem() + $index }}</td>
-                            <td>{{ $dt->TenDeTai }}</td>
-                            <td>{{ $dt->ChuNhiem }}</td>
-                            <td>{{ $dt->LoaiDeTai }}</td>
+                            <td class="py-4">{{ $detais->firstItem() + $index }}</td>
+                            <td class="py-4"> {{ $dt->TenDeTai }}</td>
+                            <td class="py-4">{{ $dt->ChuNhiem }}</td>
+                            <td class="py-4">{{ $dt->LoaiDeTai }}</td>
 
                             <td>
                                 <span class="bg-orange-400 text-white px-2 py-1 rounded text-xs">
@@ -101,7 +92,7 @@
                                 </span>
                             </td>
 
-                            <td>
+                            <td class="py-4">
                                 <button onclick="xemChiTiet({{ $dt->MaSo }}, this)"
                                     class="bg-[#2f5d6e] text-white px-4 py-1 rounded text-sm">
                                     Xem

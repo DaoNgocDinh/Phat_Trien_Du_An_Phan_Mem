@@ -5,13 +5,15 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Detai;
 use Illuminate\Http\Request;
+use App\Models\LoaiDeTai;
 
 class PheDuyetController extends Controller
 {
     // Trang danh sách
     public function index()
     {
-        $detais = Detai::where('TrangThai', 'ChoDuyet')->paginate(10);
+        // Lấy tất cả loại đề tài
+        $detais = Detai::where('TrangThai', 'Chờ Duyệt')->paginate(10);
 
         return view('Admin.pheduyetdexuat.index', compact('detais'));
     }
@@ -28,11 +30,11 @@ class PheDuyetController extends Controller
     {
         $dt = Detai::findOrFail($id);
 
-        if ($dt->TrangThai != 'ChoDuyet') {
+        if ($dt->TrangThai != 'Chờ Duyệt') {
             return response()->json(['success' => false]);
         }
 
-        $dt->TrangThai = 'DaDuyet';
+        $dt->TrangThai = 'Đã Duyệt';
         $dt->save();
 
         return response()->json(['success' => true]);
@@ -43,11 +45,11 @@ class PheDuyetController extends Controller
     {
         $dt = Detai::findOrFail($id);
 
-        if ($dt->TrangThai != 'ChoDuyet') {
+        if ($dt->TrangThai != 'Chờ Duyệt') {
             return response()->json(['success' => false]);
         }
 
-        $dt->TrangThai = 'TuChoi';
+        $dt->TrangThai = 'Từ Chối';
         $dt->LyDoTuChoi = $request->LyDoTuChoi;
         $dt->save();
 
