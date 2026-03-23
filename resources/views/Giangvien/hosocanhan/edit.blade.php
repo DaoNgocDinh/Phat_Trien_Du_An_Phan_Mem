@@ -284,37 +284,71 @@
 
 <!-- xử lý validate -->
 <script>
-    document.querySelector("form").addEventListener("submit", function(e) {
+    const form = document.querySelector("form");
+    const hoTen = document.querySelector("input[name='HoTen']");
+    const ngaySinh = document.querySelector("input[name='NgaySinh']");
+    const btnSave = document.getElementById("btnSave");
 
-        let hoTen = document.querySelector("input[name='HoTen']");
-        let ngaySinh = document.querySelector("input[name='NgaySinh']");
-        let isValid = true;
+    // ===== VALIDATE REALTIME =====
+    hoTen.addEventListener("input", () => validateHoTen());
+    ngaySinh.addEventListener("input", () => validateNgaySinh());
 
-        // Reset lỗi cũ
-        document.querySelectorAll(".error-msg").forEach(el => el.remove());
-
+    function validateHoTen() {
         if (hoTen.value.trim() === "") {
-            showError(hoTen, "Vui lòng nhập đầy đủ thông tin");
-            isValid = false;
+            showError(hoTen, "Vui lòng nhập họ tên");
+            return false;
         }
-        s
+        clearError(hoTen);
+        return true;
+    }
 
+    function validateNgaySinh() {
         if (ngaySinh.value.trim() === "") {
-            showError(ngaySinh, "Vui lòng nhập ngày sinh");
-            isValid = false;
+            showError(ngaySinh, "Vui lòng chọn ngày sinh");
+            return false;
         }
 
-        if (!isValid) {
+        // check ngày hợp lệ (không lớn hơn hôm nay)
+        let today = new Date().toISOString().split('T')[0];
+        if (ngaySinh.value > today) {
+            showError(ngaySinh, "Ngày sinh không hợp lệ");
+            return false;
+        }
+
+        clearError(ngaySinh);
+        return true;
+    }
+
+    // ===== SUBMIT =====
+    form.addEventListener("submit", function(e) {
+
+        let isHoTenValid = validateHoTen();
+        let isNgaySinhValid = validateNgaySinh();
+
+        if (!isHoTenValid || !isNgaySinhValid) {
             e.preventDefault(); // ❌ chặn submit
         }
-
     });
 
+    // ===== HIỂN THỊ LỖI =====
     function showError(input, message) {
+
+        clearError(input); // xóa lỗi cũ trước
+
+        input.classList.add("border-red-500");
+
         let error = document.createElement("p");
-        error.className = "text-red-500 text-sm error-msg";
+        error.className = "text-red-500 text-sm mt-1 error-msg";
         error.innerText = message;
+
         input.parentElement.appendChild(error);
+    }
+
+    function clearError(input) {
+        input.classList.remove("border-red-500");
+
+        let oldError = input.parentElement.querySelector(".error-msg");
+        if (oldError) oldError.remove();
     }
 </script>
 

@@ -37,5 +37,8 @@ class Detai extends Model
     {
         return $this->hasMany(Tiendodetai::class, 'MaDeTai', 'MaSo');
     }
+    public function loai()
+    {
+        return $this->belongsTo(LoaiDeTai::class, 'loai_id');
+    }
 }
-

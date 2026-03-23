@@ -1,67 +1,45 @@
-<?php
-?>
-<!DOCTYPE html>
-<html lang="vi">
+<div id="formEdit"
+    class="hidden bg-[#EBF4F6] border border-black rounded-xl shadow-md w-full max-w-md mx-auto">
 
-<head>
-    <meta charset="UTF-8">
-    <title>Chỉnh sửa danh mục</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <!-- Header -->
+    <div class="border-b border-gray-200 px-6 py-4 font-semibold text-gray-700">
+        Chỉnh sửa danh mục
+    </div>
 
-</head>
+    <!-- Body -->
+    <div class="px-6 py-6">
 
+        <label class="block text-sm font-medium text-gray-600 mb-2">
+            Loại đề tài
+        </label>
 
-<body>
-    <div id="formEdit"
-        class="hidden bg-[#EBF4F6] border border-black rounded-lg w-1/3 h-fit">
+        <form method="POST" id="formUpdate">
+            @csrf
+            @method('PUT')
 
-        <!-- header -->
-
-        <div class="border-b border-black px-4 py-2 font-semibold">
-
-            Chỉnh sửa danh mục
-
-        </div>
-
-
-        <div class="p-4">
-
-            <label class="block text-sm mb-2">
-
-                Loại đề tài
-
-            </label>
+            <input type="hidden" id="editId" name="id">
 
             <input
                 id="editInput"
+                name="ten_loai"
                 type="text"
-                class="bg-white w-full border border-gray-400 rounded px-3 py-2 mb-6">
+                class="w-full border border-gray-300 rounded-lg px-4 py-2 mb-6 focus:outline-none focus:ring-2 focus:ring-blue-400">
 
-
-            <div class="flex justify-center gap-4">
-
-                <button
-                    onclick="capNhatDanhMuc()"
-                    class="bg-[#82b1ad] px-6 py-1 rounded">
-
-                    Cập nhật
-
-                </button>
-
-                <button
+            <!-- Buttons -->
+            <div class="flex justify-end gap-3">
+                <button type="button"
                     onclick="huyEdit()"
-                    class="bg-gray-300 px-6 py-1 rounded">
-
+                    class="px-5 py-2 rounded-lg bg-gray-200 hover:bg-gray-300 text-gray-700 text-sm">
                     Hủy
-
                 </button>
 
+                <button type="submit"
+                    class="px-5 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm">
+                    Cập nhật
+                </button>
             </div>
 
-        </div>
+        </form>
 
     </div>
-</body>
-
-</html>
+</div>
