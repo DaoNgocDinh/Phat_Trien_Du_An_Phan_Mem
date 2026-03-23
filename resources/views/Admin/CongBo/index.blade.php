@@ -22,32 +22,13 @@
             </div>
 
             <div class="flex items-center justify-end">
-                <div class="inline-flex items-center gap-3 rounded-xl
-                                                !bg-[#3B95CF] px-6 py-3 !text-white font-semibold
-                                                shadow-md hover:!bg-[#2f86bb] transition">
-                    <span class="flex items-center justify-center w-7 h-7 rounded-md bg-white/30">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-4 h-4" fill="white">
-                            <path d="M12 2L15 8L22 9L17 14L18 21L12 18L6 21L7 14L2 9L9 8L12 2Z" />
+                    <a href="{{ route('admin.congbo.pheduyet.danhsach') }}" 
+                    class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#3B95CF] text-white text-sm font-semibold rounded-lg shadow-md hover:bg-[#2f86bb] transition">
+                        <svg class="w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd" />
                         </svg>
-                    </span>
-                    <a href="{{ route('admin.congbo.pheduyet.danhsach') }}" style="background:#3D99D7;" class="inline-flex items-center gap-3 px-5 py-2 rounded-lg
-                                                            text-white font-semibold shadow-sm
-                                                            hover:brightness-95 transition text-xl">
-                        <span class="flex items-center justify-center w-8 h-8 rounded bg-white/25">
-                            <svg class="w-10 h-6 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 15`"
-                                fill="currentColor">
-
-                                <path fill-rule="evenodd"
-                                    d="M12 2c-.791 0-1.55.314-2.11.874l-.893.893a.985.985 0 0 1-.696.288H7.04A2.984 2.984 0 0 0 4.055 7.04v1.262a.986.986 0 0 1-.288.696l-.893.893a2.984 2.984 0 0 0 0 4.22l.893.893a.985.985 0 0 1 .288.696v1.262a2.984 2.984 0 0 0 2.984 2.984h1.262c.261 0 .512.104.696.288l.893.893a2.984 2.984 0 0 0 4.22 0l.893-.893a.985.985 0 0 1 .696-.288h1.262a2.984 2.984 0 0 0 2.984-2.984V15.7c0-.261.104-.512.288-.696l.893-.893a2.984 2.984 0 0 0 0-4.22l-.893-.893a.985.985 0 0 1-.288-.696V7.04a2.984 2.984 0 0 0-2.984-2.984h-1.262a.985.985 0 0 1-.696-.288l-.893-.893A2.984 2.984 0 0 0 12 2Zm3.683 7.73a1 1 0 1 0-1.414-1.413l-4.253 4.253-1.277-1.277a1 1 0 0 0-1.415 1.414l1.985 1.984a1 1 0 0 0 1.414 0l4.96-4.96Z"
-                                    clip-rule="evenodd" />
-
-                            </svg>
-
-                        </span>
-
                         Phê duyệt công bố
                     </a>
-                </div>
             </div>
 
             <div class="mt-6 flex items-start justify-between gap-4">
