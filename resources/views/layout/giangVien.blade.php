@@ -1,119 +1,32 @@
-<?php
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
 
-namespace App\Http\Controllers;
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@yield('title') - Quản trị Hệ thống Khoa học</title>
 
-use Illuminate\Http\Request;
-use App\Models\Quyche;
-use App\Models\CongBo;
-use App\Models\DeTai;
-use App\Models\Sukien;
-use App\Models\Thongbao;
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
 
-class GiangVienController extends Controller
-{
-    //
-    public function dashBoard()
-    {
-        return view('Giangvien.trangChu');
-    }
+</head>
 
-    public function search(Request $request)
-    {
+<body class="bg-gray-50 font-sans antialiased">
 
-        $search = $request->search;
-        $filter = $request->filter; // Lấy giá trị filter nếu có
+    @include('layout.navbar_giangvien')
 
+    <div class="flex min-h-screen">
 
-        $quyche = Quyche::select(
-            'MaQuyChe as Ma',
-            'TenVanBan as Ten',
-            Quyche::raw("'Quy chế' as Loai")
-        );
+        @include('layout.sidebarGiangvien')
 
-        if ($search) {
-            $quyche->where('TenVanBan', 'like', "%{$search}%");
-        }
+        <main class="flex-1 sm:ml-64 pt-16 bg-gray-100 overflow-y-auto p-6">
+            @yield('content')
+        </main>
 
-        $congbo = CongBo::select(
-            'MaCongBo as Ma',
-            'TenCongBo as Ten',
-            CongBo::raw("'Công bố' as Loai")
-        );
+    </div>
 
-        if ($search) {
-            $congbo->where('TenCongBo', 'like', "%{$search}%");
-        }
+</body>
 
-        $detai = DeTai::select(
-            'MaSo as Ma',
-            'TenDeTai as Ten',
-            DeTai::raw("'Đề tài' as Loai")
-        );
-
-        if ($search) {
-            $detai->where('TenDeTai', 'like', "%{$search}%");
-        }
-
-        $sukien = Sukien::select(
-            'MaSuKien as Ma',
-            'TenSuKien as Ten',
-            CongBo::raw("'Sự kiện' as Loai")
-        );
-
-        if ($search) {
-            $sukien->where('TenSuKien', 'like', "%{$search}%");
-        }
-
-        $thongbao = Thongbao::select(
-            'MaThongBao as Ma',
-            'TieuDe as Ten',
-            Thongbao::raw("'Thông báo' as Loai")
-        );
-
-        if ($search) {
-            $thongbao->where('TieuDe', 'like', "%{$search}%");
-        }
-
-        $results = $quyche
-            ->unionAll($congbo)
-            ->unionAll($detai)
-            ->unionAll($sukien)
-            ->unionAll($thongbao)
-            ->get(); // lấy tất cả vào collection
-
-        // Thêm filter thực sự
-        if ($filter) {
-            $results = $results->filter(fn($item) => $item->Loai === $filter);
-        }
-
-        // Phân trang thủ công
-        $page = request()->get('page', 1);
-        $perPage = 10;
-        $paginated = new \Illuminate\Pagination\LengthAwarePaginator(
-            $results->forPage($page, $perPage),
-            $results->count(),
-            $perPage,
-            $page,
-            ['path' => request()->url(), 'query' => request()->query()]
-        );
-
-        return view('giangvien.search.index', ['results' => $paginated]);
-    }
-    public function CongBo()
-    {
-        $congbos = CongBo::latest()->paginate(10);
-        return view('Giangvien.congBo', compact('congbos'));
-    }
-    public function DeTai()
-    {
-        $detais = Detai::latest()->paginate(10);
-        return view('Giangvien.deTai', compact('detais'));
-    }
-
-    public function SuKien()
-    {
-        $sukiens = Sukien::latest()->paginate(10);
-        return view('Giangvien.suKien', compact('sukiens'));
-    }
-}
+</html>
