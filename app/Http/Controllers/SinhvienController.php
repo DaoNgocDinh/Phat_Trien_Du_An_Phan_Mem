@@ -7,7 +7,6 @@ use App\Models\Quyche;
 use App\Models\CongBo;
 use App\Models\DeTai;
 use App\Models\Sukien;
-use App\Models\Thongbao;
 
 class SinhvienController extends Controller
 {

@@ -7,7 +7,6 @@ use App\Models\Quyche;
 use App\Models\CongBo;
 use App\Models\DeTai;
 use App\Models\Sukien;
-use App\Models\Thongbao;
 
 
 class GiangVienController extends Controller
@@ -65,21 +64,11 @@ class GiangVienController extends Controller
             $sukien->where('TenSuKien', 'like', "%{$search}%");
         }
 
-        $thongbao = Thongbao::select(
-            'MaThongBao as Ma',
-            'TieuDe as Ten',
-            Thongbao::raw("'Thông báo' as Loai")
-        );
-
-        if ($search) {
-            $thongbao->where('TieuDe', 'like', "%{$search}%");
-        }
 
         $results = $quyche
             ->unionAll($congbo)
             ->unionAll($detai)
             ->unionAll($sukien)
-            ->unionAll($thongbao)
             ->get(); // lấy tất cả vào collection
 
         // Thêm filter thực sự
@@ -123,9 +112,9 @@ class GiangVienController extends Controller
     public function SuKien()
     {
         $sukiens = Sukien::withSum('dangkysukien as tong_dang_ky', 'SoLuongDangKy')
-                         ->latest()
-                         ->paginate(10);
-                         
+            ->latest()
+            ->paginate(10);
+
         return view('Giangvien.suKien', compact('sukiens'));
     }
 }

@@ -71,9 +71,9 @@
                 // case 'Đề tài':
                 //     window.location.href = '/admin/detai/' + id; // hoặc route đề tài nếu khác
                 //     break;
-                // case 'Sự kiện':
-                //     window.location.href = '/admin/sukien/' + id;
-                //     break;
+                case 'Sự kiện':
+                    window.location.href = '/admin/su-kien/';
+                    break;
                 // case 'Thông báo':
                 //     window.location.href = '/admin/thongbao/' + id;
                 //     break;
