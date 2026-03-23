@@ -1,9 +1,9 @@
 @extends('layout.giangVien')
 
-@section('title', 'Công bố Khoa học')
+@section('title', 'Đề tài nghiên cứu')
 
 @section('content')
-    <div class="p-4 md:p-6 lg:p-8 bg-gray-50 min-h-screen">
+    <div class="p-4 md:p-6 lg:p-8 bg-gray-50 min-h-screen" style="margin-left: 260px; padding-top: 5rem;">
         <div class="max-w-[1400px] mx-auto">
 
             <!-- Thanh tìm kiếm -->
@@ -17,7 +17,7 @@
                         </svg>
                     </div>
 
-                    <input type="text"
+                    <input type="text" id="deTaiSearch"
                         placeholder="Tìm tên đề tài..."
                         style="padding-left:40px; background:#D9D9D9;"
                         class="w-full pr-3 py-2.5 border border-gray-200 rounded-lg text-sm text-gray-700">
@@ -25,11 +25,19 @@
             </div>
             
             <!-- Header + Nút đề xuất đề tài -->
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
-                <button class="bg-[#1D546D] hover:bg-[#2c5d6e] text-white px-6 py-2.5 shadow-md transition flex items-center gap-2 font-medium">
-                    <!-- <i class="fas fa-plus-circle"></i> -->
-                    Đề xuất đề tài
-                </button>
+            <div class="flex flex-row justify-start items-center mb-6 gap-2">
+                <a href="{{ route('giangvien.detai.sugget') }}">
+                    <button class="bg-[#1D546D] hover:bg-[#2c5d6e] text-white px-6 py-2.5 shadow-md transition flex items-center gap-2 font-medium">
+                        <!-- <i class="fas fa-plus-circle"></i> -->
+                        Đề xuất đề tài
+                    </button>
+                </a>
+                <a href="{{ route('giangvien.deTaiCuaToi') }}">
+                    <button class="bg-[#1D546D] hover:bg-[#2c5d6e] text-white px-6 py-2.5 shadow-md transition flex items-center gap-2 font-medium">
+                        <!-- <i class="fas fa-plus-circle"></i> -->
+                        Đề xuất của tôi
+                    </button>
+                </a>
             </div>
 
             <!-- Bảng danh sách -->
@@ -45,7 +53,7 @@
                                 <th class="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">Hành động</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-gray-200">
+                        <tbody class="divide-y divide-gray-200" id="deTaiListBody">
                             @forelse($detais as $index => $item)
                                 <tr class="hover:bg-gray-50 transition">
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-medium">
@@ -58,8 +66,16 @@
                                         {{ $item->ThoiGianKetThuc ? \Carbon\Carbon::parse($item->ThoiGianKetThuc)->format('Y') : '' }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm">
-                                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold"
-                                            style="background-color: #12CD51; color: white;">
+                                        @php
+                                            $status = strtolower(trim($item->TrangThai));
+                                            $statusClass = 'bg-gray-300 text-gray-800';
+                                            if ($status === 'đang thực hiện' || $status === 'dang thuc hien') {
+                                                $statusClass = 'bg-yellow-400 text-gray-900';
+                                            } elseif ($status === 'hoàn thành' || $status === 'hoan thanh') {
+                                                $statusClass = 'bg-green-500 text-white';
+                                            }
+                                        @endphp
+                                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold {{ $statusClass }}">
                                             {{ $item->TrangThai }}
                                         </span>
                                     </td>
@@ -230,7 +246,7 @@
 
             const fileLink = document.getElementById('modalFile');
             fileLink.textContent = fileSanPham ? fileSanPham.split('/').pop() : 'Không có file';
-            fileLink.href = fileSanPham ? '{{ asset('storage/') }}' + fileSanPham : '#';
+            fileLink.href = fileSanPham ? '{{ asset('uploads/pdf') }}/' + fileSanPham : '#';
 
             const modal = document.getElementById('deTaiModal');
             console.log('Modal element:', modal);
@@ -254,6 +270,17 @@
                     if (e.target === this) closeModal();
                 });
             }
+
+            // Tìm kiếm đề tài
+            document.getElementById('deTaiSearch').addEventListener('input', (e) => {
+                const filter = e.target.value.toLowerCase();
+                document.querySelectorAll('#deTaiListBody tr').forEach(row => {
+                    const nameCell = row.querySelector('td:nth-child(2)');
+                    if (!nameCell) return;
+                    const text = nameCell.textContent.toLowerCase();
+                    row.style.display = text.includes(filter) ? '' : 'none';
+                });
+            });
         });
     </script>
-@endsection
+@endsectionndsection

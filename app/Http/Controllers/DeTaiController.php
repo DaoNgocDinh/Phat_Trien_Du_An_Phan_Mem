@@ -26,10 +26,46 @@ class DeTaiController extends Controller
     // lưu đề tài
     public function store(Request $request)
     {
-        Detai::create($request->all());
+        $request->validate([
+            'TenDeTai' => 'required',
+            'ThoiGianBatDau' => 'required',
+            'ThoiGianKetThuc' => 'required',
+            'KinhPhi' => 'required|numeric|min:0',
+            'NoiDungChinh' => 'required',
+            'MucTieu' => 'required',
+            'FileSanPham' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
+        ]);
 
-        return redirect()->route('admin.detai.index')
-            ->with('success', 'Thêm đề tài thành công');
+        if ($request->hasFile('FileSanPham')) {
+            $file = $request->file('FileSanPham');
+
+            $fileName = time() . '_' . $file->getClientOriginalName();
+
+            $file->move(public_path('uploads/pdf'), $fileName);
+        }
+
+        $MaSo = Detai::max('MaSo') + 1;
+        $ChuNhiem = session('HoTen');
+
+        Detai::create([
+            'MaSo' => $MaSo,
+            'TenDeTai' => $request->TenDeTai,
+            'ChuNhiem' => $ChuNhiem,
+            'DonVi' => $request->DonVi,
+            'CapDeTai' => $request->CapDeTai,
+            'LoaiDeTai' => $request->LoaiDeTai,
+            'ThoiGianBatDau' => $request->ThoiGianBatDau,
+            'ThoiGianKetThuc' => $request->ThoiGianKetThuc,
+            'TrangThai' => 'Chờ xét duyệt',
+            'MucTieu' => $request->MucTieu,
+            'NoiDungChinh' => $request->NoiDungChinh,
+            'Thanhvien' => '',
+            'KetQua' => '',
+            'FileSanPham' => $fileName ?? null,
+            'KinhPhi' => $request->KinhPhi,
+        ]);
+
+        return redirect()->route('giangvien.trangChu')->with('success', 'Thêm thành công');
     }
 
     // form sửa
@@ -57,5 +93,14 @@ class DeTaiController extends Controller
 
         return redirect()->route('admin.detai.index')
             ->with('success', 'Xóa thành công');
+    }
+
+    public function sugget()
+    {
+        return view('Giangvien.detai.deXuatThemtnKH');
+    }
+    public function index_giangvien()
+    {
+        return view('Giangvien.detai.index');
     }
 }

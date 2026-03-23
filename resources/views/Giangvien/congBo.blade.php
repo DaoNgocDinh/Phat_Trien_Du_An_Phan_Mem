@@ -7,46 +7,66 @@
         <div class="max-w-[1400px] mx-auto">
 
             <!-- Thanh tìm kiếm -->
-             <div class="mb-6">
+            <div class="mb-6">
                 <div class="relative" style="width:300px;">
-                    
-                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"  style="padding-left:10px">
+
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
+                        style="padding-left:10px">
                         <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                         </svg>
                     </div>
 
-                    <input type="text"
-                        placeholder="Tìm tên bài báo..."
+                    <input type="text" id="congBoSearch" placeholder="Tìm tên bài báo..."
                         style="padding-left:40px; background:#D9D9D9;"
                         class="w-full pr-3 py-2.5 border border-gray-200 rounded-lg text-sm text-gray-700">
                 </div>
             </div>
-            
+
             <!-- Header + Nút khai báo mới (placeholder cho sinh viên) -->
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
-                <button class="bg-[#1D546D] hover:bg-[#2c5d6e] text-white px-6 py-2.5 shadow-md transition flex items-center gap-2 font-medium cursor-not-allowed opacity-70">
-                    <!-- <i class="fas fa-plus-circle"></i> -->
-                    Khai báo công bố mới
-                </button>
+            <div class="flex flex-col md:flex-row items-start md:items-center mb-6 gap-4">
+                <a>
+                    <button
+                        class="bg-[#1D546D] text-white px-6 py-2.5 shadow-md transition flex items-center gap-2 font-medium">
+                        <!-- <i class="fas fa-plus-circle"></i> -->
+                        Tất cả công bố
+                    </button>
+                </a>
+                <a href="#">
+                    <button
+                        class="bg-gray-500 hover:bg-[#2c5d6e] text-black px-6 py-2.5 shadow-md transition flex items-center gap-2 font-medium">
+                        <!-- <i class="fas fa-plus-circle"></i> -->
+                        Công bố của tôi
+                    </button>
+                </a>
+                <a href="{{ route('giangvien.congbo.suggest') }}">
+                    <button
+                        class="bg-gray-500 hover:bg-[#2c5d6e] text-black px-6 py-2.5 shadow-md transition flex items-center gap-2 font-medium">
+                        <!-- <i class="fas fa-plus-circle"></i> -->
+                        Đề xuất công bố
+                    </button>
+                </a>
             </div>
 
             <!-- Bảng danh sách -->
             <div class="bg-white rounded-xl shadow overflow-hidden border border-gray-200">
                 <div class="overflow-x-auto">
                     <table class="w-full divide-y divide-gray-200">
-                        <thead style="background-color: #EBF4F6 !important; color: black !important; font-weight: bold !important;">
+                        <thead
+                            style="background-color: #EBF4F6 !important; color: black !important; font-weight: bold !important;">
                             <tr>
                                 <th class="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">STT</th>
-                                <th class="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">Tên bài báo/Công bố</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">Tên bài
+                                    báo/Công bố</th>
                                 <th class="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">Tác giả</th>
                                 <th class="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">Nơi Đăng</th>
                                 <th class="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">Năm</th>
-                                <th class="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">Hành động</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">Hành động
+                                </th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-gray-200">
+                        <tbody class="divide-y divide-gray-200" id="congBoListBody">
                             @forelse($congbos as $index => $item)
                                 <tr class="hover:bg-gray-50 transition">
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-medium">
@@ -65,7 +85,7 @@
                                         {{ $item->NamXuatBan }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-center">
-                                        <button 
+                                        <button
                                             onclick="openModal('{{ $item->TenCongBo }}', '{{ $item->NamXuatBan }}', '{{ $item->NoiCongBo }}', '{{ $item->NoiDungTomTat ?? 'Không có tóm tắt' }}', '{{ $item->FilePDF ?? 'Không có file' }}')"
                                             class="text-green-600 hover:text-green-900 text-xl">
                                             <i class="fas fa-eye" style="color:#3D99D7;"></i>
@@ -84,9 +104,11 @@
                 </div>
 
                 <!-- Phân trang -->
-                <div class="px-6 py-4 border-t border-gray-200 flex flex-col sm:flex-row justify-between items-center text-sm text-gray-600 gap-4">
+                <div
+                    class="px-6 py-4 border-t border-gray-200 flex flex-col sm:flex-row justify-between items-center text-sm text-gray-600 gap-4">
                     <div>
-                        Hiển thị {{ $congbos->firstItem() }} - {{ $congbos->lastItem() }} trong {{ $congbos->total() }} công bố
+                        Hiển thị {{ $congbos->firstItem() }} - {{ $congbos->lastItem() }} trong {{ $congbos->total() }} công
+                        bố
                     </div>
                     <div class="flex items-center gap-2">
                         {{ $congbos->links('pagination::tailwind') }}
@@ -135,7 +157,8 @@
                     <!-- File -->
                     <div class="flex items-center gap-5">
                         <span class="font-semibold">File minh chứng:</span>
-                        <a id="modalFile" href="#" target="_blank" class="flex items-center gap-2 bg-gray-100 px-3 py-2 rounded-lg hover:bg-gray-200 transition">
+                        <a id="modalFile" href="#" target="_blank"
+                            class="flex items-center gap-2 bg-gray-100 px-3 py-2 rounded-lg hover:bg-gray-200 transition">
                             <i class="fas fa-file-pdf text-red-600"></i>
                             <span id="modalFileName" class="text-gray-700"></span>
                         </a>
@@ -143,7 +166,8 @@
                 </div>
 
                 <div class="mt-8 flex justify-center">
-                    <button onclick="closeModal()" class="bg-gray-600 hover:bg-gray-700 text-white px-8 py-3 rounded-lg shadow-md transition">
+                    <button onclick="closeModal()"
+                        class="bg-gray-600 hover:bg-gray-700 text-white px-8 py-3 rounded-lg shadow-md transition">
                         Đóng
                     </button>
                 </div>
@@ -159,7 +183,7 @@
             document.getElementById('modalNoiCongBo').textContent = noiCongBo || 'Không có thông tin';
             document.getElementById('modalTomTat').textContent = tomTat || 'Không có tóm tắt';
             document.getElementById('modalFileName').textContent = file ? file.split('/').pop() : 'Không có file';
-            document.getElementById('modalFile').href = file ? '{{ asset('storage/') }}' + file : '#';
+            document.getElementById('modalFile').href = file ? '{{ asset('uploads/pdf') }}/' + file : '#';
 
             document.getElementById('congBoModal').classList.remove('hidden');
         }
@@ -169,8 +193,19 @@
         }
 
         // Đóng modal khi click bên ngoài
-        document.getElementById('congBoModal').addEventListener('click', function(e) {
+        document.getElementById('congBoModal').addEventListener('click', function (e) {
             if (e.target === this) closeModal();
+        });
+
+        // Tìm kiếm công bố
+        document.getElementById('congBoSearch').addEventListener('input', (e) => {
+            const filter = e.target.value.toLowerCase();
+            document.querySelectorAll('#congBoListBody tr').forEach(row => {
+                const nameCell = row.querySelector('td:nth-child(2)');
+                if (!nameCell) return;
+                const text = nameCell.textContent.toLowerCase();
+                row.style.display = text.includes(filter) ? '' : 'none';
+            });
         });
     </script>
 @endsection

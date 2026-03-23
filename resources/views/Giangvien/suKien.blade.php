@@ -7,10 +7,6 @@
         <div class="max-w-[1400px] mx-auto">
             <!-- Tiêu đề -->
             <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6">
-                <div>
-                    <h1 class="text-2xl md:text-3xl font-bold text-gray-900">Sự kiện</h1>
-                    <p class="mt-1 text-sm text-gray-600">Danh sách sự kiện và trạng thái đăng ký của bạn.</p>
-                </div>
 
                 <div class="w-full md:w-72">
                     <div class="relative">
@@ -36,16 +32,15 @@
                             <tr>
                                 <th class="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">STT</th>
                                 <th class="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">Tên sự kiện</th>
-                                <th class="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">Thời gian</th>
                                 <th class="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">Trạng thái</th>
-                                <th class="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">Hành động</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">Xem chi tiết</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200" id="eventListBody">
                             @forelse($sukiens as $index => $event)
                                 @php
                                     $eventDate = $event->ThoiGian ? \Carbon\Carbon::parse($event->ThoiGian) : null;
-                                    $status = $eventDate && $eventDate->isPast() ? 'Hết hạn' : 'Đang đăng ký';
+                                    $status = $eventDate && $eventDate->isPast() ? 'Hết hạn' : 'Sắp diễn ra';
                                 @endphp
                                 <tr class="hover:bg-gray-50 transition">
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-medium">
@@ -54,32 +49,28 @@
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                                         {{ $event->TenSuKien }}
                                     </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                                        {{ $event->ThoiGian ? \Carbon\Carbon::parse($event->ThoiGian)->format('d/m/Y H:i') : '-' }}
-                                    </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm">
                                         <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold" data-status="{{ $status }}">
                                             {{ $status }}
                                         </span>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-center">
-                                        <button type="button" class="view-details text-gray-600 hover:text-gray-900" data-event='@json([
-                                            "id" => $event->MaSuKien,
-                                            "name" => $event->TenSuKien,
-                                            "description" => $event->MoTa,
-                                            "location" => $event->DiaDiem,
-                                            "time" => $event->ThoiGian,
-                                            "format" => $event->HinhThuc,
-                                            "capacity" => $event->SoLuongToiDa,
-                                            "status" => $status,
-                                        ], JSON_UNESCAPED_UNICODE)'>
+                                        <button type="button" class="view-details text-gray-600 hover:text-gray-900" 
+                                            data-event-id="{{ $event->MaSuKien }}"
+                                            data-event-name="{{ $event->TenSuKien }}"
+                                            data-event-description="{{ $event->MoTa }}"
+                                            data-event-location="{{ $event->DiaDiem }}"
+                                            data-event-time="{{ $event->ThoiGian }}"
+                                            data-event-format="{{ $event->HinhThuc }}"
+                                            data-event-capacity="{{ $event->SoLuongToiDa }}"
+                                            data-event-status="{{ $status }}">
                                             <span class="text-sm font-medium">Xem chi tiết</span>
                                         </button>
                                     </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="5" class="px-6 py-12 text-center text-gray-500 text-lg">
+                                    <td colspan="4" class="px-6 py-12 text-center text-gray-500 text-lg">
                                         Chưa có sự kiện nào để hiển thị.
                                     </td>
                                 </tr>
@@ -102,14 +93,13 @@
     </div>
 
     <!-- Modal Chi tiết sự kiện -->
-    <div id="suKienModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
-        <div class="bg-white rounded-xl shadow-2xl mx-4 relative overflow-hidden" style="border: 1px solid #000; width: 480px; max-width: calc(100% - 2rem);">
-            <!-- Header -->
-            <div class="px-8 py-2.5 relative rounded-xl" style="background-color: #D9D9D9; border-bottom: 1px solid #000;">
-                <h2 class="text-2xl font-bold text-left" style="color: #21546B; padding-left: 15px; font-size: 1.25rem;">
-                    Chi tiết sự kiện
-                </h2>
-            </div>
+    <div id="suKienModal" class="bg-white rounded-xl shadow-lg mx-auto mt-6 relative overflow-hidden hidden" style="border: 1px solid #000; width: 100%; max-width: 600px;">
+        <!-- Header -->
+        <div class="px-8 py-2.5 relative rounded-xl" style="background-color: #D9D9D9; border-bottom: 1px solid #000;">
+            <h2 class="text-2xl font-bold text-left" style="color: #21546B; padding-left: 15px; font-size: 1.25rem;">
+                Chi tiết sự kiện
+            </h2>
+        </div>
 
             <!-- Content -->
             <div class="p-6 space-y-4 text-gray-700">
@@ -188,6 +178,7 @@
 
         function formatStatus(status) {
             const mapping = {
+                'Sắp diễn ra': { label: 'Sắp diễn ra', bg: '#E6F7FF', color: '#0C4A6E' },
                 'Đang đăng ký': { label: 'Đang đăng ký', bg: '#E6F7FF', color: '#0C4A6E' },
                 'Đã đăng ký': { label: 'Đã đăng ký', bg: '#ECFDF5', color: '#0F5132' },
                 'Hết hạn': { label: 'Hết hạn', bg: '#FEE2E2', color: '#991B1B' },
@@ -201,8 +192,9 @@
                 const statusSpan = row.querySelector('span[data-status]');
                 if (!statusSpan) return;
                 const status = statusSpan.getAttribute('data-status');
-                const eventData = JSON.parse(row.querySelector('.view-details').dataset.event);
-                const isRegistered = registered.includes(eventData.id);
+                const button = row.querySelector('.view-details');
+                const eventId = button.dataset.eventId;
+                const isRegistered = registered.includes(parseInt(eventId));
                 const computedStatus = isRegistered ? 'Đã đăng ký' : status;
 
                 const formatted = formatStatus(computedStatus);
@@ -266,6 +258,7 @@
             const modal = document.getElementById('suKienModal');
             if (modal) {
                 modal.classList.remove('hidden');
+                modal.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         }
 
@@ -279,7 +272,16 @@
         document.addEventListener('DOMContentLoaded', () => {
             document.querySelectorAll('.view-details').forEach(button => {
                 button.addEventListener('click', () => {
-                    const eventData = JSON.parse(button.dataset.event);
+                    const eventData = {
+                        id: parseInt(button.dataset.eventId),
+                        name: button.dataset.eventName,
+                        description: button.dataset.eventDescription,
+                        location: button.dataset.eventLocation,
+                        time: button.dataset.eventTime,
+                        format: button.dataset.eventFormat,
+                        capacity: button.dataset.eventCapacity,
+                        status: button.dataset.eventStatus
+                    };
                     openEventModal(eventData);
                 });
             });
@@ -293,13 +295,6 @@
                     row.style.display = text.includes(filter) ? '' : 'none';
                 });
             });
-
-            const modal = document.getElementById('suKienModal');
-            if (modal) {
-                modal.addEventListener('click', function(e) {
-                    if (e.target === this) closeEventModal();
-                });
-            }
 
             updateStatusPills();
         });

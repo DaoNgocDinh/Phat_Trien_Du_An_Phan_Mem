@@ -3,35 +3,58 @@
 namespace App\Http\Controllers;
 
 use App\Models\Canbokhoahoc;
+use App\Models\ChucVu;
+use App\Models\Khoa;
+use App\Models\Giangvien;
+use App\Models\Nghiencuusinh;
+use App\Models\Taikhoan;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use App\Models\Taikhoan;
-use App\Models\Giangvien;
-use App\Models\Nghiencuusinh;
 class AuthController extends Controller
 {
     public function showRegister()
     {
         $nextUserID = Taikhoan::max('UserID') + 1;
-        $chucvu = Canbokhoahoc::select('ChucVu')->distinct()->pluck('ChucVu');
-        return view('Admin.taikhoan.register', compact('nextUserID', 'chucvu'));
+
+        $khoas = Khoa::select('MaKhoa', 'TenKhoa')->get();
+        $chucvus = ChucVu::select('MaChucVu', 'TenChucVu')->get();
+
+        $chucvuByKhoa = Giangvien::whereNotNull('giangvien.MaKhoa')
+            ->whereNotNull('giangvien.MaChucVu')
+            ->join('khoa', 'giangvien.MaKhoa', '=', 'khoa.MaKhoa')
+            ->join('chucvu', 'giangvien.MaChucVu', '=', 'chucvu.MaChucVu')
+            ->select('khoa.MaKhoa', 'khoa.TenKhoa', 'chucvu.MaChucVu', 'chucvu.TenChucVu')
+            ->get()
+            ->groupBy('MaKhoa')
+            ->map(function ($items) {
+                return $items->map(function ($item) {
+                    return ['MaChucVu' => $item->MaChucVu, 'TenChucVu' => $item->TenChucVu];
+                })->unique('MaChucVu')->values();
+            });
+
+        return view('Admin.taikhoan.register', compact('nextUserID', 'khoas', 'chucvus', 'chucvuByKhoa'));
     }
 
     public function register(Request $request)
     {
+        // Ensure ChucVu is only set for giangvien
+        if ($request->VaiTro !== 'giangvien') {
+            $request->merge(['ChucVu' => null]);
+        }
+
         $request->validate([
             'VaiTro' => 'required|in:giangvien,nghiencuusinh',
             'MatKhau' => 'required|min:6',
             'HoTen' => 'required',
-            'Khoa' => 'required',
+            'Khoa' => 'required|exists:khoa,MaKhoa',
 
-            'Email' => 'nullable|email',
+            'Email' => 'required|email',
             'Sdt' => 'nullable',
-            'ChucVu' => 'nullable',
+            'ChucVu' => 'nullable|required_if:VaiTro,giangvien|exists:chucvu,MaChucVu',
 
             'Lop' => 'nullable',
-            'NgaySinh' => 'nullable|date'
+            'NgaySinh' => 'required_if:VaiTro,nghiencuusinh|date'
         ]);
 
         DB::beginTransaction();
@@ -46,32 +69,32 @@ class AuthController extends Controller
                 'VaiTro' => $request->VaiTro
             ]);
 
+            // Nên đã map sẵn từ id ở dropdown
+            $maKhoa = $request->Khoa;
+            $maChucVu = $request->ChucVu;
             if ($request->VaiTro === 'giangvien') {
-
                 Giangvien::create([
                     'MaGiangVien' => (Giangvien::max('MaGiangVien') ?? 0) + 1,
                     'UserID' => $userID,
                     'HoTen' => $request->HoTen,
-                    'ChucVu' => $request->ChucVu,
-                    'Khoa' => $request->Khoa,
+                    'MaKhoa' => $maKhoa,
+                    'MaChucVu' => $maChucVu,
                     'Email' => $request->Email,
-                    'Sdt' => $request->Sdt
+                    'Sdt' => $request->Sdt,
+                    'NgaySinh' => $request->NgaySinh
                 ]);
-
             }
 
             if ($request->VaiTro === 'nghiencuusinh') {
-
                 Nghiencuusinh::create([
                     'MaSinhVien' => (Nghiencuusinh::max('MaSinhVien') ?? 0) + 1,
                     'UserID' => $userID,
                     'HoTen' => $request->HoTen,
-                    'Khoa' => $request->Khoa,
+                    'MaKhoa' => $maKhoa,
                     'Lop' => $request->Lop,
                     'Email' => $request->Email,
                     'NgaySinh' => $request->NgaySinh
                 ]);
-
             }
 
             DB::commit();
@@ -112,13 +135,13 @@ class AuthController extends Controller
         if ($user->VaiTro == 'nghiencuusinh') {
             $sv = Nghiencuusinh::where('UserID', $user->UserID)->first();
             session(['HoTen' => $sv->HoTen]);
-            return redirect()->route('sinhVien.trangChu');
+            return redirect('/sinhvien/trang-chu');
         }
             // may chỉnh thêm login cho giảng viên ở đây
         if ($user->VaiTro == 'giangvien') { 
             $gv = Giangvien::where('UserID', $user->UserID)->first();
             session(['HoTen' => $gv->HoTen]);
-            return redirect('/giangvien/trang-chu');
+            return redirect()->route('giangvien.trangChu');
         }
 
         if ($user->VaiTro == 'admin') {

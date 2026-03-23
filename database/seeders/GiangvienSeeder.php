@@ -9,13 +9,30 @@ class GiangvienSeeder extends Seeder
 {
     public function run(): void
     {
+        // Map khoa names to IDs
+        $khoaMap = [
+            'CNTT' => 1, // Công nghệ thông tin
+            'HTTT' => 2, // Hệ thống thông tin (sẽ map thành Kinh tế)
+            'Khoa học máy tính' => 1, // Map thành CNTT
+            'AI' => 1, // Map thành CNTT
+            'Phòng khoa học' => 1, // Map thành CNTT
+        ];
+
+        // Map chucvu names to IDs
+        $chucvuMap = [
+            'Trưởng khoa' => 5, // PGS.TS
+            'Giảng viên' => 1, // Giảng viên
+            'Phó khoa' => 6, // GS.TS
+            'Quản trị' => 1, // Giảng viên
+        ];
+
         DB::table('giangvien')->insert([
             [
                 'MaGiangVien' => 1,
                 'UserID' => 2,
                 'HoTen' => 'Nguyễn Văn An',
-                'ChucVu' => 'Trưởng khoa',
-                'Khoa' => 'CNTT',
+                'MaChucVu' => $chucvuMap['Trưởng khoa'],
+                'MaKhoa' => $khoaMap['CNTT'],
                 'Email' => 'an@uni.edu',
                 'Sdt' => '0911111111',
                 'AnhDaiDien' => 'gv1.jpg',
@@ -26,8 +43,8 @@ class GiangvienSeeder extends Seeder
                 'MaGiangVien' => 2,
                 'UserID' => 3,
                 'HoTen' => 'Trần Minh Hùng',
-                'ChucVu' => 'Giảng viên',
-                'Khoa' => 'CNTT',
+                'MaChucVu' => $chucvuMap['Giảng viên'],
+                'MaKhoa' => $khoaMap['CNTT'],
                 'Email' => 'hung@uni.edu',
                 'Sdt' => '0911111112',
                 'AnhDaiDien' => 'gv2.jpg',
@@ -38,8 +55,8 @@ class GiangvienSeeder extends Seeder
                 'MaGiangVien' => 3,
                 'UserID' => 4,
                 'HoTen' => 'Lê Thu Hà',
-                'ChucVu' => 'Phó khoa',
-                'Khoa' => 'HTTT',
+                'MaChucVu' => $chucvuMap['Phó khoa'],
+                'MaKhoa' => 4, // Kinh tế
                 'Email' => 'ha@uni.edu',
                 'Sdt' => '0911111113',
                 'AnhDaiDien' => 'gv3.jpg',
@@ -50,8 +67,8 @@ class GiangvienSeeder extends Seeder
                 'MaGiangVien' => 4,
                 'UserID' => 5,
                 'HoTen' => 'Phạm Quang Dũng',
-                'ChucVu' => 'Giảng viên',
-                'Khoa' => 'Khoa học máy tính',
+                'MaChucVu' => $chucvuMap['Giảng viên'],
+                'MaKhoa' => $khoaMap['CNTT'],
                 'Email' => 'dung@uni.edu',
                 'Sdt' => '0911111114',
                 'AnhDaiDien' => 'gv4.jpg',
@@ -62,8 +79,8 @@ class GiangvienSeeder extends Seeder
                 'MaGiangVien' => 5,
                 'UserID' => 6,
                 'HoTen' => 'Đặng Minh Tuấn',
-                'ChucVu' => 'Giảng viên',
-                'Khoa' => 'CNTT',
+                'MaChucVu' => $chucvuMap['Giảng viên'],
+                'MaKhoa' => $khoaMap['CNTT'],
                 'Email' => 'tuan@uni.edu',
                 'Sdt' => '0911111115',
                 'AnhDaiDien' => 'gv5.jpg',
@@ -74,8 +91,8 @@ class GiangvienSeeder extends Seeder
                 'MaGiangVien' => 6,
                 'UserID' => 7,
                 'HoTen' => 'Nguyễn Hoàng Nam',
-                'ChucVu' => 'Giảng viên',
-                'Khoa' => 'HTTT',
+                'MaChucVu' => $chucvuMap['Giảng viên'],
+                'MaKhoa' => 4, // Kinh tế
                 'Email' => 'nam@uni.edu',
                 'Sdt' => '0911111116',
                 'AnhDaiDien' => 'gv6.jpg',
@@ -86,8 +103,8 @@ class GiangvienSeeder extends Seeder
                 'MaGiangVien' => 7,
                 'UserID' => 8,
                 'HoTen' => 'Trần Quốc Bảo',
-                'ChucVu' => 'Giảng viên',
-                'Khoa' => 'CNTT',
+                'MaChucVu' => $chucvuMap['Giảng viên'],
+                'MaKhoa' => $khoaMap['CNTT'],
                 'Email' => 'bao@uni.edu',
                 'Sdt' => '0911111117',
                 'AnhDaiDien' => 'gv7.jpg',
@@ -98,8 +115,8 @@ class GiangvienSeeder extends Seeder
                 'MaGiangVien' => 8,
                 'UserID' => 9,
                 'HoTen' => 'Phạm Thanh Long',
-                'ChucVu' => 'Giảng viên',
-                'Khoa' => 'AI',
+                'MaChucVu' => $chucvuMap['Giảng viên'],
+                'MaKhoa' => $khoaMap['CNTT'],
                 'Email' => 'long@uni.edu',
                 'Sdt' => '0911111118',
                 'AnhDaiDien' => 'gv8.jpg',
@@ -110,8 +127,8 @@ class GiangvienSeeder extends Seeder
                 'MaGiangVien' => 9,
                 'UserID' => 10,
                 'HoTen' => 'Lý Văn Đức',
-                'ChucVu' => 'Giảng viên',
-                'Khoa' => 'CNTT',
+                'MaChucVu' => $chucvuMap['Giảng viên'],
+                'MaKhoa' => $khoaMap['CNTT'],
                 'Email' => 'duc@uni.edu',
                 'Sdt' => '0911111119',
                 'AnhDaiDien' => 'gv9.jpg',
@@ -122,8 +139,8 @@ class GiangvienSeeder extends Seeder
                 'MaGiangVien' => 10,
                 'UserID' => 1,
                 'HoTen' => 'Admin Hệ Thống',
-                'ChucVu' => 'Quản trị',
-                'Khoa' => 'Phòng khoa học',
+                'MaChucVu' => $chucvuMap['Quản trị'],
+                'MaKhoa' => $khoaMap['CNTT'],
                 'Email' => 'admin@uni.edu',
                 'Sdt' => '0999999999',
                 'AnhDaiDien' => 'admin.jpg',

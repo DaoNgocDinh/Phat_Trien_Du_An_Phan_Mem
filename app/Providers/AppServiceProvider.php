@@ -5,6 +5,8 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use App\Models\Taikhoan;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Lienhe;
+use Illuminate\Support\Facades\View;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -21,6 +23,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Skip if running in console (migrations, commands)
+        if ($this->app->runningInConsole()) {
+            return;
+        }
+
         $admin = Taikhoan::where('VaiTro', 'admin')->first();
 
         if (!$admin) {
@@ -32,7 +39,6 @@ class AppServiceProvider extends ServiceProvider
             ]);
 
             echo "Admin default created: 99999 / admin123";
-
         }
     }
 }

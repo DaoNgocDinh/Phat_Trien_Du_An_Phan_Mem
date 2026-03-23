@@ -10,11 +10,11 @@ class SinhvienController extends Controller
     //
     public function dashBoard()
     {
-        return view('sinhVien.trangChu');
+        return view('Sinhvien.trangChu');
     }
     public function CongBo()
     {
         $congbos = CongBo::latest()->paginate(10); // hoặc lọc theo trạng thái 'Đã duyệt' nếu cần
-        return view('sinhVien.congBo', compact('congbos'));
+        return view('Sinhvien.congBo', compact('congbos'));
     }
 }

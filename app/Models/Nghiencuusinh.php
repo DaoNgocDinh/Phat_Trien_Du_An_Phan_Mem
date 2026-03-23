@@ -18,7 +18,7 @@ class Nghiencuusinh extends Model
         'MaSinhVien',
         'UserID',
         'HoTen',
-        'Khoa',
+        'MaKhoa',
         'Lop',
         'NgaySinh',
         'Email',
@@ -27,6 +27,11 @@ class Nghiencuusinh extends Model
     public function taikhoan()
     {
         return $this->belongsTo(Taikhoan::class, 'UserID', 'UserID');
+    }
+
+    public function khoa()
+    {
+        return $this->belongsTo(Khoa::class, 'MaKhoa', 'MaKhoa');
     }
 }
 

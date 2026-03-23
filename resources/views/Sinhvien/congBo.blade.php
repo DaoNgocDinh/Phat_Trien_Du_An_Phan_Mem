@@ -17,7 +17,7 @@
                         </svg>
                     </div>
 
-                    <input type="text"
+                    <input type="text" id="sinhVienCongBoSearch"
                         placeholder="Tìm tên bài báo..."
                         style="padding-left:40px; background:#D9D9D9;"
                         class="w-full pr-3 py-2.5 border border-gray-200 rounded-lg text-sm text-gray-700">
@@ -46,7 +46,7 @@
                                 <th class="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">Hành động</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-gray-200">
+                        <tbody class="divide-y divide-gray-200" id="sinhVienCongBoListBody">
                             @forelse($congbos as $index => $item)
                                 <tr class="hover:bg-gray-50 transition">
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-medium">
@@ -171,6 +171,17 @@
         // Đóng modal khi click bên ngoài
         document.getElementById('congBoModal').addEventListener('click', function(e) {
             if (e.target === this) closeModal();
+        });
+
+        // Tìm kiếm công bố
+        document.getElementById('sinhVienCongBoSearch').addEventListener('input', (e) => {
+            const filter = e.target.value.toLowerCase();
+            document.querySelectorAll('#sinhVienCongBoListBody tr').forEach(row => {
+                const nameCell = row.querySelector('td:nth-child(2)');
+                if (!nameCell) return;
+                const text = nameCell.textContent.toLowerCase();
+                row.style.display = text.includes(filter) ? '' : 'none';
+            });
         });
     </script>
 @endsection

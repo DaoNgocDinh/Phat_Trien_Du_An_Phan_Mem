@@ -18,8 +18,8 @@ class Giangvien extends Model
         'MaGiangVien',
         'UserID',
         'HoTen',
-        'ChucVu',
-        'Khoa',
+        'MaChucVu',
+        'MaKhoa',
         'Email',
         'Sdt',
         'AnhDaiDien',
@@ -30,6 +30,16 @@ class Giangvien extends Model
     public function taikhoan()
     {
         return $this->belongsTo(Taikhoan::class, 'UserID', 'UserID');
+    }
+
+    public function khoa()
+    {
+        return $this->belongsTo(Khoa::class, 'MaKhoa', 'MaKhoa');
+    }
+
+    public function chucvu()
+    {
+        return $this->belongsTo(ChucVu::class, 'MaChucVu', 'MaChucVu');
     }
 }
 
