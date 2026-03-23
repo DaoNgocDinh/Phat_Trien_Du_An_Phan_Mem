@@ -33,7 +33,7 @@
                         Tất cả công bố
                     </button>
                 </a>
-                <a href="#">
+                <a href="{{ route('giangvien.congBoCuaToi') }}">
                     <button
                         class="bg-gray-500 hover:bg-[#2c5d6e] text-black px-6 py-2.5 shadow-md transition flex items-center gap-2 font-medium">
                         <!-- <i class="fas fa-plus-circle"></i> -->
@@ -62,7 +62,7 @@
                                 <th class="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">Tác giả</th>
                                 <th class="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">Nơi Đăng</th>
                                 <th class="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">Năm</th>
-                                <th class="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">Hành động
+                                <th class="px-6 py-4 text-center text-sm font-semibold uppercase tracking-wider">Hành động
                                 </th>
                             </tr>
                         </thead>

@@ -24,6 +24,11 @@ class Nghiencuusinh extends Model
         'Email',
     ];
 
+    protected $casts = [
+        'NgaySinh' => 'date',
+    ];
+
+
     public function taikhoan()
     {
         return $this->belongsTo(Taikhoan::class, 'UserID', 'UserID');

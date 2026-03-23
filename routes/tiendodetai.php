@@ -23,3 +23,8 @@ Route::prefix('admin')->middleware('roles:admin')->group(function () {
         ->name('admin.theodoitiendo.capnhat');
 
 });
+
+Route::prefix('giangvien')->middleware('roles:giangvien')->group(function () {
+    Route::post('/cap-nhat-tien-do', [TienDoDeTaiController::class, 'store'])
+         ->name('giangvien.capNhatTienDo');
+});

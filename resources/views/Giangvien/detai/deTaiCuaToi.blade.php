@@ -23,81 +23,105 @@
             </div>
 
             <!-- Tab buttons -->
-            <div class="flex flex-wrap gap-4 mb-6">
-                <button id="tab-de-xuat" 
-                        class="px-6 py-3 rounded-lg font-medium transition tab-btn bg-gray-200 text-gray-700 hover:bg-gray-300">
+            <div class="flex flex-row justify-start items-center mb-6 gap-2">
+            <a href="{{ route('giangvien.deTai') }}">
+                <button
+                    class="bg-[#6B727F] hover:bg-[#2c5d6e] text-white px-6 py-2.5 shadow-md transition flex items-center gap-2 font-medium">
+                    <!-- <i class="fas fa-plus-circle"></i> -->
+                    Tất cả đề tài
+                </button>
+            </a>
+            <a href="#">
+                <button
+                    class="bg-[#1D546D] text-white px-6 py-2.5 shadow-md transition flex items-center gap-2 font-medium">
+                    <!-- <i class="fas fa-plus-circle"></i> -->
+                    Đề xuất của tôi
+                </button>
+            </a>
+            <a href="{{ route('giangvien.detai.sugget') }}">
+                <button
+                    class="bg-[#6B727F] hover:bg-[#2c5d6e] text-white px-6 py-2.5 shadow-md transition flex items-center gap-2 font-medium">
+                    <!-- <i class="fas fa-plus-circle"></i> -->
                     Đề xuất đề tài
                 </button>
-                <button id="tab-de-tai-cua-toi" 
-                        class="px-6 py-3 rounded-lg font-medium transition tab-btn active bg-[#1D546D] text-white shadow-md">
-                    Đề tài của tôi
-                </button>
-            </div>
+            </a>
+        </div>
 
-            <!-- Tab 1: Đề xuất đề tài (link về file cũ nếu cần, hoặc ẩn) -->
-            <div id="content-de-xuat" class="tab-content hidden">
-                <!-- Nếu bạn muốn giữ nội dung đề xuất đề tài từ file cũ, có thể @include hoặc copy bảng -->
-                <div class="bg-white rounded-xl shadow overflow-hidden border border-gray-200 p-8 text-center text-gray-600">
-                    Nội dung đề xuất đề tài (có thể @include('giangvien.deTai') hoặc giữ trống nếu chuyển sang file khác)
-                </div>
-            </div>
-
-            <!-- Tab 2: Đề tài của tôi -->
-            <div id="content-de-tai-cua-toi" class="tab-content">
-                <div class="bg-white rounded-xl shadow overflow-hidden border border-gray-200 flex-1 flex flex-col min-h-[600px]">
-                    <div class="overflow-x-auto flex-1">
-                        <table class="min-w-full divide-y divide-gray-200 h-full table-fixed">
-                            <thead class="bg-[#1D546D] text-white sticky top-0 z-10">
-                                <tr>
-                                    <th class="w-16 px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">STT</th>
-                                    <th class="w-3/5 px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">Tên đề tài</th>
-                                    <th class="w-1/4 px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">Trạng thái</th>
-                                    <th class="w-1/4 px-6 py-4 text-center text-sm font-semibold uppercase tracking-wider">Hành động</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-gray-200 bg-white">
-                                @forelse($deTaiCuaToi as $index => $item)
-                                    <tr class="hover:bg-gray-50 transition">
-                                        <td class="px-6 py-5 whitespace-nowrap text-sm text-gray-900 font-medium text-center">
-                                            {{ $index + 1 + ($deTaiCuaToi->currentPage() - 1) * $deTaiCuaToi->perPage() }}
-                                        </td>
-                                        <td class="px-6 py-5 text-sm font-medium text-gray-900 truncate">
-                                            {{ $item->TenDeTai }}
-                                        </td>
-                                        <td class="px-6 py-5 whitespace-nowrap text-center">
-                                            <span class="px-4 py-1 inline-flex text-xs leading-5 font-semibold rounded-full 
-                                                  {{ $item->TrangThai == 'Đang thực hiện' ? 'bg-blue-100 text-blue-800' : 
-                                                     ($item->TrangThai == 'Chờ phê duyệt' ? 'bg-yellow-100 text-yellow-800' : 'bg-gray-100 text-gray-800') }}">
+            <!-- Bảng danh sách -->
+            <div class="bg-white rounded-xl shadow overflow-hidden border border-gray-200 flex-1 flex flex-col min-h-[600px]">
+                <div class="overflow-x-auto flex-1">
+                    <table class="min-w-full divide-y divide-gray-200 h-full table-fixed">
+                        <thead class="bg-[#EBF4F6] sticky top-0 z-10">
+                            <tr>
+                                <th class="w-16 px-6 py-4 text-center text-sm font-bold uppercase tracking-wider">STT</th>
+                                <th class="w-3/5 px-6 py-4 text-center text-sm font-bold uppercase tracking-wider">Tên đề tài</th>
+                                <th class="w-1/4 px-6 py-4 text-center text-sm font-bold uppercase tracking-wider">Trạng thái</th>
+                                <th class="w-1/4 px-6 py-4 text-center text-sm font-bold uppercase tracking-wider">Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200 bg-white">
+                            @forelse($deTaiCuaToi as $index => $item)
+                                @php
+                                    // Lấy tiến độ gần nhất trực tiếp bằng Model
+                                    $tienDoCu = \App\Models\Tiendodetai::where('MaDeTai', $item->MaSo)
+                                                    ->orderBy('ThoiGianCapNhat', 'desc')
+                                                    ->first();
+                                @endphp
+                                <tr class="hover:bg-gray-50 transition">
+                                    <td class="px-6 py-5 whitespace-nowrap text-sm text-gray-900 font-medium text-center">
+                                        {{ $index + 1 + ($deTaiCuaToi->currentPage() - 1) * $deTaiCuaToi->perPage() }}
+                                    </td>
+                                    <td class="px-6 py-5 text-sm font-medium text-gray-900 truncate text-center">
+                                        {{ $item->TenDeTai }}
+                                    </td>
+                                    <td class="px-6 py-5 whitespace-nowrap text-center">
+                                        @if($item->TrangThai == 'Đang thực hiện')
+                                            <span class="px-4 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-[#619597] text-white">
+                                                {{ $item->TrangThai }}
+                                            </span>
+                                        @elseif($item->TrangThai == 'Chờ phê duyệt')
+                                            <span class="px-4 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-[#67C3D9] text-white">
+                                                {{ $item->TrangThai }}
+                                            </span>
+                                        @else
+                                            <span class="px-4 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">
                                                 {{ $item->TrangThai ?? 'Chưa xác định' }}
                                             </span>
-                                        </td>
-                                        <td class="px-6 py-5 whitespace-nowrap text-center">
-                                            <button 
-                                                onclick="openCapNhatModal('{{ addslashes($item->TenDeTai) }}', '{{ $item->TrangThai ?? 'Chưa xác định' }}', '{{ $item->PhanTramTienDo ?? 0 }}', '{{ $item->MaSo }}')"
-                                                class="text-blue-600 hover:text-blue-900 font-medium px-4 py-2 bg-blue-50 rounded hover:bg-blue-100 transition">
-                                                Cập nhật tiến độ
-                                            </button>
-                                        </td>
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="4" class="px-6 py-20 text-center text-gray-500 text-lg">
-                                            Bạn chưa có đề tài nào.
-                                        </td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
-                    </div>
+                                        @endif
+                                    </td>
+                                    <td class="px-6 py-5 whitespace-nowrap text-center">
+                                        <button type="button"
+                                            data-maso="{{ $item->MaSo }}"
+                                            data-tendetai="{{ $item->TenDeTai }}"
+                                            data-trangthai="{{ $item->TrangThai ?? 'Chưa xác định' }}"
+                                            data-phantram="{{ $tienDoCu->PhanTramTienDo ?? $item->PhanTramTienDo ?? 0 }}"
+                                            data-noidung="{{ $tienDoCu->NoiDungBaoCao ?? '' }}"
+                                            data-ketqua="{{ $tienDoCu->KetQua ?? '' }}"
+                                            data-khokhan="{{ $tienDoCu->KhoKhan ?? '' }}"
+                                            onclick="openCapNhatModal(this)"
+                                            class="text-blue-600 hover:text-blue-900 font-medium px-4 py-2 bg-blue-50 rounded hover:bg-blue-100 transition">
+                                            Cập nhật tiến độ
+                                        </button>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="4" class="px-6 py-20 text-center text-gray-500 text-lg">
+                                        Bạn chưa có đề tài nào.
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
 
-                    <!-- Phân trang -->
-                    <div class="px-6 py-4 border-t border-gray-200 flex flex-col sm:flex-row justify-between items-center text-sm text-gray-600 gap-4 bg-white">
-                        <div>
-                            Hiển thị {{ $deTaiCuaToi->firstItem() }} - {{ $deTaiCuaToi->lastItem() }} trong {{ $deTaiCuaToi->total() }} đề tài
-                        </div>
-                        <div class="flex items-center gap-2">
-                            {{ $deTaiCuaToi->links('pagination::tailwind') }}
-                        </div>
+                <!-- Phân trang -->
+                <div class="px-6 py-4 border-t border-gray-200 flex flex-col sm:flex-row justify-between items-center text-sm text-gray-600 gap-4 bg-white">
+                    <div>
+                        Hiển thị {{ $deTaiCuaToi->firstItem() }} - {{ $deTaiCuaToi->lastItem() }} trong {{ $deTaiCuaToi->total() }} đề tài
+                    </div>
+                    <div class="flex items-center gap-2">
+                        {{ $deTaiCuaToi->links('pagination::tailwind') }}
                     </div>
                 </div>
             </div>
@@ -106,81 +130,100 @@
 
     <!-- Modal Cập nhật tiến độ đề tài -->
     <div id="capNhatModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
-        <div class="bg-white rounded-xl shadow-2xl max-w-3xl w-full mx-4 p-8 relative overflow-y-auto max-h-[90vh]">
-            <button onclick="closeCapNhatModal()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-2xl font-bold">
-                ×
-            </button>
+        <div class="bg-white rounded-xl shadow-2xl max-w-5xl w-full mx-4 p-0 relative overflow-hidden max-h-[90vh] flex flex-col">
+            
+            <!-- Tiêu đề modal -->
+            <div class="bg-[#EBF4F6] px-8 py-5 border-b border-gray-200">
+                <h2 class="text-xl font-bold text-gray-800 text-center">
+                    Cập nhật tiến độ đề tài
+                </h2>
+            </div>
 
-            <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center border-b pb-4">
-                Cập nhật tiến độ đề tài
-            </h2>
-
-            <div class="space-y-6 text-gray-700">
-                <div>
-                    <span class="font-semibold block mb-1">Tên đề tài:</span> 
-                    <span id="modalTenDeTai" class="text-lg font-medium block"></span>
-                </div>
-                <div>
-                    <span class="font-semibold block mb-1">Trạng thái hiện tại:</span> 
-                    <span id="modalTrangThai" class="text-lg block"></span>
-                </div>
-                <div>
-                    <span class="font-semibold block mb-1">Tiến độ hiện tại:</span> 
-                    <div class="mt-2 text-xl font-bold text-[#1D546D]" id="modalPhanTram"></div>
-                </div>
-
-                <form class="space-y-6" method="POST" action="{{ route('giangvien.cap-nhat-tien-do') }}" enctype="multipart/form-data">
-                    @csrf
-                    <input type="hidden" name="maDeTai" id="modalMaDeTai">
-
-                    <div>
-                        <label class="block font-semibold mb-1">Tiêu đề cập nhật</label>
-                        <input type="text" name="tieuDe" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1D546D]">
-                    </div>
-                    <div>
-                        <label class="block font-semibold mb-1">Thời gian cập nhật</label>
-                        <div class="relative">
-                            <input type="date" name="thoiGian" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1D546D]">
-                            <i class="fas fa-calendar-alt absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"></i>
+            <!-- Nội dung chính - 2 cột -->
+            <div class="flex flex-col md:flex-row gap-8 p-8 overflow-y-auto flex-1">
+                
+                <!-- Cột trái: Thông tin hiện tại + Form cập nhật -->
+                <div class="md:w-1/2 space-y-6">
+                    <!-- Thông tin hiện tại -->
+                    <div class="space-y-4">
+                        <div>
+                            <span class="font-semibold text-gray-700 block mb-1">Tên đề tài:</span>
+                            <span id="modalTenDeTai" class="text-lg font-medium block text-gray-900"></span>
+                        </div>
+                        <div>
+                            <span class="font-semibold text-gray-700 block mb-1">Trạng thái hiện tại:</span>
+                            <span id="modalTrangThai" class="text-lg font-medium block text-gray-900"></span>
+                        </div>
+                        <div>
+                            <span class="font-semibold text-gray-700 block mb-1">Tiến độ hiện tại:</span>
+                            <div class="text-2xl font-bold text-[#1D546D]" id="modalPhanTram"></div>
                         </div>
                     </div>
-                    <div>
-                        <label class="block font-semibold mb-1">Phần trăm tiến độ (%)</label>
-                        <input type="number" name="phanTram" min="0" max="100" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1D546D]">
-                    </div>
-                    <div>
-                        <label class="block font-semibold mb-1">Nội dung báo cáo</label>
-                        <textarea name="noiDung" rows="4" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1D546D]"></textarea>
-                    </div>
-                    <div>
-                        <label class="block font-semibold mb-1">Kết quả đạt được</label>
-                        <textarea name="ketQua" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1D546D]"></textarea>
-                    </div>
-                    <div>
-                        <label class="block font-semibold mb-1">Khó khăn</label>
-                        <textarea name="khoKhan" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1D546D]"></textarea>
-                    </div>
-                    <div>
-                        <label class="block font-semibold mb-1">File minh chứng / báo cáo</label>
-                        <input type="file" name="fileBaoCao" class="w-full px-4 py-2 border border-gray-300 rounded-lg">
-                    </div>
-                </form>
 
-                <!-- Thông báo thành công -->
-                <div id="thanhCongMsg" class="hidden mt-6 p-4 bg-green-100 text-green-800 rounded-lg text-center font-medium">
+                    <!-- Form cập nhật -->
+                    <form id="capNhatForm" method="POST" action="{{ route('giangvien.capNhatTienDo') }}" enctype="multipart/form-data" class="space-y-6">
+                        @csrf
+                        <input type="hidden" name="maDeTai" id="modalMaDeTai">
+
+                        <div>
+                            <label class="block font-semibold text-gray-700 mb-1">Tiêu đề cập nhật</label>
+                            <input type="text" name="tieuDe" required class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1D546D] transition">
+                        </div>
+
+                        <div>
+                            <label class="block font-semibold text-gray-700 mb-1">Thời gian cập nhật</label>
+                            <div class="relative">
+                                <input type="date" name="thoiGian" required class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1D546D] transition">
+                                <i class="fas fa-calendar-alt absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none"></i>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block font-semibold text-gray-700 mb-1">Phần trăm tiến độ (%)</label>
+                            <input type="number" name="phanTram" min="0" max="100" required class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1D546D] transition">
+                        </div>
+
+                        <div>
+                            <label class="block font-semibold text-gray-700 mb-1">Nội dung báo cáo</label>
+                            <textarea name="noiDung" rows="5" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1D546D] transition resize-y"></textarea>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Cột phải -->
+                <div class="md:w-1/2 space-y-6">
+                    <div>
+                        <label class="block font-semibold text-gray-700 mb-1">Kết quả đạt được</label>
+                        <textarea name="ketQua" rows="5" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1D546D] transition resize-y"></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block font-semibold text-gray-700 mb-1">Khó khăn</label>
+                        <textarea name="khoKhan" rows="5" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1D546D] transition resize-y"></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block font-semibold text-gray-700 mb-1">File minh chứng / báo cáo</label>
+                        <input type="file" name="fileBaoCao" form="capNhatForm" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1D546D] transition">
+                        <p class="text-xs text-gray-500 mt-1">Hỗ trợ: word, pdf, excel,...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nút hành động -->
+            <div class="px-8 py-6 border-t border-gray-200 flex flex-col sm:flex-row justify-between items-center gap-4">
+                <div id="thanhCongMsg" class="hidden text-green-600 font-medium">
                     Tiến độ đề tài cập nhật thành công!
                 </div>
 
-                <!-- Nút hành động -->
-                <div class="mt-8 flex justify-center gap-4 flex-wrap">
-                    <button onclick="closeCapNhatModal()" class="bg-gray-500 hover:bg-gray-600 text-white px-8 py-3 rounded-lg shadow-md transition">
+                <div class="flex gap-4 flex-wrap">
+                    <button onclick="closeCapNhatModal()" class="bg-gray-500 hover:bg-gray-600 text-white px-8 py-3 rounded-lg shadow-md transition font-medium">
                         Hủy
                     </button>
-                    <button type="submit" form="capNhatForm" class="bg-yellow-500 hover:bg-yellow-600 text-white px-8 py-3 rounded-lg shadow-md transition">
+                    <button type="submit" form="capNhatForm" name="action" value="luu_nhap" class="bg-yellow-500 hover:bg-yellow-600 text-white px-8 py-3 rounded-lg shadow-md transition font-medium">
                         Lưu nháp
                     </button>
-                    <button type="submit" form="capNhatForm" onclick="document.getElementById('thanhCongMsg').classList.remove('hidden'); setTimeout(() => { closeCapNhatModal(); }, 2000)" 
-                            class="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg shadow-md transition">
+                    <button type="submit" form="capNhatForm" class="bg-[#1D546D] hover:bg-[#2c5d6e] text-white px-8 py-3 rounded-lg shadow-md transition font-medium">
                         Gửi báo cáo
                     </button>
                 </div>
@@ -188,65 +231,56 @@
         </div>
     </div>
 
-    <!-- Script tab switch + modal + tìm kiếm -->
+    <!-- Script mở/đóng modal -->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const tabDeXuat = document.getElementById('tab-de-xuat');
-            const tabCuaToi = document.getElementById('tab-de-tai-cua-toi');
-            const contentDeXuat = document.getElementById('content-de-xuat');
-            const contentCuaToi = document.getElementById('content-de-tai-cua-toi');
+        function openCapNhatModal(btn) {
+        // 1. Reset form
+        document.getElementById('capNhatForm').reset();
 
-            tabDeXuat.addEventListener('click', () => {
-                tabDeXuat.classList.add('bg-[#1D546D]', 'text-white', 'shadow-md');
-                tabDeXuat.classList.remove('bg-gray-200', 'text-gray-700');
-                tabCuaToi.classList.add('bg-gray-200', 'text-gray-700');
-                tabCuaToi.classList.remove('bg-[#1D546D]', 'text-white', 'shadow-md');
+        // 2. Đọc dữ liệu từ nút bấm (biến 'btn')
+        const maDeTai = btn.dataset.maso;
+        const tenDeTai = btn.dataset.tendetai;
+        const trangThai = btn.dataset.trangthai;
+        const phanTram = btn.dataset.phantram;
+        const noiDung = btn.dataset.noidung;
+        const ketQua = btn.dataset.ketqua;
+        const khoKhan = btn.dataset.khokhan;
 
-                contentDeXuat.classList.remove('hidden');
-                contentCuaToi.classList.add('hidden');
-            });
+        // 3. Hiển thị thông tin bên ngoài
+        document.getElementById('modalMaDeTai').value = maDeTai || '';
+        document.getElementById('modalTenDeTai').textContent = tenDeTai || 'Không có thông tin';
+        document.getElementById('modalTrangThai').textContent = trangThai || 'Không có thông tin';
+        document.getElementById('modalPhanTram').textContent = (phanTram || '0') + '%';
 
-            tabCuaToi.addEventListener('click', () => {
-                tabCuaToi.classList.add('bg-[#1D546D]', 'text-white', 'shadow-md');
-                tabCuaToi.classList.remove('bg-gray-200', 'text-gray-700');
-                tabDeXuat.classList.add('bg-gray-200', 'text-gray-700');
-                tabDeXuat.classList.remove('bg-[#1D546D]', 'text-white', 'shadow-md');
+        // 4. Set mặc định thời gian cập nhật là ngày hôm nay
+        const today = new Date().toISOString().split('T')[0];
+        document.querySelector('input[name="thoiGian"]').value = today;
 
-                contentCuaToi.classList.remove('hidden');
-                contentDeXuat.classList.add('hidden');
-            });
+        // 5. Điền dữ liệu cũ vào các ô input/textarea
+        document.querySelector('input[name="phanTram"]').value = phanTram || 0;
+        document.querySelector('textarea[name="noiDung"]').value = noiDung || '';
+        document.querySelector('textarea[name="ketQua"]').value = ketQua || '';
+        document.querySelector('textarea[name="khoKhan"]').value = khoKhan || '';
 
-            // Tìm kiếm client-side
-            document.getElementById('deTaiSearch').addEventListener('input', (e) => {
-                const filter = e.target.value.toLowerCase();
-                const activeContent = document.querySelector('.tab-content:not(.hidden)');
-                if (!activeContent) return;
-                activeContent.querySelectorAll('tbody tr').forEach(row => {
-                    const nameCell = row.querySelector('td:nth-child(2)');
-                    if (!nameCell) return;
-                    const text = nameCell.textContent.toLowerCase();
-                    row.style.display = text.includes(filter) ? '' : 'none';
-                });
-            });
-        });
+        // 6. Hiển thị Modal lên
+        document.getElementById('capNhatModal').classList.remove('hidden');
+    }
 
-        // Modal cập nhật tiến độ
-        function openCapNhatModal(tenDeTai, trangThai, phanTram, maDeTai) {
-            document.getElementById('modalTenDeTai').textContent = tenDeTai || 'Không có thông tin';
-            document.getElementById('modalTrangThai').textContent = trangThai || 'Không có thông tin';
-            document.getElementById('modalPhanTram').textContent = phanTram || '0';
-            document.getElementById('modalMaDeTai').value = maDeTai || '';
+    function closeCapNhatModal() {
+        document.getElementById('capNhatModal').classList.add('hidden');
+    }
 
-            document.getElementById('capNhatModal').classList.remove('hidden');
-        }
-
-        function closeCapNhatModal() {
-            document.getElementById('capNhatModal').classList.add('hidden');
-            document.getElementById('thanhCongMsg').classList.add('hidden');
-        }
-
-        document.getElementById('capNhatModal').addEventListener('click', function(e) {
-            if (e.target === this) closeCapNhatModal();
-        });
+    document.getElementById('capNhatModal').addEventListener('click', function(e) {
+        if (e.target === this) closeCapNhatModal();
+    });
     </script>
 @endsection
+@if ($errors->any())
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Có thể lấy lại ID đề tài cũ từ session hoặc flash data để mở đúng form
+        document.getElementById('capNhatModal').classList.remove('hidden');
+        alert("Có lỗi xảy ra: \n" + @json($errors->all()).join('\n'));
+    });
+</script>
+@endif

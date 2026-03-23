@@ -24,7 +24,7 @@
         <!-- HEADER -->
         <div class="flex justify-between items-center mb-6">
 
-            <button class="bg-[#2f5d6e] text-white px-6 py-2 rounded">
+            <button class="bg-[#2f5d6e] text-white px-6 py-3 rounded">
                 Theo dõi tiến độ đề tài
             </button>
 
@@ -36,21 +36,6 @@
 
             <!-- DANH SÁCH ĐỀ TÀI -->
             <div class="w-2/3 bg-[#EBF4F6] p-6 rounded-lg">
-
-                <!-- SEARCH -->
-                <div class="flex gap-4 mb-4">
-
-                    <input type="text"
-                        placeholder="Tìm kiếm đề tài ..."
-                        class="border px-3 py-2 rounded w-60">
-
-                    <select class="border px-3 py-2 rounded">
-                        <option>Tất cả trạng thái</option>
-                    </select>
-
-                </div>
-
-
                 <!-- TABLE -->
                 <table class="w-full text-sm">
 
@@ -71,7 +56,7 @@
                         <tr onclick="xemChiTiet({{ $dt->MaSo }}, this)"
                             class="cursor-pointer hover:bg-gray-200">
 
-                            <td class="py-2">{{ $index+1 }}</td>
+                            <td class="py-2">{{ $detai->firstItem() + $index }}</td>
 
                             <td>{{ $dt->TenDeTai }}</td>
 
@@ -113,6 +98,9 @@
                     </tbody>
 
                 </table>
+                <div class="mt-4">
+                    {{ $detai->links() }}
+                </div>
 
             </div>
 
@@ -125,6 +113,7 @@
             </div>
 
         </div>
+
 
     </div>
 

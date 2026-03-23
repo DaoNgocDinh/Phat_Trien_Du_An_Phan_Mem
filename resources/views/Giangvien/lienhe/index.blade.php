@@ -3,6 +3,7 @@
 @section('title', 'Đề xuất đề tài nghiên cứu')
 
 @section('content')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <div class="p-6">
 
         <!-- Card -->
@@ -59,7 +60,7 @@
                     </a>
 
                     <!-- Gửi -->
-                    <button type="submit"
+                    <button type="button" onclick="validateAndSubmit()"
                         class="px-5 py-2 bg-[#2c5d6e] text-white rounded-lg hover:bg-[#3f7b8e] transition shadow">
                         Gửi
                     </button>
@@ -70,6 +71,60 @@
                         {{ session('success') }}
                     </div>
                 @endif
+                <script>
+                    function validateAndSubmit() {
+                        const name = document.querySelector('input[name="name"]').value.trim();
+                        const email = document.querySelector('input[name="email"]').value.trim();
+                        const subject = document.querySelector('input[name="subject"]').value.trim();
+                        const message = document.querySelector('textarea[name="message"]').value.trim();
+
+                        // Regex email cơ bản
+                        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+                        if (!name) {
+                            Swal.fire("Thiếu thông tin", "Vui lòng nhập họ tên", "warning");
+                            return;
+                        }
+
+                        if (!email) {
+                            Swal.fire("Thiếu thông tin", "Vui lòng nhập email", "warning");
+                            return;
+                        }
+
+                        if (!emailRegex.test(email)) {
+                            Swal.fire("Email không hợp lệ", "Vui lòng nhập đúng định dạng email", "error");
+                            return;
+                        }
+
+                        if (!subject) {
+                            Swal.fire("Thiếu thông tin", "Vui lòng nhập chủ đề", "warning");
+                            return;
+                        }
+
+                        if (!message) {
+                            Swal.fire("Thiếu thông tin", "Vui lòng nhập nội dung", "warning");
+                            return;
+                        }
+
+                        if (message.length < 10) {
+                            Swal.fire("Nội dung quá ngắn", "Vui lòng nhập ít nhất 10 ký tự", "warning");
+                            return;
+                        }
+
+                        Swal.fire({
+                            title: "Xác nhận gửi",
+                            text: "Bạn có chắc muốn gửi yêu cầu liên hệ?",
+                            icon: "question",
+                            showCancelButton: true,
+                            confirmButtonText: "Gửi",
+                            cancelButtonText: "Hủy"
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                document.querySelector('form').submit();
+                            }
+                        });
+                    }
+                </script>
             </form>
         </div>
     </div>

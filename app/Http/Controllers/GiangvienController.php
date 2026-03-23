@@ -105,17 +105,27 @@ class GiangVienController extends Controller
     public function CongBo()
     {
         $congbos = CongBo::latest()->paginate(10);
-        return view('Giangvien.congBo', compact('congbos'));
+        return view('Giangvien.congbo.congBo', compact('congbos'));
     }
     public function DeTai()
     {
         $detais = Detai::latest()->paginate(10);
-        return view('Giangvien.deTai', compact('detais'));
+        return view('Giangvien.detai.deTai', compact('detais'));
+    }
+
+    public function DeTaiCuaToi()
+    {
+        $hoTen = session('HoTen');
+        $deTaiCuaToi = Detai::where('ChuNhiem', $hoTen)->latest()->paginate(10);
+        return view('Giangvien.detai.deTaiCuaToi', compact('deTaiCuaToi'));
     }
 
     public function SuKien()
     {
-        $sukiens = Sukien::latest()->paginate(10);
+        $sukiens = Sukien::withSum('dangkysukien as tong_dang_ky', 'SoLuongDangKy')
+                         ->latest()
+                         ->paginate(10);
+                         
         return view('Giangvien.suKien', compact('sukiens'));
     }
 }

@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('TenDeTai')->nullable();
             $table->string('ChuNhiem')->nullable();
             $table->string('DonVi')->nullable();
-            $table->string('CapDeTai')->nullable();
-            $table->string('LoaiDeTai')->nullable();        
+            $table->string('LoaiDeTai')->nullable();
+            $table->string('CapDeTai')->nullable();       
 
             $table->date('ThoiGianBatDau')->nullable();
             $table->date('ThoiGianKetThuc')->nullable();

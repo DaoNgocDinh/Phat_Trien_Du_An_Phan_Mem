@@ -12,7 +12,7 @@ class DeTaiController extends Controller
     {
         $danhmuc = Detai::select('LoaiDeTai')
             ->distinct()
-            ->get();
+            ->paginate(10);
 
         return view('Admin.quanlydanhmuc.index', compact('danhmuc'));
     }
@@ -65,7 +65,7 @@ class DeTaiController extends Controller
             'KinhPhi' => $request->KinhPhi,
         ]);
 
-        return redirect()->route('giangvien.trangChu')->with('success', 'Thêm thành công');
+        return redirect()->route('giangvien.deTai')->with('success', 'Thêm thành công');
     }
 
     // form sửa

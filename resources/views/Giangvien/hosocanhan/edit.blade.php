@@ -23,7 +23,7 @@
         <div class="bg-[#D9E2E6] rounded-lg p-8 mt-2">
 
             <p class="text-red-500 text-center mb-3">
-                Vui lòng sửa các thông tin muốn thay đổi
+                Vui lòng sửa các thông tin muốn thay đổi !
             </p>
 
 
@@ -55,16 +55,22 @@
                             name="HoTen"
                             value="{{ $hoso->HoTen ?? '' }}"
                             class="border border-black rounded px-3 py-2 w-full">
+                        @error('HoTen')
+                        <p class="text-red-500 text-sm">{{ $message }}</p>
+                        @enderror
                     </div>
 
 
                     <div>
-                        <label>Ngày sinh :</label>
 
+                        <label>Ngày sinh :</label>
                         <input type="date"
                             name="NgaySinh"
-                            value="{{ isset($hoso->NgaySinh) ? \Carbon\Carbon::parse($hoso->NgaySinh)->format('Y-m-d') : '' }}"
+                            value="{{ $hoso->NgaySinh ? $hoso->NgaySinh->format('Y-m-d') : '' }}"
                             class="border border-black rounded px-3 py-2 w-full">
+                        @error('NgaySinh')
+                        <p class="text-red-500 text-sm">{{ $message }}</p>
+                        @enderror
                     </div>
 
                     <div>
@@ -147,10 +153,10 @@
 
                 <div id="editButtons" class="hidden flex gap-4">
 
-                    <button type="submit"
+                    <button id="btnSave" type="submit"
                         class="bg-[#1D8E8E] text-white px-6 py-2 rounded">
                         <i class="fa fa-check"></i>
-                        Cập nhật
+                        Lưu thay đổi
                     </button>
 
 
@@ -160,7 +166,6 @@
 
                         <i class="fa fa-times"></i>
                         Hủy
-
                     </button>
 
                 </div>
@@ -276,6 +281,77 @@
     });
 </script>
 @endif
+
+<!-- xử lý validate -->
+<script>
+    const form = document.querySelector("form");
+    const hoTen = document.querySelector("input[name='HoTen']");
+    const ngaySinh = document.querySelector("input[name='NgaySinh']");
+    const btnSave = document.getElementById("btnSave");
+
+    // ===== VALIDATE REALTIME =====
+    hoTen.addEventListener("input", () => validateHoTen());
+    ngaySinh.addEventListener("input", () => validateNgaySinh());
+
+    function validateHoTen() {
+        if (hoTen.value.trim() === "") {
+            showError(hoTen, "Vui lòng nhập họ tên");
+            return false;
+        }
+        clearError(hoTen);
+        return true;
+    }
+
+    function validateNgaySinh() {
+        if (ngaySinh.value.trim() === "") {
+            showError(ngaySinh, "Vui lòng chọn ngày sinh");
+            return false;
+        }
+
+        // check ngày hợp lệ (không lớn hơn hôm nay)
+        let today = new Date().toISOString().split('T')[0];
+        if (ngaySinh.value > today) {
+            showError(ngaySinh, "Ngày sinh không hợp lệ");
+            return false;
+        }
+
+        clearError(ngaySinh);
+        return true;
+    }
+
+    // ===== SUBMIT =====
+    form.addEventListener("submit", function(e) {
+
+        let isHoTenValid = validateHoTen();
+        let isNgaySinhValid = validateNgaySinh();
+
+        if (!isHoTenValid || !isNgaySinhValid) {
+            e.preventDefault(); // ❌ chặn submit
+        }
+    });
+
+    // ===== HIỂN THỊ LỖI =====
+    function showError(input, message) {
+
+        clearError(input); // xóa lỗi cũ trước
+
+        input.classList.add("border-red-500");
+
+        let error = document.createElement("p");
+        error.className = "text-red-500 text-sm mt-1 error-msg";
+        error.innerText = message;
+
+        input.parentElement.appendChild(error);
+    }
+
+    function clearError(input) {
+        input.classList.remove("border-red-500");
+
+        let oldError = input.parentElement.querySelector(".error-msg");
+        if (oldError) oldError.remove();
+    }
+</script>
+
 </body>
 
 </html>

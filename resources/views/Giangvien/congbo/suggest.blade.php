@@ -3,6 +3,7 @@
 @section('title', 'Đề xuất công bố khoa học')
 
 @section('content')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <div class="p-6" style="margin-top: 60px; margin-left: 260px;">
     <button type="button"
         class="text-2xl flex gap-2 text-white bg-[#1D546D] px-4 py-2 rounded-md hover:bg-[#3f7b8e] hover:shadow-xl hover:border-gray-600 cursor-pointer">
@@ -35,7 +36,7 @@
                     Tất cả công bố
                 </button>
             </a>
-            <a href="#">
+            <a href="{{ route('giangvien.congBoCuaToi') }}">
                 <button type="button"
                     class="bg-gray-500 hover:bg-[#2c5d6e] text-black px-6 py-2.5 shadow-md transition flex items-center gap-2 font-medium">
                     <!-- <i class="fas fa-plus-circle"></i> -->
@@ -95,7 +96,7 @@
                 </div>
 
                 <div>
-                    <label class="block mb-1 font-medium text-gray-600">File với định dại pdf</label>
+                    <label class="block mb-1 font-medium text-gray-600">File với định dạng pdf</label>
 
                     <div
                         class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#2c5d6e] focus:outline-none flex items-center justify-between cursor-pointer">
@@ -126,7 +127,8 @@
                 Hủy
             </button>
 
-            <button type="submit" class="px-6 py-2 bg-[#1D546D] text-white rounded-lg hover:bg-[#174454]">
+            <button type="button" onclick="validateAndSubmit()"
+                class="px-6 py-2 bg-[#1D546D] text-white rounded-lg hover:bg-[#174454]">
                 Gửi đề xuất
             </button>
         </div>
@@ -139,5 +141,78 @@
         input.addEventListener('change', function () {
             fileName.textContent = this.files[0]?.name || "Chọn file...";
         });
+    </script>
+
+    <script>
+        function validateAndSubmit() {
+            const ten = document.querySelector('input[name="TenCongBo"]').value.trim();
+            const loai = document.querySelector('input[name="LoaiCongBo"]').value.trim();
+            const tacGia = document.querySelector('input[name="TacGia"]').value.trim();
+            const noi = document.querySelector('input[name="NoiCongBo"]').value.trim();
+            const ngay = document.querySelector('input[name="NamXuatBan"]').value;
+            const tomTat = document.querySelector('textarea[name="NoiDungTomTat"]').value.trim();
+            const file = document.getElementById('fileInput').files[0];
+
+            // ===== VALIDATE =====
+            if (!ten) {
+                Swal.fire("Thiếu thông tin", "Vui lòng nhập tiêu đề", "warning");
+                return;
+            }
+
+            if (!loai) {
+                Swal.fire("Thiếu thông tin", "Vui lòng nhập loại công bố", "warning");
+                return;
+            }
+
+            if (!tacGia) {
+                Swal.fire("Thiếu thông tin", "Vui lòng nhập tác giả", "warning");
+                return;
+            }
+
+            if (!noi) {
+                Swal.fire("Thiếu thông tin", "Vui lòng nhập nơi công bố", "warning");
+                return;
+            }
+
+            if (!ngay) {
+                Swal.fire("Thiếu thông tin", "Vui lòng chọn ngày công bố", "warning");
+                return;
+            }
+
+            if (!tomTat) {
+                Swal.fire("Thiếu thông tin", "Vui lòng nhập tóm tắt nội dung", "warning");
+                return;
+            }
+
+            // ===== FILE BẮT BUỘC =====
+            if (!file) {
+                Swal.fire("Thiếu file", "Vui lòng tải lên file PDF", "warning");
+                return;
+            }
+
+            if (file.type !== "application/pdf") {
+                Swal.fire("Sai định dạng", "Chỉ chấp nhận file PDF", "error");
+                return;
+            }
+
+            if (file.size > 5 * 1024 * 1024) {
+                Swal.fire("File quá lớn", "File PDF tối đa 5MB", "error");
+                return;
+            }
+
+            // ===== CONFIRM =====
+            Swal.fire({
+                title: "Xác nhận gửi",
+                text: "Bạn có chắc chắn muốn gửi công bố này?",
+                icon: "question",
+                showCancelButton: true,
+                confirmButtonText: "Gửi",
+                cancelButtonText: "Hủy"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('formCongBo').submit();
+                }
+            });
+        }
     </script>
 </div>
