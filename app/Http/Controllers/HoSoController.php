@@ -38,12 +38,17 @@ class HoSoController extends Controller
 
         $request->validate([
             'HoTen' => 'required|string|max:255',
-            'NgaySinh' => 'required|date',
-            'SoDienThoai' => 'required',
+            'NgaySinh' => 'required|date|before_or_equal:today',
+            'SoDienThoai' => 'required|regex:/^[0-9]{10}$/',
+            'Email' => 'required|email',
         ], [
             'HoTen.required' => 'Vui lòng nhập họ tên',
             'NgaySinh.required' => 'Vui lòng chọn ngày sinh',
+            'NgaySinh.before_or_equal' => 'Ngày sinh không hợp lệ',
             'SoDienThoai.required' => 'Vui lòng nhập số điện thoại',
+            'SoDienThoai.regex' => 'Số điện thoại phải 10 chữ số',
+            'Email.required' => 'Vui lòng nhập email',
+            'Email.email' => 'Email không hợp lệ',
         ]);
 
         $userID = session('UserID');
@@ -59,8 +64,6 @@ class HoSoController extends Controller
 
             $gv->HoTen = $request->HoTen;
             $gv->NgaySinh = $request->NgaySinh;
-            $gv->ChucVu = $request->ChucVu;
-            $gv->Khoa = $request->Khoa;
             $gv->Email = $request->Email;
             $gv->Sdt = $request->SoDienThoai;
 

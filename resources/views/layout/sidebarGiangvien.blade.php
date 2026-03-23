@@ -35,6 +35,14 @@
                     </a>
                 </li>
                 <li>
+                    <a href="{{ route('giangvien.tiendo.index') }}"
+                        class="flex items-center px-3 py-2.5 text-white rounded-md hover:bg-[#2c5d6e] hover:shadow-md transition-all duration-200 
+       {{ request()->routeIs('giangvien.tiendo.*') ? 'bg-[#2c5d6e] shadow-md border-l-4 border-white text-white font-semibold' : '' }}">
+                        <i class="fas fa-tasks w-6 text-lg"></i>
+                        <span class="ml-3">Theo dõi tiến độ</span>
+                    </a>
+                </li>
+                <li>
                     <a href="{{ route('giangvien.quyChe.index') }}"
                         class="flex items-center px-3 py-2.5 text-white rounded-md hover:bg-[#2c5d6e] hover:shadow-md transition-all duration-200 
                        {{ request()->routeIs('giangvien.quyChe.*') ? 'bg-[#2c5d6e] shadow-md border-l-4 border-white text-white font-semibold' : '' }}">
@@ -75,7 +83,7 @@
                     </a>
                 </li>
                 <li>
-                    <a {{-- href="{{ route('giangvien.ho-so.index') }}" --}}
+                    <a href="{{ route('hoso.edit') }}"
                         class="flex items-center px-3 py-2.5 text-white rounded-md hover:bg-[#2c5d6e] hover:shadow-md transition-all duration-200 
                        {{ request()->routeIs('giangvien.ho-so.*') ? 'bg-[#2c5d6e] shadow-md border-l-4 border-white text-white font-semibold' : '' }}">
                         <i class="fas fa-user w-6 text-lg"></i>
@@ -98,7 +106,7 @@
         }
 
         // Nhấn Enter trong input
-        input.addEventListener('keydown', function (e) {
+        input.addEventListener('keydown', function(e) {
             if (e.key === 'Enter') {
                 goToSearch();
             }

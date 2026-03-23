@@ -1,4 +1,4 @@
-<form action="{{ route('danhmuc.store') }}" method="POST">
+<form action="{{ route('admin.danhmuc.store') }}" method="POST">
     @csrf
 
     <div id="popupForm" class="hidden bg-[#EBF4F6] border border-black rounded-lg w-full h-full">
