@@ -20,4 +20,10 @@ Route::prefix('admin')->middleware('roles:admin')->group(function () {
     Route::get('/lienhe/{MaLienHe}', [LienHeController::class, 'detail'])->name('admin.lienhe.detail');
 
     Route::get('/search', [AdminController::class, 'search'])->name('admin.search');
+
+    // Quản lý Sự kiện (Admin)
+    Route::get('/admin/su-kien', [AdminController::class, 'suKienIndex'])->name('admin.sukien.index');
+    Route::post('/admin/su-kien/store', [AdminController::class, 'suKienStore'])->name('admin.sukien.store');
+    Route::put('/admin/su-kien/update/{id}', [AdminController::class, 'suKienUpdate'])->name('admin.sukien.update');
+    Route::delete('/admin/su-kien/delete/{id}', [AdminController::class, 'suKienDestroy'])->name('admin.sukien.destroy');
 });

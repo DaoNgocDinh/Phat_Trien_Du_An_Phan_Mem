@@ -113,4 +113,65 @@ class AdminController extends Controller
 
         return view('Admin.search.index', ['results' => $paginated]);
     }
+    // --- QUẢN LÝ SỰ KIỆN ---
+
+    public function suKienIndex()
+    {
+        // Lấy danh sách sự kiện kèm tổng số lượng đăng ký
+        $sukiens = Sukien::withSum('dangkysukien as tong_dang_ky', 'SoLuongDangKy')
+                         ->orderBy('ThoiGian', 'desc')
+                         ->paginate(10);
+                         
+        return view('Admin.sukien.index', compact('sukiens'));
+    }
+
+    public function suKienStore(Request $request)
+    {
+        $request->validate([
+            'TenSuKien' => 'required',
+            'ThoiGian' => 'required|date',
+        ]);
+
+        $maxId = Sukien::max('MaSuKien');
+        $newId = $maxId ? $maxId + 1 : 1;
+
+        Sukien::create([
+            'MaSuKien' => $newId,
+            'TenSuKien' => $request->TenSuKien,
+            'MoTa' => $request->MoTa,
+            'DiaDiem' => $request->DiaDiem,
+            'ThoiGian' => $request->ThoiGian,
+            'HinhThuc' => $request->HinhThuc,
+            'SoLuongToiDa' => $request->SoLuongToiDa,
+        ]);
+
+        return back()->with('success', 'Thêm sự kiện thành công!');
+    }
+
+    public function suKienUpdate(Request $request, $id)
+    {
+        $sukien = Sukien::findOrFail($id);
+        
+        $sukien->update([
+            'TenSuKien' => $request->TenSuKien,
+            'MoTa' => $request->MoTa,
+            'DiaDiem' => $request->DiaDiem,
+            'ThoiGian' => $request->ThoiGian,
+            'HinhThuc' => $request->HinhThuc,
+            'SoLuongToiDa' => $request->SoLuongToiDa,
+        ]);
+
+        return back()->with('success', 'Cập nhật sự kiện thành công!');
+    }
+
+    public function suKienDestroy($id)
+    {
+        // Cần xóa các bản ghi đăng ký liên quan trong bảng dangkysukien trước để tránh lỗi khóa ngoại (Foreign Key)
+        \App\Models\Dangkysukien::where('MaSuKien', $id)->delete();
+        
+        // Sau đó mới xóa sự kiện
+        Sukien::where('MaSuKien', $id)->delete();
+
+        return back()->with('success', 'Xóa sự kiện thành công!');
+    }
 }
