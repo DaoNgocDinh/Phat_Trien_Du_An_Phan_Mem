@@ -9,8 +9,6 @@ Route::prefix('admin')->middleware('roles:admin')->group(function () {
         ->name('admin.congbo.index');
 
     Route::get('/congbo/bao-cao', [CongBoController::class, 'baocao'])->name('admin.congbo.baocao');
-    Route::get('/congbo/bao-cao/show', [CongBoController::class, 'hienthitaobaocao'])->name('admin.congbo.baocao.show');
-    Route::get('/congbo/bao-cao/timkiem', [CongBoController::class, 'taobaocao'])->name('admin.congbo.baocao.timkiem');
     Route::post('/congbo/export', [CongBoController::class, 'export'])->name('admin.congbo.export');
 
     Route::get('/congbo/{id}', [CongBoController::class, 'show'])

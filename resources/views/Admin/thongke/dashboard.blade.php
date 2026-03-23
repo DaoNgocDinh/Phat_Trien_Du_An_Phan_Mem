@@ -13,11 +13,10 @@
                 Báo cáo - Thống kê
             </div>
 
-            <a href="{{ route('admin.congbo.baocao.show') }}"
-                class="bg-[#3498DB] text-white px-4 py-2 rounded flex items-center gap-2">
+            <button onclick="openModal()" class="bg-[#3498DB] text-white px-4 py-2 rounded flex items-center gap-2">
                 <i class="fa-solid fa-file-export"></i>
-                Tạo báo cáo
-            </a>
+                Xuất báo cáo
+            </button>
 
         </div>
 
