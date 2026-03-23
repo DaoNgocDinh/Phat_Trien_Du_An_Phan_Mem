@@ -82,7 +82,8 @@
                 <b>File PDF: {{ $congbo->FilePDF }}</b>
 
                 <div class="mt-3">
-                    <a href="{{ asset('storage/' . $congbo->FilePDF) }}" target="_blank" class="text-blue-600 hover:underline">
+                    <a href="{{ asset('uploads/pdf/' . $congbo->FilePDF) }}" target="_blank"
+                        class="text-blue-600 hover:underline">
                         Xem file PDF
                     </a>
                 </div>

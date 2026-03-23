@@ -56,7 +56,7 @@ class DeTaiController extends Controller
             'LoaiDeTai' => $request->LoaiDeTai,
             'ThoiGianBatDau' => $request->ThoiGianBatDau,
             'ThoiGianKetThuc' => $request->ThoiGianKetThuc,
-            'TrangThai' => 'Chờ xét duyệt',
+            'TrangThai' => 'Chờ Duyệt',
             'MucTieu' => $request->MucTieu,
             'NoiDungChinh' => $request->NoiDungChinh,
             'Thanhvien' => '',

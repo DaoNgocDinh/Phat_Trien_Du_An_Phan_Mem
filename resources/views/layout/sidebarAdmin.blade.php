@@ -56,15 +56,6 @@
                     </a>
                 </li>
 
-                <!-- Hoạt động -->
-                <li>
-                    <a href="#"
-                        class="flex items-center px-3 py-2.5 text-white rounded-md hover:bg-[#2c5d6e] transition">
-                        <i class="fas fa-stream w-6"></i>
-                        <span class="ml-3">Hoạt động khoa học</span>
-                    </a>
-                </li>
-
                 <!-- Sự kiện -->
                 <li>
                     <a href="{{ route('admin.sukien.index') }}"
@@ -81,15 +72,6 @@
                         {{ request()->routeIs('admin.lienhe.*') ? 'bg-[#2c5d6e] border-l-4 border-white font-semibold' : '' }}">
                         <i class="fas fa-envelope w-6"></i>
                         <span class="ml-3">Liên hệ</span>
-                    </a>
-                </li>
-
-                <!-- Đăng tải -->
-                <li>
-                    <a href="#"
-                        class="flex items-center px-3 py-2.5 text-white rounded-md hover:bg-[#2c5d6e] transition">
-                        <i class="fas fa-upload w-6"></i>
-                        <span class="ml-3">Đăng tải</span>
                     </a>
                 </li>
 
