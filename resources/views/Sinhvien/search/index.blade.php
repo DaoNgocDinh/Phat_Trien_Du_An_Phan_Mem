@@ -1,4 +1,4 @@
-@extends('layout.giangvien')
+@extends('layout.sinhvien')
 
 @section('title', 'Tìm kiếm và lọc')
 
@@ -59,9 +59,9 @@
 <script>
     function goToCard(type, id) {
         switch (type) {
-            case 'Quy chế':
-                window.location.href = '/sinhvien/quyche/' + id;
-                break;
+            // case 'Quy chế':
+            //     window.location.href = '/sinhvien/quyche/' + id;
+            //     break;
             // case 'Công bố':
             //     window.location.href = '/sinhvien/congbo/' + id;
             //     break;

@@ -1,46 +1,67 @@
-@extends('layout.sinhVien') 
+@extends('layout.sinhvien') 
 
-@section('title', 'Trang chủ')
+@section('title', 'Trang chủ Sinh viên')
 
 @section('content')
-    <div class="bg-gray-50 min-h-screen">
+    <div class="p-4 md:p-6 lg:p-8 bg-gray-50 min-h-screen">
         
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 md:gap-6">
             
-            <a href="{{ route('guest.deTai') }}" class="group bg-white rounded-xl shadow hover:shadow-2xl hover:scale-105 transition-all duration-300 flex flex-col items-center justify-center aspect-square p-6 text-center border border-gray-200">
-                <div class="text-7xl md:text-8xl text-gray-700 mb-4 group-hover:text-[#1D546D] transition-colors">
-                    <i class="fas fa-book-reader"></i>
+            <!-- 1. Đề tài nghiên cứu -->
+            <a href="{{ route('sinhvien.deTai') }}" class="group bg-white rounded-xl shadow hover:shadow-2xl hover:scale-105 transition-all duration-300 flex flex-col items-center justify-center aspect-square p-6 text-center border border-gray-200">
+                <div class="text-7xl md:text-8xl text-gray-700 mb-4">
+                    <svg class="w-24 h-24 mx-auto" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="20" y="20" width="60" height="60" rx="8" stroke="currentColor" stroke-width="6"/>
+                        <path d="M30 50 Q40 30 50 50 T70 50" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+                    </svg>
                 </div>
-                <h3 class="text-lg md:text-xl font-bold text-gray-800 group-hover:text-[#1D546D] transition-colors">Đề tài nghiên cứu</h3>
+                <h3 class="text-lg md:text-xl font-bold text-gray-800 group-hover:text-[#1D546D]">Đề tài nghiên cứu</h3>
             </a>
 
-            <a href="{{ route('guest.quyChe.index') }}" class="group bg-white rounded-xl shadow hover:shadow-2xl hover:scale-105 transition-all duration-300 flex flex-col items-center justify-center aspect-square p-6 text-center border border-gray-200">
-                <div class="text-7xl md:text-8xl text-gray-700 mb-4 group-hover:text-[#1D546D] transition-colors">
-                    <i class="fas fa-gavel"></i>
+            <!-- 2. Quy chế khoa học -->
+            <a href="{{ route('sinhvien.quyChe.index') }}" class="group bg-white rounded-xl shadow hover:shadow-2xl hover:scale-105 transition-all duration-300 flex flex-col items-center justify-center aspect-square p-6 text-center border border-gray-200">
+                <div class="text-7xl md:text-8xl text-gray-700 mb-4">
+                    <svg class="w-24 h-24 mx-auto" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="20" y="20" width="60" height="60" rx="8" stroke="currentColor" stroke-width="6"/>
+                        <path d="M30 40 H70 M30 50 H70 M30 60 H70" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+                    </svg>
                 </div>
-                <h3 class="text-lg md:text-xl font-bold text-gray-800 group-hover:text-[#1D546D] transition-colors">Quy chế khoa học</h3>
+                <h3 class="text-lg md:text-xl font-bold text-gray-800 group-hover:text-[#1D546D]">Quy chế khoa học</h3>
             </a>
 
-            <a href="{{ route('guest.congBo') ?? '#' }}" class="group bg-white rounded-xl shadow hover:shadow-2xl hover:scale-105 transition-all duration-300 flex flex-col items-center justify-center aspect-square p-6 text-center border border-gray-200">
-                <div class="text-7xl md:text-8xl text-gray-700 mb-4 group-hover:text-[#1D546D] transition-colors">
-                    <i class="fas fa-file-contract"></i>
+            <!-- 3. Công bố khoa học -->
+            <a href="{{ route('sinhvien.congBo') }}" class="group bg-white rounded-xl shadow hover:shadow-2xl hover:scale-105 transition-all duration-300 flex flex-col items-center justify-center aspect-square p-6 text-center border border-gray-200">
+                <div class="text-7xl md:text-8xl text-gray-700 mb-4">
+                    <svg class="w-24 h-24 mx-auto" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="20" y="20" width="60" height="60" rx="8" stroke="currentColor" stroke-width="6"/>
+                        <path d="M30 30 Q50 70 70 30" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+                    </svg>
                 </div>
-                <h3 class="text-lg md:text-xl font-bold text-gray-800 group-hover:text-[#1D546D] transition-colors">Công bố khoa học</h3>
+                <h3 class="text-lg md:text-xl font-bold text-gray-800 group-hover:text-[#1D546D]">Công bố khoa học</h3>
             </a>
 
-            <a href="{{ route('guest.suKien') }}" class="group bg-white rounded-xl shadow hover:shadow-2xl hover:scale-105 transition-all duration-300 flex flex-col items-center justify-center aspect-square p-6 text-center border border-gray-200">
-                <div class="text-7xl md:text-8xl text-gray-700 mb-4 group-hover:text-[#1D546D] transition-colors">
-                    <i class="fas fa-calendar-check"></i>
+            <!-- 5. Sự kiện -->
+            <a href="{{ route('sinhvien.suKien') }}" class="group bg-white rounded-xl shadow hover:shadow-2xl hover:scale-105 transition-all duration-300 flex flex-col items-center justify-center aspect-square p-6 text-center border border-gray-200">
+                <div class="text-7xl md:text-8xl text-gray-700 mb-4">
+                    <svg class="w-24 h-24 mx-auto" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="20" y="20" width="60" height="60" rx="8" stroke="currentColor" stroke-width="6"/>
+                        <circle cx="50" cy="50" r="15" stroke="currentColor" stroke-width="6"/>
+                    </svg>
                 </div>
-                <h3 class="text-lg md:text-xl font-bold text-gray-800 group-hover:text-[#1D546D] transition-colors">Sự kiện</h3>
+                <h3 class="text-lg md:text-xl font-bold text-gray-800 group-hover:text-[#1D546D]">Sự kiện</h3>
             </a>
 
-            <a href="{{ route('guest.lienhe') }}" class="group bg-white rounded-xl shadow hover:shadow-2xl hover:scale-105 transition-all duration-300 flex flex-col items-center justify-center aspect-square p-6 text-center border border-gray-200">
-                <div class="text-7xl md:text-8xl text-gray-700 mb-4 group-hover:text-[#1D546D] transition-colors">
-                    <i class="fas fa-envelope"></i>
+            <!-- 6. Liên hệ -->
+            <a href="{{ route('sinhvien.lienhe.index') }}" class="group bg-white rounded-xl shadow hover:shadow-2xl hover:scale-105 transition-all duration-300 flex flex-col items-center justify-center aspect-square p-6 text-center border border-gray-200">
+                <div class="text-7xl md:text-8xl text-gray-700 mb-4">
+                    <svg class="w-24 h-24 mx-auto" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="20" y="20" width="60" height="60" rx="8" stroke="currentColor" stroke-width="6"/>
+                        <path d="M30 40 L50 60 L70 40" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+                    </svg>
                 </div>
-                <h3 class="text-lg md:text-xl font-bold text-gray-800 group-hover:text-[#1D546D] transition-colors">Liên hệ</h3>
+                <h3 class="text-lg md:text-xl font-bold text-gray-800 group-hover:text-[#1D546D]">Liên hệ</h3>
             </a>
+
 
         </div>
     </div>
