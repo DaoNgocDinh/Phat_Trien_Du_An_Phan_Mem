@@ -4,6 +4,36 @@
 
 @section('content')
 
+@if(session('success'))
+<div id="successModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
+    
+    <div class="bg-white w-[400px] rounded-lg shadow-lg overflow-hidden">
+        
+        <!-- HEADER -->
+        <div class="flex justify-between items-center border-b px-4 py-2 bg-gray-100">
+            <span class="font-semibold text-gray-700">Thông báo</span>
+            <button onclick="closeModal()" class="text-gray-600 hover:text-black">✖</button>
+        </div>
+
+        <!-- CONTENT -->
+        <div class="text-center py-8 px-4">
+
+            <div class="w-16 h-16 mx-auto mb-4 bg-green-500 rounded-full flex items-center justify-center">
+                <i class="fa-solid fa-check text-white text-2xl"></i>
+            </div>
+
+            <h2 class="text-lg font-bold mb-2">Thêm tài khoản thành công!</h2>
+            <p class="text-gray-600 text-sm">
+                {{ session('success') }}
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+@endif
+
 <div class="flex flex-col">
 
     <div class="bg-[#1D546D] text-white text-2xl font-semibold px-7 py-3 rounded-md w-fit mb-8 ml-20 mt-10">
@@ -163,6 +193,14 @@
 
     role.addEventListener("change", changeRole);
     changeRole();
+
+
+    setTimeout(() => {
+    let modal = document.getElementById('successModal');
+    if(modal) modal.style.display = 'none';
+}, 2000);
 </script>
+
+
 
 @endsection

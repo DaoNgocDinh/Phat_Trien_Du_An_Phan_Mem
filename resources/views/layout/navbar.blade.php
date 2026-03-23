@@ -3,8 +3,8 @@
         <div class="flex h-16 items-center justify-between">
 
             <!-- Nút Đăng xuất -->
-            <a href="{{ route('logout') }}"
-                class="hidden sm:flex items-center px-4 py-2 text-sm font-medium text-white bg-red-600/90 hover:bg-red-700 rounded-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-red-500/50">
+            <a href="javascript:void(0)" onclick="openLogoutModal()"
+                class="hidden sm:flex items-center px-4 py-2 text-sm font-medium text-white bg-red-600/90 hover:bg-red-700 rounded-md">
                 <i class="fas fa-sign-out-alt mr-2"></i>
                 Đăng xuất
             </a>
@@ -67,6 +67,37 @@
             </div>
         </div>
     </div>
+    <div id="logoutModal" class="hidden fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+
+        <div class="bg-white w-[350px] rounded-lg shadow-lg">
+
+            <!-- Header -->
+            <div class="flex justify-between items-center px-4 py-2 border-b bg-gray-100">
+                <span class="font-semibold">Xác nhận</span>
+                <button onclick="closeLogoutModal()">✖</button>
+            </div>
+
+            <!-- Content -->
+            <div class="p-6 text-center">
+                <p class="text-gray-700 mb-6">
+                    Bạn có chắc chắn muốn đăng xuất không ?
+                </p>
+
+                <div class="flex justify-center gap-4">
+                    <button onclick="closeLogoutModal()" class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">
+                        Không
+                    </button>
+
+                    <a href="{{ route('logout') }}"
+                        class="px-4 py-2 bg-[#6b9080] text-white rounded hover:bg-[#5a7c6f]">
+                        Có
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
 </nav>
 
 <script>
@@ -77,7 +108,6 @@
         const content = document.getElementById("dropdownContent");
         const badge = document.getElementById("badge");
 
-        // 🔴 Load số lượng
         function loadCount() {
             fetch("{{ route('lienhe.count') }}")
                 .then(res => res.json())
@@ -91,7 +121,6 @@
                 });
         }
 
-        // 📩 Load danh sách
         function loadList() {
             fetch("{{ route('lienhe.list') }}")
                 .then(res => res.json())
@@ -110,36 +139,39 @@
                     data.forEach(item => {
                         content.innerHTML += `
                         <div class="px-4 py-2 hover:bg-gray-100 transition cursor-pointer">
-                            
                             <p class="text-blue-600 hover:underline text-sm"
                                onclick="goToDetail(${item.MaLienHe})">
                                 Liên hệ từ: ${item.HoTen}
                             </p>
-
                         </div>
                     `;
                     });
                 });
         }
 
-        // 👉 Click chuông
         bell.addEventListener("click", function () {
             dropdown.classList.toggle("hidden");
             loadList();
         });
 
-        // 👉 Click ngoài đóng
         document.addEventListener("click", function (e) {
             if (!bell.contains(e.target) && !dropdown.contains(e.target)) {
                 dropdown.classList.add("hidden");
             }
         });
 
-        // 👉 Điều hướng
         window.goToDetail = function (id) {
             window.location.href = "lienhe/" + id;
         }
 
         loadCount();
     });
+
+    function openLogoutModal() {
+        document.getElementById('logoutModal').classList.remove('hidden');
+    }
+
+    function closeLogoutModal() {
+        document.getElementById('logoutModal').classList.add('hidden');
+    }
 </script>

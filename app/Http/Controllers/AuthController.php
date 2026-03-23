@@ -111,46 +111,48 @@ class AuthController extends Controller
                 ->withInput();
         }
     }
-    public function login(Request $request)
-    {
+public function login(Request $request)
+{
+    $request->validate([
+        'UserID' => 'required',
+        'MatKhau' => 'required'
+    ], [
+        'UserID.required' => 'Vui lòng nhập tài khoản',
+        'MatKhau.required' => 'Vui lòng nhập mật khẩu',
+    ]);
 
-        $request->validate([
-            'UserID' => 'required',
-            'MatKhau' => 'required'
-        ]);
+    $user = Taikhoan::where('UserID', $request->UserID)->first();
 
-        $user = Taikhoan::where('UserID', $request->UserID)->first();
-
-        if (!$user || !Hash::check($request->MatKhau, $user->MatKhau)) {
-            return back()->withErrors([
-                'MatKhau' => 'Sai tài khoản hoặc mật khẩu'
-            ])->withInput();
-        }
-
-        session([
-            'UserID' => $user->UserID,
-            'VaiTro' => $user->VaiTro
-        ]);
-
-        if ($user->VaiTro == 'nghiencuusinh') {
-            $sv = Nghiencuusinh::where('UserID', $user->UserID)->first();
-            session(['HoTen' => $sv->HoTen]);
-            return redirect('/sinhvien/trang-chu');
-        }
-            // may chỉnh thêm login cho giảng viên ở đây
-        if ($user->VaiTro == 'giangvien') { 
-            $gv = Giangvien::where('UserID', $user->UserID)->first();
-            session(['HoTen' => $gv->HoTen]);
-            return redirect()->route('giangvien.trangChu');
-        }
-
-        if ($user->VaiTro == 'admin') {
-            session(['HoTen' => 'Admin']);
-            return redirect()->route('admin.trangChu');
-        }
-
-        return redirect('/');
+    if (!$user || !Hash::check($request->MatKhau, $user->MatKhau)) {
+        return back()->withErrors([
+            'login' => 'Sai tài khoản hoặc mật khẩu'
+        ])->withInput();
     }
+
+    session([
+        'UserID' => $user->UserID,
+        'VaiTro' => $user->VaiTro
+    ]);
+
+    if ($user->VaiTro == 'nghiencuusinh') {
+        $sv = Nghiencuusinh::where('UserID', $user->UserID)->first();
+        session(['HoTen' => $sv->HoTen]);
+        return redirect('/sinhvien/trang-chu');
+    }
+
+    if ($user->VaiTro == 'giangvien') {
+        $gv = Giangvien::where('UserID', $user->UserID)->first();
+        session(['HoTen' => $gv->HoTen]);
+        return redirect()->route('giangvien.trangChu');
+    }
+
+    if ($user->VaiTro == 'admin') {
+        session(['HoTen' => 'Admin']);
+        return redirect()->route('admin.trangChu');
+    }
+
+    return redirect('/');
+}
     public function showLogin()
     {
         return view('Admin.auth.login');
@@ -166,63 +168,81 @@ class AuthController extends Controller
     }
 
     public function showChangePassword()
-    {
-        return view('Admin.auth.change_password');
+{
+    return view('Admin.auth.change_password');
+}
+
+ public function changePassword(Request $request)
+{
+    $request->validate([
+        'old_password' => 'required',
+        'new_password' => 'required|min:6|confirmed'
+    ], [
+        'old_password.required' => 'Vui lòng nhập mật khẩu cũ',
+        'new_password.required' => 'Vui lòng nhập mật khẩu mới',
+        'new_password.min' => 'Mật khẩu phải ít nhất 6 ký tự',
+        'new_password.confirmed' => 'Nhập lại mật khẩu không khớp'
+    ]);
+
+    $user = Taikhoan::where('UserID', session('UserID'))->first();
+
+    if (!$user) {
+        return back()->with('error', 'Không tìm thấy tài khoản');
     }
-    public function changePassword(Request $request)
-    {
-        $request->validate([
-            'old_password' => 'required',
-            'new_password' => 'required|min:6|confirmed'
-        ]);
 
-        $user = Taikhoan::where('UserID', session('UserID'))->first();
-
-
-        if (!Hash::check($request->old_password, $user->MatKhau)) {
-            return back()->with('error', 'Mật khẩu cũ không đúng');
-        }
-
-        $user->MatKhau = Hash::make($request->new_password);
-        $user->save();
-
-        return back()->with('success', 'Đổi mật khẩu thành công');
+    if (!Hash::check($request->old_password, $user->MatKhau)) {
+        return back()->with('error', 'Mật khẩu cũ không đúng');
     }
+
+    $user->MatKhau = Hash::make($request->new_password);
+    $user->save();
+
+    return back()->with('success', 'Đổi mật khẩu thành công');
+}
 
     public function showForgotPassword()
     {
-        return view('auth.forgot_password');
+        return view('Admin.auth.forgot_password');
     }
-    public function handleForgotPassword(Request $request)
-    {
-        $request->validate([
-            'UserID' => 'required',
-            'email' => 'required|email',
-            'password' => 'required|min:6|confirmed'
-        ]);
+public function handleForgotPassword(Request $request)
+{
+    $request->validate([
+        'UserID' => 'required',
+        'email' => 'required|email',
+        'password' => 'required|min:6|confirmed'
+    ], [
+        'UserID.required' => 'Vui lòng nhập mã tài khoản',
 
-        $user = Taikhoan::where('UserID', $request->UserID)->first();
+        'email.required' => 'Vui lòng nhập email',
+        'email.email' => 'Email không đúng định dạng',
 
-        if (!$user) {
-            return back()->with('error', 'Tài khoản không tồn tại');
-        }
+        'password.required' => 'Vui lòng nhập mật khẩu mới',
+        'password.min' => 'Mật khẩu phải có ít nhất 6 ký tự',
+        'password.confirmed' => 'Mật khẩu nhập lại không khớp',
+    ]);
 
-        $gv = Giangvien::where('UserID', $user->UserID)
-            ->where('Email', $request->email)
-            ->first();
+    $user = Taikhoan::where('UserID', $request->UserID)->first();
 
-        $ncs = Nghiencuusinh::where('UserID', $user->UserID)
-            ->where('Email', $request->email)
-            ->first();
-
-        if (!$gv && !$ncs) {
-            return back()->with('error', 'Email không khớp với tài khoản');
-        }
-
-        $user->MatKhau = Hash::make($request->password);
-        $user->save();
-
-        return redirect('/login')->with('success', 'Đổi mật khẩu thành công');
+    if (!$user) {
+        return back()->with('error', 'Tài khoản không tồn tại')->withInput();
     }
+
+    $gv = Giangvien::where('UserID', $user->UserID)
+        ->where('Email', $request->email)
+        ->first();
+
+    $ncs = Nghiencuusinh::where('UserID', $user->UserID)
+        ->where('Email', $request->email)
+        ->first();
+
+    if (!$gv && !$ncs) {
+        return back()->with('error', 'Email không khớp với tài khoản')->withInput();
+    }
+
+    $user->MatKhau = Hash::make($request->password);
+    $user->save();
+
+    return redirect('/login')->with('success', 'Đổi mật khẩu thành công');
+}
 
 }
