@@ -26,6 +26,7 @@ class DetaiSeeder extends Seeder
                 'KetQua' => 'Đang thử nghiệm',
                 'FileSanPham' => 'sp1.pdf',
                 'KinhPhi' => 20000000,
+                'loai_id' => 2,
             ],
             [
                 'MaSo' => 2,
@@ -43,6 +44,7 @@ class DetaiSeeder extends Seeder
                 'KetQua' => 'Hoàn thành',
                 'FileSanPham' => 'sp2.pdf',
                 'KinhPhi' => 30000000,
+                'loai_id' => 2,
             ],
             [
                 'MaSo' => 3,
@@ -60,6 +62,7 @@ class DetaiSeeder extends Seeder
                 'KetQua' => 'Đang làm',
                 'FileSanPham' => 'sp3.pdf',
                 'KinhPhi' => 25000000,
+                'loai_id' => 2,
             ],
             [
                 'MaSo' => 4,
@@ -77,6 +80,7 @@ class DetaiSeeder extends Seeder
                 'KetQua' => 'Đang test',
                 'FileSanPham' => 'sp4.pdf',
                 'KinhPhi' => 18000000,
+                'loai_id' => 3,
             ],
             [
                 'MaSo' => 5,
@@ -94,6 +98,7 @@ class DetaiSeeder extends Seeder
                 'KetQua' => 'Đã xong',
                 'FileSanPham' => 'sp5.pdf',
                 'KinhPhi' => 35000000,
+                'loai_id' => 2,
             ],
             [
                 'MaSo' => 6,
@@ -111,6 +116,7 @@ class DetaiSeeder extends Seeder
                 'KetQua' => 'Đang làm',
                 'FileSanPham' => 'sp6.pdf',
                 'KinhPhi' => 22000000,
+                'loai_id' => 2,
             ],
             [
                 'MaSo' => 7,
@@ -128,6 +134,7 @@ class DetaiSeeder extends Seeder
                 'KetQua' => 'Đang dev',
                 'FileSanPham' => 'sp7.pdf',
                 'KinhPhi' => 17000000,
+                'loai_id' => 3,
             ],
             [
                 'MaSo' => 8,
@@ -145,6 +152,7 @@ class DetaiSeeder extends Seeder
                 'KetQua' => 'Hoàn thành',
                 'FileSanPham' => 'sp8.pdf',
                 'KinhPhi' => 26000000,
+                'loai_id' => 2,
             ],
             [
                 'MaSo' => 9,
@@ -162,6 +170,7 @@ class DetaiSeeder extends Seeder
                 'KetQua' => 'Đang làm',
                 'FileSanPham' => 'sp9.pdf',
                 'KinhPhi' => 21000000,
+                'loai_id' => 2,
             ],
             [
                 'MaSo' => 10,
@@ -179,6 +188,7 @@ class DetaiSeeder extends Seeder
                 'KetQua' => 'Đang dev',
                 'FileSanPham' => 'sp10.pdf',
                 'KinhPhi' => 15000000,
+                'loai_id' => 3,
             ],
         ]);
     }

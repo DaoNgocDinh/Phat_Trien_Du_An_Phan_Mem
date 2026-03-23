@@ -12,7 +12,7 @@ class DeTaiController extends Controller
     {
         $danhmuc = Detai::select('LoaiDeTai')
             ->distinct()
-            ->get();
+            ->paginate(10);
 
         return view('Admin.quanlydanhmuc.index', compact('danhmuc'));
     }

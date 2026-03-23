@@ -26,7 +26,7 @@ class TienDoDeTaiController extends Controller
                 'detai.*',
                 'td.TienDoHienTai as TrangThaiTienDo'
             )
-            ->get();
+            ->paginate(10);
 
         return view('Admin.theodoitiendo.index', compact('detai'));
     }

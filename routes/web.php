@@ -13,6 +13,8 @@ require __DIR__.'/user.php';
 require __DIR__.'/detai.php';
 require __DIR__.'/tiendodetai.php';
 require __DIR__.'/hoso.php';
+require __DIR__.'/pheduyetdexuat.php';
+require __DIR__.'/quanlydanhmuc.php';
 
 use App\Http\Controllers\GiangVienController;
 
@@ -51,27 +53,27 @@ Route::get('/admin/report/create', function () {
 });
 
 #QUANLYDANHMUC
-Route::get('/admin/danhmuc', function () {
-    return view('Admin.quanlydanhmuc.index');
-});
+// Route::get('/admin/danhmuc', function () {
+//     return view('Admin.quanlydanhmuc.index');
+// });
 
-Route::get('/admin/danhmuc/create', function () {
-    return view('Admin.quanlydanhmuc.create');
-});
+// Route::get('/admin/danhmuc/create', function () {
+//     return view('Admin.quanlydanhmuc.create');
+// });
 
-Route::get('/admin/danhmuc/edit', function () {
-    return view('Admin.quanlydanhmuc.edit');
-});
+// Route::get('/admin/danhmuc/edit', function () {
+//     return view('Admin.quanlydanhmuc.edit');
+// });
 
-///CHỈNH SỬA HỒ SƠ CÁ NHÂN
-Route::get('/hoso/chinhsua', function () {
-    return view('Giangvien.hosocanhan.edit');
-});
+// ///CHỈNH SỬA HỒ SƠ CÁ NHÂN
+// Route::get('/hoso/chinhsua', function () {
+//     return view('Giangvien.hosocanhan.edit');
+// });
 
 ///PHÊ DUYỆT ĐỀ XUẤT
-Route::get('/pheduyetdexuat', function () {
-    return view('Admin.pheduyetdexuat.index');
-});
+// Route::get('/pheduyetdexuat', function () {
+//     return view('Admin.pheduyetdexuat.index');
+// });
 
 //THEO DÕI TIẾN ĐỒ ĐỀ TÀI
 // Route::get('/theodoitiendo', function () {
