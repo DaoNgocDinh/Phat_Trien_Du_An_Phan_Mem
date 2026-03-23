@@ -54,17 +54,16 @@
                                             {{ $status }}
                                         </span>
                                     </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-center">
-                                        <button type="button" class="view-details text-gray-600 hover:text-gray-900" 
-                                            data-event-id="{{ $event->MaSuKien }}"
+                                    <td class="px-6 py-5 whitespace-nowrap text-center text-sm font-medium">
+                                        <button class="view-details text-blue-600 hover:text-blue-900 font-medium px-4 py-2 bg-blue-50 rounded hover:bg-blue-100 transition"
+                                            data-event-id="{{ $event->MaSuKien }}" 
                                             data-event-name="{{ $event->TenSuKien }}"
-                                            data-event-description="{{ $event->MoTa }}"
+                                            data-event-description="{{ $event->MoTa }}" 
                                             data-event-location="{{ $event->DiaDiem }}"
-                                            data-event-time="{{ $event->ThoiGian }}"
+                                            data-event-time="{{ \Carbon\Carbon::parse($event->ThoiGian)->format('d/m/Y') }}" 
                                             data-event-format="{{ $event->HinhThuc }}"
-                                            data-event-capacity="{{ $event->SoLuongToiDa }}"
-                                            data-event-status="{{ $status }}">
-                                            <span class="text-sm font-medium">Xem chi tiết</span>
+                                            data-event-capacity="{{ $event->tong_dang_ky ?? 0 }}/{{ $event->SoLuongToiDa ?? '∞' }}"
+                                            data-event-status="{{ $status }}"> Xem chi tiết
                                         </button>
                                     </td>
                                 </tr>
@@ -136,7 +135,7 @@
                         <span id="modalEventFormat"></span>
                     </div>
                     <div>
-                        <span class="font-semibold text-gray-800">Số lượng tối đa:</span>
+                        <span class="font-semibold text-gray-800">Số lượng:</span>
                         <span id="modalEventCapacity"></span>
                     </div>
                 </div>
@@ -225,35 +224,70 @@
             const registerBtn = document.getElementById('modalRegisterBtn');
             const registered = getRegisteredEvents();
 
+            // Xóa sự kiện click cũ để tránh bị chạy đè lệnh khi mở các sự kiện khác nhau
+            registerBtn.onclick = null;
+
             if (status === 'Hết hạn') {
-                registerMessage.textContent = 'Sự kiện đã hết hạn đăng ký.';
+                registerMessage.textContent = 'Bạn không thể đăng ký sự kiện này.';
                 registerBtn.textContent = 'Đã hết hạn';
                 registerBtn.disabled = true;
                 registerBtn.style.backgroundColor = '#D1D5DB';
                 registerBtn.style.cursor = 'not-allowed';
+                
             } else if (registered.includes(eventData.id)) {
                 registerMessage.textContent = 'Bạn đã đăng ký sự kiện này.';
-                registerBtn.textContent = 'Đã đăng ký';
-                registerBtn.disabled = true;
-                registerBtn.style.backgroundColor = '#10B981';
-                registerBtn.style.cursor = 'not-allowed';
+                registerBtn.textContent = 'Hủy đăng ký';
+                registerBtn.disabled = false; 
+                registerBtn.style.backgroundColor = '#EF4444'; // Màu đỏ cho nút Hủy
+                registerBtn.style.cursor = 'pointer';
+                
+                // Xử lý HỦY ĐĂNG KÝ
+                registerBtn.onclick = () => {
+                    if (confirm("Bạn có chắc chắn muốn hủy đăng ký tham gia sự kiện này không?")) {
+                        let nowRegistered = getRegisteredEvents();
+                        // Xóa ID khỏi danh sách đăng ký
+                        nowRegistered = nowRegistered.filter(id => id !== eventData.id);
+                        setRegisteredEvents(nowRegistered);
+                        
+                        // Tính toán GIẢM số lượng
+                        let parts = eventData.capacity.split('/');
+                        let current = parseInt(parts[0].trim()) - 1;
+                        if(current < 0) current = 0;
+                        let max = parts[1] ? parts[1].trim() : '∞';
+                        eventData.capacity = `${current} / ${max}`;
+                        
+                        updateStatusPills();
+                        openEventModal(eventData); // Gọi lại để load giao diện mới
+                        alert('Đã hủy đăng ký thành công!');
+                    }
+                };
+
             } else {
                 registerMessage.textContent = 'Bạn có thể đăng ký tham gia sự kiện này.';
                 registerBtn.textContent = 'Đăng ký';
                 registerBtn.disabled = false;
                 registerBtn.style.backgroundColor = '#1D546D';
                 registerBtn.style.cursor = 'pointer';
-            }
 
-            registerBtn.onclick = () => {
-                const nowRegistered = getRegisteredEvents();
-                if (nowRegistered.includes(eventData.id)) return;
-                nowRegistered.push(eventData.id);
-                setRegisteredEvents(nowRegistered);
-                updateStatusPills();
-                openEventModal(eventData);
-                alert('Đăng ký thành công!');
-            };
+                // Xử lý ĐĂNG KÝ
+                registerBtn.onclick = () => {
+                    const nowRegistered = getRegisteredEvents();
+                    if (nowRegistered.includes(eventData.id)) return;
+                    
+                    nowRegistered.push(eventData.id);
+                    setRegisteredEvents(nowRegistered);
+                    
+                    // Tính toán TĂNG số lượng
+                    let parts = eventData.capacity.split('/');
+                    let current = parseInt(parts[0].trim()) + 1;
+                    let max = parts[1] ? parts[1].trim() : '∞';
+                    eventData.capacity = `${current} / ${max}`;
+
+                    updateStatusPills();
+                    openEventModal(eventData); // Gọi lại để load giao diện mới
+                    alert('Đăng ký thành công!');
+                };
+            }
 
             const modal = document.getElementById('suKienModal');
             if (modal) {

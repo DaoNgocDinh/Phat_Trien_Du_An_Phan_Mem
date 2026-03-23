@@ -122,7 +122,10 @@ class GiangVienController extends Controller
 
     public function SuKien()
     {
-        $sukiens = Sukien::latest()->paginate(10);
+        $sukiens = Sukien::withSum('dangkysukien as tong_dang_ky', 'SoLuongDangKy')
+                         ->latest()
+                         ->paginate(10);
+                         
         return view('Giangvien.suKien', compact('sukiens'));
     }
 }
