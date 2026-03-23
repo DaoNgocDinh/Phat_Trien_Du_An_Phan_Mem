@@ -71,32 +71,49 @@ class TienDoDeTaiController extends Controller
     // Cập nhật tiến độ
     public function capNhatTienDo(Request $request)
     {
-        // tìm bản ghi tiến độ của đề tài
-        $tiendo = Tiendodetai::where('MaDeTai', $request->MaDeTai)->first();
+        // 1. Kiểm tra dữ liệu đầu vào
+        $request->validate([
+            'maDeTai'  => 'required|exists:detai,MaSo',
+            'tieuDe'   => 'required|string|max:255',
+            'thoiGian' => 'required|date',
+            'phanTram' => 'required|numeric|min:0|max:100',
+            'noiDung'  => 'nullable|string',
+            'ketQua'   => 'nullable|string',
+            'khoKhan'  => 'nullable|string',
+            'fileBaoCao'=> 'nullable|mimes:pdf,doc,docx,xls,xlsx,zip,rar|max:10240',
+        ], [
+            'fileBaoCao.mimes' => 'Định dạng file không hỗ trợ. Vui lòng nộp file PDF, Word, Excel hoặc nén.',
+            'fileBaoCao.max' => 'Dung lượng file không được vượt quá 10MB.',
+        ]);
 
-        if ($tiendo) {
-            // ✅ đã có → update
-            $tiendo->update([
-                'TienDoHienTai' => $request->TrangThai,
-                'ThoiGianCapNhat' => now()
-            ]);
-        } else {
-            // ❗ chưa có → tạo mới (lần đầu)
-            $maxId = Tiendodetai::max('MaTienDo');
-            $newId = $maxId ? $maxId + 1 : 1;
-
-            $tiendo = Tiendodetai::create([
-                'MaTienDo' => $newId,
-                'MaDeTai' => $request->MaDeTai,
-                'TienDoHienTai' => $request->TrangThai,
-                'ThoiGianCapNhat' => now()
-            ]);
+        // 2. Xử lý Upload File
+        $fileName = null;
+        if ($request->hasFile('fileBaoCao')) {
+            $file = $request->file('fileBaoCao');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('uploads/baocao'), $fileName);
         }
 
-        return response()->json([
-            'message' => 'Cập nhật thành công',
-            'tiendo' => $tiendo
+        $detai = Detai::where('MaSo', $request->maDeTai)->first();
+
+        // 3. Tạo ID và Lưu trực tiếp tiến độ
+        $maxId = \App\Models\Tiendodetai::max('MaTienDo');
+        
+        \App\Models\Tiendodetai::create([
+            'MaTienDo'        => $maxId ? $maxId + 1 : 1,
+            'MaDeTai'         => $request->maDeTai,
+            'TenDeTai'        => $detai->TenDeTai,
+            'TrangThai'       => 'Đã nộp', // Chốt thẳng trạng thái đã nộp
+            'ThoiGianCapNhat' => $request->thoiGian,
+            'TienDoHienTai'   => $request->tieuDe,
+            'PhanTramTienDo'  => $request->phanTram,
+            'NoiDungBaoCao'   => $request->noiDung,
+            'KetQua'          => $request->ketQua,
+            'KhoKhan'         => $request->khoKhan,
+            'FileBaoCao'      => $fileName,
         ]);
+
+        return back()->with('success', 'Đã gửi báo cáo tiến độ thành công!');
     }
 
     public function store(Request $request)
