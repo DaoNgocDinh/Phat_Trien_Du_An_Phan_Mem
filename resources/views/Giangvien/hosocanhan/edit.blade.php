@@ -1,4 +1,4 @@
-@extends('layout.sinhVien')
+@extends('layout.giangVien')
 <div class="ml-64 p-9 mt-10">
 
     <!-- TITLE -->
@@ -352,6 +352,3 @@
     }
 </script>
 
-</body>
-
-</html>

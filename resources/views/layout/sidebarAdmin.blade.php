@@ -28,7 +28,7 @@
 
                 <!-- Đề tài -->
                 <li>
-                    <a href="#"
+                    <a href="admin/pheduyet"
                         class="flex items-center px-3 py-2.5 text-white rounded-md hover:bg-[#2c5d6e] transition
                        {{ request()->routeIs('#') ? 'bg-[#2c5d6e] border-l-4 border-white font-semibold' : '' }}">
                         <i class="fas fa-file-alt w-6"></i>
@@ -115,7 +115,7 @@
 
                 <!-- Danh mục -->
                 <li>
-                    <a href="#"
+                    <a href="/admin/detai"
                         class="flex items-center px-3 py-2.5 text-white rounded-md hover:bg-[#2c5d6e] transition">
                         <i class="fas fa-tags w-6"></i>
                         <span class="ml-3">Quản lý danh mục</span>
