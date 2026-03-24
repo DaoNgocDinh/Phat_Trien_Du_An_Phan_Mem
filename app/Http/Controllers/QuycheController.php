@@ -150,4 +150,9 @@ class QuyCheController extends Controller
 
         return response()->download($path, $originalName);
     }
+    public function index_guest()
+    {
+        $quyches = QuyChe::latest('NgayBanHanh')->paginate(10);
+        return view('Sinhvien.quyChe', compact('quyches'));
+    }
 }
