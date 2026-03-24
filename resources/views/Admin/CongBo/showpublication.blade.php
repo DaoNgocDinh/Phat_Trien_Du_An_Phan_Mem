@@ -82,7 +82,8 @@
                 <b>File PDF: {{ $congbo->FilePDF }}</b>
 
                 <div class="mt-3">
-                    <a href="{{ asset('storage/' . $congbo->FilePDF) }}" target="_blank" class="text-blue-600 hover:underline">
+                    <a href="{{ asset('uploads/pdf/' . $congbo->FilePDF) }}" target="_blank"
+                        class="text-blue-600 hover:underline">
                         Xem file PDF
                     </a>
                 </div>
@@ -95,18 +96,13 @@
 
             <form method="POST" action="{{ route('admin.congbo.trangthai', $congbo->MaCongBo) }}">
                 @csrf
-                <input type="hidden" name="TrangThai" value="Đã Duyệt">
 
-                <button class="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700">
+                <button name="TrangThai" value="Đã Duyệt"
+                    class="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700">
                     Phê duyệt
                 </button>
-            </form>
 
-            <form method="POST" action="{{ route('admin.congbo.trangthai', $congbo->MaCongBo) }}">
-                @csrf
-                <input type="hidden" name="TrangThai" value="Từ chối">
-
-                <button class="bg-red-600 text-white px-6 py-2 rounded hover:bg-red-700">
+                <button name="TrangThai" value="Từ chối" class="bg-red-600 text-white px-6 py-2 rounded hover:bg-red-700">
                     Từ chối
                 </button>
             </form>

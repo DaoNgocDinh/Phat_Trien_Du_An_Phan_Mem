@@ -14,9 +14,9 @@
 <body class="bg-white">
 
     @include('layout.navbar')
-    @include('layout.sidebar')
+    @include('layout.sidebarAdmin')
 
-    <div class="ml-64 p-10">
+    <div class="ml-64 pt-20 pl-10 pr-10">
 
         <!-- TITLE -->
 
@@ -37,7 +37,7 @@
 
             <div class="col-span-2 bg-[#EBF4F6] rounded-lg p-6">
 
-                <h2 class="font-semibold mb-4">
+                <!-- <h2 class="font-semibold mb-4">
                     Bộ lọc đề xuất
                 </h2>
 
@@ -51,26 +51,12 @@
                             <option>Đề tài</option>
                         </select>
                     </div>
-
-
-                    <div>
-                        <label class="text-sm">Thời gian</label>
-
-                        <input type="date"
-                            class="border rounded px-3 py-1 block">
-                    </div>
-
-
-                    <button class="bg-blue-500 text-white px-6 py-1.5 rounded mt-5">
-                        Tìm kiếm
-                    </button>
-
-                </div>
+                </div> -->
 
 
                 <!-- TABLE -->
 
-                <h2 class="font-semibold mb-3">
+                <h2 class="font-semibold mb-10 border-b border-gray-300 pb-2">
                     Danh sách đề xuất
                 </h2>
 
@@ -90,163 +76,40 @@
                         </tr>
 
                     </thead>
-
-
                     <tbody>
 
-                        <tr class="border-b">
+                        @forelse($detais as $index => $dt)
+                        <tr class="border-b hover:bg-gray-50 transition-colors">
 
-                            <td>01</td>
-
-                            <td>Xây dựng hệ thống quản lý học tập</td>
-
-                            <td>Nguyễn Văn C</td>
-
-                            <td>Đề tài</td>
+                            <td class="py-4">{{ $detais->firstItem() + $index }}</td>
+                            <td class="py-4"> {{ $dt->TenDeTai }}</td>
+                            <td class="py-4">{{ $dt->ChuNhiem }}</td>
+                            <td class="py-4">{{ $dt->LoaiDeTai }}</td>
 
                             <td>
                                 <span class="bg-orange-400 text-white px-2 py-1 rounded text-xs">
-                                    Chờ duyệt
+                                    {{ $dt->TrangThai }}
                                 </span>
                             </td>
 
-                            <td>
-
-                                <button onclick="xemChiTiet(this)"
+                            <td class="py-4">
+                                <button onclick="xemChiTiet({{ $dt->MaSo }}, this)"
                                     class="bg-[#2f5d6e] text-white px-4 py-1 rounded text-sm">
-
                                     Xem
-
                                 </button>
-
                             </td>
 
                         </tr>
 
+                        @empty
 
-                        <tr class="border-b">
-
-                            <td>02</td>
-
-                            <td>Khai phá dữ liệu trong giáo dục</td>
-
-                            <td>Đào Ngọc Lan</td>
-
-                            <td>Công bố</td>
-
-                            <td>
-
-                                <span class="bg-orange-400 text-white px-2 py-1 rounded text-xs">
-                                    Chờ duyệt
-                                </span>
-
+                        <tr>
+                            <td colspan="6" class="text-center py-6 text-gray-500 italic">
+                                Không có đề xuất nào cần phê duyệt
                             </td>
-
-                            <td>
-
-                                <button onclick="xemChiTiet(this)"
-                                    class="bg-[#2f5d6e] text-white px-4 py-1 rounded text-sm">
-
-                                    Xem
-
-                                </button>
-
-                            </td>
-
                         </tr>
 
-                        <tr class="border-b">
-
-                            <td>03</td>
-
-                            <td>Chatbox hỗ trợ sinh viên </td>
-
-                            <td>Nguyễn Ngọc Lan</td>
-
-                            <td>Đề tài</td>
-
-                            <td>
-
-                                <span class="bg-orange-400 text-white px-2 py-1 rounded text-xs">
-                                    Chờ duyệt
-                                </span>
-
-                            </td>
-
-                            <td>
-
-                                <button onclick="xemChiTiet(this)"
-                                    class="bg-[#2f5d6e] text-white px-4 py-1 rounded text-sm">
-
-                                    Xem
-
-                                </button>
-
-                            </td>
-
-                        </tr>
-
-                        <tr class="border-b">
-
-                            <td>04</td>
-
-                            <td>Hệ thống gợi ý thông tin</td>
-
-                            <td>Vũ Đức Minh</td>
-
-                            <td>Công bố</td>
-
-                            <td>
-
-                                <span class="bg-orange-400 text-white px-2 py-1 rounded text-xs">
-                                    Chờ duyệt
-                                </span>
-
-                            </td>
-
-                            <td>
-
-                                <button onclick="xemChiTiet(this)"
-                                    class="bg-[#2f5d6e] text-white px-4 py-1 rounded text-sm">
-
-                                    Xem
-
-                                </button>
-
-                            </td>
-
-                        </tr>
-
-                        <tr class="border-b">
-
-                            <td>06</td>
-
-                            <td>Phát hiện gian lận trong giao dịch số</td>
-
-                            <td>Trần Văn B</td>
-
-                            <td>Công bố</td>
-
-                            <td>
-
-                                <span class="bg-orange-400 text-white px-2 py-1 rounded text-xs">
-                                    Chờ duyệt
-                                </span>
-
-                            </td>
-
-                            <td>
-
-                                <button onclick="xemChiTiet(this)"
-                                    class="bg-[#2f5d6e] text-white px-4 py-1 rounded text-sm">
-
-                                    Xem
-
-                                </button>
-
-                            </td>
-
-                        </tr>
+                        @endforelse
 
                     </tbody>
 
@@ -254,21 +117,8 @@
 
 
                 <!-- PAGINATIO: phân trang -->
-
-                <div class="flex justify-center mt-6 gap-2">
-
-                    <button class="px-3 py-1 bg-white rounded hover:bg-gray-300">
-                        &lt;
-                    </button>
-
-                    <button class="px-3 py-1 bg-white text-black rounded">
-                        1
-                    </button>
-
-                    <button class="px-3 py-1 bg-white rounded hover:bg-gray-300">
-                        &gt;
-                    </button>
-
+                <div class="mt-6">
+                    {{ $detais->links() }}
                 </div>
 
             </div>
@@ -308,7 +158,7 @@
 
                 <div class="flex justify-center gap-4">
 
-                    <button
+                    <button onclick="confirmApprove()"
                         class="bg-[#1D8E8E] text-white px-5 py-1 rounded">
                         ✔ Xác nhận
                     </button>
@@ -342,13 +192,20 @@
 
             <!-- BODY -->
             <div class="p-6 text-center">
+
                 <p class="mb-5">
                     Bạn có chắc chắn muốn <b>từ chối</b> đề xuất này ?
                 </p>
 
+                <!-- 🔥 THÊM TEXTAREA -->
+                <textarea id="lyDoTuChoi"
+                    placeholder="Nhập lý do từ chối..."
+                    class="w-full border rounded p-2 mb-4 text-sm"></textarea>
+
                 <div class="flex justify-center gap-4">
 
-                    <button class="bg-red-500 text-white px-4 py-2 rounded">
+                    <button onclick="confirmReject()"
+                        class="bg-red-500 text-white px-4 py-2 rounded">
                         ✔ Xác nhận
                     </button>
 
@@ -365,22 +222,35 @@
 
 
     <script>
-        function xemChiTiet(btn) {
-            // xóa highlight tất cả dòng
+        let currentId = null;
+
+        function xemChiTiet(id, btn) {
+
+            currentId = id;
+
             let rows = document.querySelectorAll("tbody tr");
-            rows.forEach(row => {
-                row.classList.remove("bg-blue-100");
-            });
+            rows.forEach(r => r.classList.remove("bg-[#E6E6E6]"));
 
-            // lấy dòng hiện tại
-            let row = btn.closest("tr");
+            btn.closest("tr").classList.add("bg-[#E6E6E6]");
 
-            // highlight
-            row.classList.add("bg-[#E6E6E6]");
+            fetch('/admin/pheduyet/' + id)
+                .then(res => res.json())
+                .then(data => {
 
+                    document.getElementById("chiTietBox").classList.remove("hidden");
 
-            document.getElementById("chiTietBox").classList.remove("hidden")
+                    document.getElementById("ten").innerText = data.TenDeTai;
+                    document.getElementById("nguoi").innerText = data.ChuNhiem;
+                    document.getElementById("mota").innerText = data.NoiDungChinh;
+                    document.getElementById("file").innerText = data.FileSanPham ?? 'Không có file';
+                    document.getElementById("trangthai").innerText = data.TrangThai;
 
+                    if (data.TrangThai === 'TuChoi') {
+                        document.getElementById("lydo").innerText = "Lý do: " + data.LyDoTuChoi;
+                    } else {
+                        document.getElementById("lydo").innerText = "";
+                    }
+                });
         }
 
         function dongChiTiet() {
@@ -408,6 +278,62 @@
 
         function closeReject() {
             document.getElementById("popupReject").classList.add("hidden")
+        }
+
+        function confirmApprove() {
+
+            fetch("{{ url('/admin/pheduyet') }}/" + currentId + "/approve", {
+                    method: "POST",
+                    headers: {
+                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                    }
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        alert("Đã phê duyệt!");
+                        location.reload();
+                    } else {
+                        alert("Lỗi!");
+                    }
+                });
+
+        }
+
+        function confirmReject() {
+
+            let lydo = document.getElementById("lyDoTuChoi").value;
+
+            // ❗ validate
+            if (!lydo || lydo.trim() === "") {
+                alert("Vui lòng nhập lý do từ chối!");
+                return;
+            }
+
+            fetch("{{ url('/admin/pheduyet') }}/" + currentId + "/reject", {
+                    method: "POST",
+                    headers: {
+                        "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        LyDoTuChoi: lydo
+                    })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        alert("Đã từ chối!");
+
+                        // reset input
+                        document.getElementById("lyDoTuChoi").value = "";
+
+                        closeReject();
+                        location.reload();
+                    } else {
+                        alert("Có lỗi xảy ra!");
+                    }
+                });
         }
     </script>
 

@@ -30,11 +30,15 @@ class Detai extends Model
         'KetQua',
         'FileSanPham',
         'KinhPhi',
+        'LyDoTuChoi'
     ];
 
     public function tiendodetai()
     {
         return $this->hasMany(Tiendodetai::class, 'MaDeTai', 'MaSo');
     }
+    public function loai()
+    {
+        return $this->belongsTo(LoaiDeTai::class, 'loai_id');
+    }
 }
-

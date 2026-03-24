@@ -23,6 +23,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Skip if running in console (migrations, commands)
+        if ($this->app->runningInConsole()) {
+            return;
+        }
+
         $admin = Taikhoan::where('VaiTro', 'admin')->first();
 
         if (!$admin) {

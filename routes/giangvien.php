@@ -8,7 +8,7 @@ use App\Http\Controllers\LienHeController;
 use App\Http\Controllers\CongBoController;
 use App\Http\Controllers\TienDoDeTaiController;
 
-Route::prefix('giangvien')->middleware('roles:giangvien')->group(function () {
+Route::prefix('giangvien')->middleware('roles:giangvien,nghiencuusinh')->group(function () {
     Route::get('/trang-chu', [GiangVienController::class, 'dashBoard'])
         ->name('giangvien.trangChu');
 
@@ -23,6 +23,8 @@ Route::prefix('giangvien')->middleware('roles:giangvien')->group(function () {
 
     Route::get('/su-kien', [GiangVienController::class, 'SuKien'])
         ->name('giangvien.suKien');
+    Route::post('/su-kien/dang-ky', [GiangVienController::class, 'dangKySuKien'])->name('giangvien.sukien.dangky');
+    Route::post('/su-kien/huy-dang-ky', [GiangVienController::class, 'huyDangKySuKien'])->name('giangvien.sukien.huydangky');
 
     Route::get('/quyche', [QuyCheController::class, 'index_giangvien'])->name('giangvien.quyChe.index');
     Route::get('/quyche/{MaQuyChe}', [QuyCheController::class, 'view_giangvien'])->name('giangvien.quyChe.view');

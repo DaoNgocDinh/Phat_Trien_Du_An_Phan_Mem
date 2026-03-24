@@ -24,17 +24,28 @@
 
             <!-- Tab buttons -->
             <div class="flex flex-row justify-start items-center mb-6 gap-2">
-                <a href="{{ route('giangvien.detai.sugget') }}">
-                    <button class="bg-[#6B727F] hover:bg-[#2c5d6e] text-white px-6 py-2.5 shadow-md transition flex items-center gap-2 font-medium">
-                        Đề xuất đề tài
-                    </button>
-                </a>
-                <a href="{{ route('giangvien.deTaiCuaToi') }}">
-                    <button class="bg-[#1D546D] hover:bg-[#2c5d6e] text-white px-6 py-2.5 shadow-md transition flex items-center gap-2 font-medium">
-                        Đề xuất của tôi
-                    </button>
-                </a>
-            </div>
+            <a href="{{ route('giangvien.deTai') }}">
+                <button
+                    class="bg-[#6B727F] hover:bg-[#2c5d6e] text-white px-6 py-2.5 shadow-md transition flex items-center gap-2 font-medium">
+                    <!-- <i class="fas fa-plus-circle"></i> -->
+                    Tất cả đề tài
+                </button>
+            </a>
+            <a href="#">
+                <button
+                    class="bg-[#1D546D] text-white px-6 py-2.5 shadow-md transition flex items-center gap-2 font-medium">
+                    <!-- <i class="fas fa-plus-circle"></i> -->
+                    Đề xuất của tôi
+                </button>
+            </a>
+            <a href="{{ route('giangvien.detai.sugget') }}">
+                <button
+                    class="bg-[#6B727F] hover:bg-[#2c5d6e] text-white px-6 py-2.5 shadow-md transition flex items-center gap-2 font-medium">
+                    <!-- <i class="fas fa-plus-circle"></i> -->
+                    Đề xuất đề tài
+                </button>
+            </a>
+        </div>
 
             <!-- Bảng danh sách -->
             <div class="bg-white rounded-xl shadow overflow-hidden border border-gray-200 flex-1 flex flex-col min-h-[600px]">
@@ -68,8 +79,12 @@
                                             <span class="px-4 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-[#619597] text-white">
                                                 {{ $item->TrangThai }}
                                             </span>
-                                        @elseif($item->TrangThai == 'Chờ phê duyệt')
+                                        @elseif($item->TrangThai == 'Chờ xét duyệt')
                                             <span class="px-4 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-[#67C3D9] text-white">
+                                                {{ $item->TrangThai }}
+                                            </span>
+                                        @elseif($item->TrangThai == 'Hoàn thành')
+                                            <span class="px-4 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-[#4CAF50] text-white">
                                                 {{ $item->TrangThai }}
                                             </span>
                                         @else
@@ -79,18 +94,32 @@
                                         @endif
                                     </td>
                                     <td class="px-6 py-5 whitespace-nowrap text-center">
-                                        <button type="button"
-                                            data-maso="{{ $item->MaSo }}"
-                                            data-tendetai="{{ $item->TenDeTai }}"
-                                            data-trangthai="{{ $item->TrangThai ?? 'Chưa xác định' }}"
-                                            data-phantram="{{ $tienDoCu->PhanTramTienDo ?? $item->PhanTramTienDo ?? 0 }}"
-                                            data-noidung="{{ $tienDoCu->NoiDungBaoCao ?? '' }}"
-                                            data-ketqua="{{ $tienDoCu->KetQua ?? '' }}"
-                                            data-khokhan="{{ $tienDoCu->KhoKhan ?? '' }}"
-                                            onclick="openCapNhatModal(this)"
-                                            class="text-blue-600 hover:text-blue-900 font-medium px-4 py-2 bg-blue-50 rounded hover:bg-blue-100 transition">
-                                            Cập nhật tiến độ
-                                        </button>
+                                        @php
+                                            $trangThai = trim($item->TrangThai);
+                                            // Kiểm tra nếu là Chờ xét duyệt hoặc Hoàn thành thì gán cờ khóa
+                                            $khoaCapNhat = ($trangThai === 'Chờ xét duyệt' || $trangThai === 'Hoàn thành' || str_contains(mb_strtolower($trangThai, 'UTF-8'), 'hủy'));
+                                        @endphp
+
+                                        @if($khoaCapNhat)
+                                            <button type="button" disabled
+                                                class="text-gray-400 font-medium px-4 py-2 bg-gray-100 rounded cursor-not-allowed"
+                                                title="Không thể cập nhật tiến độ đối với đề tài {{ $trangThai }}">
+                                                Cập nhật tiến độ
+                                            </button>
+                                        @else
+                                            <button type="button"
+                                                data-maso="{{ $item->MaSo }}"
+                                                data-tendetai="{{ $item->TenDeTai }}"
+                                                data-trangthai="{{ $item->TrangThai ?? 'Chưa xác định' }}"
+                                                data-phantram="{{ $tienDoCu->PhanTramTienDo ?? $item->PhanTramTienDo ?? 0 }}"
+                                                data-noidung="{{ $tienDoCu->NoiDungBaoCao ?? '' }}"
+                                                data-ketqua="{{ $tienDoCu->KetQua ?? '' }}"
+                                                data-khokhan="{{ $tienDoCu->KhoKhan ?? '' }}"
+                                                onclick="openCapNhatModal(this)"
+                                                class="text-blue-600 hover:text-blue-900 font-medium px-4 py-2 bg-blue-50 rounded hover:bg-blue-100 transition shadow-sm">
+                                                Cập nhật tiến độ
+                                            </button>
+                                        @endif
                                     </td>
                                 </tr>
                             @empty
@@ -274,15 +303,6 @@
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         alert("{{ session('success') }}");
-    });
-</script>
-@endif
-
-@if ($errors->any())
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        document.getElementById('capNhatModal').classList.remove('hidden');
-        alert("Có lỗi xảy ra: \n- " + {!! json_encode($errors->all()) !!}.join('\n- '));
     });
 </script>
 @endif

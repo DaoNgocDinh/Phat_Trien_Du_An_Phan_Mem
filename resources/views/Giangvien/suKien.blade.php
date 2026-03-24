@@ -238,27 +238,43 @@
                 registerMessage.textContent = 'Bạn đã đăng ký sự kiện này.';
                 registerBtn.textContent = 'Hủy đăng ký';
                 registerBtn.disabled = false; 
-                registerBtn.style.backgroundColor = '#EF4444'; // Màu đỏ cho nút Hủy
+                registerBtn.style.backgroundColor = '#EF4444'; 
                 registerBtn.style.cursor = 'pointer';
                 
-                // Xử lý HỦY ĐĂNG KÝ
+                // === XỬ LÝ HỦY ĐĂNG KÝ (GỌI API) ===
                 registerBtn.onclick = () => {
                     if (confirm("Bạn có chắc chắn muốn hủy đăng ký tham gia sự kiện này không?")) {
-                        let nowRegistered = getRegisteredEvents();
-                        // Xóa ID khỏi danh sách đăng ký
-                        nowRegistered = nowRegistered.filter(id => id !== eventData.id);
-                        setRegisteredEvents(nowRegistered);
                         
-                        // Tính toán GIẢM số lượng
-                        let parts = eventData.capacity.split('/');
-                        let current = parseInt(parts[0].trim()) - 1;
-                        if(current < 0) current = 0;
-                        let max = parts[1] ? parts[1].trim() : '∞';
-                        eventData.capacity = `${current} / ${max}`;
-                        
-                        updateStatusPills();
-                        openEventModal(eventData); // Gọi lại để load giao diện mới
-                        alert('Đã hủy đăng ký thành công!');
+                        fetch('{{ route("giangvien.sukien.huydangky") }}', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            },
+                            body: JSON.stringify({ maSuKien: eventData.id })
+                        })
+                        .then(res => res.json())
+                        .then(data => {
+                            if(data.success) {
+                                let nowRegistered = getRegisteredEvents();
+                                nowRegistered = nowRegistered.filter(id => id !== eventData.id);
+                                setRegisteredEvents(nowRegistered);
+                                
+                                let parts = eventData.capacity.split('/');
+                                let current = parseInt(parts[0].trim()) - 1;
+                                if(current < 0) current = 0;
+                                let max = parts[1] ? parts[1].trim() : '∞';
+                                eventData.capacity = `${current} / ${max}`;
+                                
+                                // Lưu thẳng vào DOM để đóng modal mở lại không bị lỗi
+                                const btnDom = document.querySelector(`button[data-event-id="${eventData.id}"]`);
+                                if(btnDom) btnDom.dataset.eventCapacity = eventData.capacity;
+                                
+                                updateStatusPills();
+                                openEventModal(eventData); 
+                                alert('Đã hủy đăng ký thành công!');
+                            }
+                        });
                     }
                 };
 
@@ -269,23 +285,39 @@
                 registerBtn.style.backgroundColor = '#1D546D';
                 registerBtn.style.cursor = 'pointer';
 
-                // Xử lý ĐĂNG KÝ
+                // === XỬ LÝ ĐĂNG KÝ (GỌI API) ===
                 registerBtn.onclick = () => {
                     const nowRegistered = getRegisteredEvents();
                     if (nowRegistered.includes(eventData.id)) return;
                     
-                    nowRegistered.push(eventData.id);
-                    setRegisteredEvents(nowRegistered);
-                    
-                    // Tính toán TĂNG số lượng
-                    let parts = eventData.capacity.split('/');
-                    let current = parseInt(parts[0].trim()) + 1;
-                    let max = parts[1] ? parts[1].trim() : '∞';
-                    eventData.capacity = `${current} / ${max}`;
+                    fetch('{{ route("giangvien.sukien.dangky") }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify({ maSuKien: eventData.id })
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if(data.success) {
+                            nowRegistered.push(eventData.id);
+                            setRegisteredEvents(nowRegistered);
+                            
+                            let parts = eventData.capacity.split('/');
+                            let current = parseInt(parts[0].trim()) + 1;
+                            let max = parts[1] ? parts[1].trim() : '∞';
+                            eventData.capacity = `${current} / ${max}`;
+                            
+                            // Lưu thẳng vào DOM để đóng modal mở lại không bị lỗi
+                            const btnDom = document.querySelector(`button[data-event-id="${eventData.id}"]`);
+                            if(btnDom) btnDom.dataset.eventCapacity = eventData.capacity;
 
-                    updateStatusPills();
-                    openEventModal(eventData); // Gọi lại để load giao diện mới
-                    alert('Đăng ký thành công!');
+                            updateStatusPills();
+                            openEventModal(eventData); 
+                            alert('Đăng ký thành công!');
+                        }
+                    });
                 };
             }
 
