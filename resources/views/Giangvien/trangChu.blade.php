@@ -1,4 +1,4 @@
-@extends('layout.giangVien') 
+@extends('layout.giangvien') 
 
 @section('title', 'Trang chủ Giảng viên')
 
