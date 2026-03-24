@@ -31,6 +31,7 @@
                 <p class="text-black mb-6">Chọn loại danh mục cần quản lý</p>
                 <select class="bg-[#F3F4F4] border border-gray-400 rounded px-3 py-2 w-56">
                     <option>Loại đề tài</option>
+                    <option>Đơn vị</option>
                 </select>
             </div>
 

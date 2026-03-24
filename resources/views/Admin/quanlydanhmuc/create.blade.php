@@ -1,4 +1,4 @@
-<form action="{{ route('admin.danhmuc.store') }}" method="POST">
+<form action="{{ route('admin.danhmuc.store') }}" method="POST" onsubmit="return validateCreate()">
     @csrf
 
     <div id="popupForm" class="hidden bg-[#EBF4F6] border border-black rounded-lg w-full h-full">
@@ -17,8 +17,14 @@
                 id="tenDanhMuc"
                 name="ten_loai"
                 type="text"
+                value="{{ old('ten_loai') }}"
                 placeholder="Nhập thông tin ..."
-                class="bg-[#F3F4F4] w-full border border-gray-400 rounded px-3 py-1 mb-6">
+                class="bg-[#F3F4F4] w-full border rounded px-3 py-1 mb-2
+                @error('ten_loai') border-red-500 @enderror">
+
+            @error('ten_loai')
+            <p class="text-red-500 text-sm mb-4">{{ $message }}</p>
+            @enderror
 
             <div class="flex justify-center gap-4">
 
@@ -38,3 +44,29 @@
 
     </div>
 </form>
+@if ($errors->any())
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.getElementById("popupForm").classList.remove("hidden");
+    });
+</script>
+@endif
+
+<script>
+    function validateCreate() {
+        let input = document.getElementById("tenDanhMuc");
+        let value = input.value.trim();
+
+        if (value === "") {
+            alert("Không được để trống!");
+            return false;
+        }
+
+        if (value.length > 255) {
+            alert("Tên quá dài!");
+            return false;
+        }
+
+        return true;
+    }
+</script>

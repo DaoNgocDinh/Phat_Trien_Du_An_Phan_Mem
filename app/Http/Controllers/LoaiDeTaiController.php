@@ -21,9 +21,12 @@ class LoaiDeTaiController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'ten_loai' => 'required'
+            'ten_loai' => 'required|string|max:255|unique:loai_de_tais,ten_loai'
+        ], [
+            'ten_loai.required' => 'Không được để trống tên loại!',
+            'ten_loai.unique' => 'Tên loại đã tồn tại!',
+            'ten_loai.max' => 'Tên loại tối đa 255 ký tự!'
         ]);
-
         LoaiDeTai::create([
             'ten_loai' => $request->ten_loai
         ]);
@@ -34,11 +37,18 @@ class LoaiDeTaiController extends Controller
     // SỬA
     public function update(Request $request, $id)
     {
-        DB::table('loai_de_tais')
-            ->where('id', $id)
-            ->update([
-                'ten_loai' => $request->ten_loai
-            ]);
+        $request->validate([
+            'ten_loai' => 'required|string|max:255|unique:loai_de_tais,ten_loai,' . $id
+        ], [
+            'ten_loai.required' => 'Không được để trống!',
+            'ten_loai.unique' => 'Tên loại đã tồn tại!'
+        ]);
+
+        $dm = LoaiDeTai::findOrFail($id);
+
+        $dm->update([
+            'ten_loai' => $request->ten_loai
+        ]);
 
         return back()->with('success', 'Cập nhật danh mục thành công!');
     }

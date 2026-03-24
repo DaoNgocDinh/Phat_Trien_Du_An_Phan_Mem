@@ -13,7 +13,7 @@
             Loại đề tài
         </label>
 
-        <form method="POST" id="formUpdate">
+        <form method="POST" id="formUpdate" onsubmit="return validateEdit()">
             @csrf
             @method('PUT')
 
@@ -23,7 +23,13 @@
                 id="editInput"
                 name="ten_loai"
                 type="text"
-                class="w-full border border-gray-300 rounded-lg px-4 py-2 mb-6 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                value="{{ old('ten_loai') }}"
+                class="w-full border rounded-lg px-4 py-2 mb-2 
+    @error('ten_loai') border-red-500 @enderror">
+
+            @error('ten_loai')
+            <p class="text-red-500 text-sm mb-4">{{ $message }}</p>
+            @enderror
 
             <!-- Buttons -->
             <div class="flex justify-end gap-3">
@@ -43,3 +49,36 @@
 
     </div>
 </div>
+
+@if ($errors->any())
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.getElementById("formEdit").classList.remove("hidden");
+        let id = "{{ old('id') }}";
+        if (id) {
+            document.getElementById("formUpdate").action = "/admin/danhmuc/update/" + id;
+        }
+
+    });
+</script>
+@endif
+
+<script>
+    function validateEdit() {
+        let input = document.getElementById("editInput");
+        let value = input.value.trim();
+
+        if (value === "") {
+            alert("Không được để trống!");
+            input.focus();
+            return false;
+        }
+
+        if (value.length > 255) {
+            alert("Tên quá dài!");
+            return false;
+        }
+
+        return true;
+    }
+</script>
