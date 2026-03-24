@@ -1,20 +1,21 @@
 <?php
 
+use App\Http\Controllers\LienHeController;
 use App\Http\Controllers\SinhvienController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\QuycheController;
 
 
-require __DIR__.'/auth.php';
-require __DIR__.'/admin.php';
-require __DIR__.'/congbo.php';
-require __DIR__.'/giangvien.php';
-require __DIR__.'/user.php';
-require __DIR__.'/detai.php';
-require __DIR__.'/tiendodetai.php';
-require __DIR__.'/hoso.php';
-require __DIR__.'/pheduyetdexuat.php';
-require __DIR__.'/quanlydanhmuc.php';
+require __DIR__ . '/auth.php';
+require __DIR__ . '/admin.php';
+require __DIR__ . '/congbo.php';
+require __DIR__ . '/giangvien.php';
+require __DIR__ . '/user.php';
+require __DIR__ . '/detai.php';
+require __DIR__ . '/tiendodetai.php';
+require __DIR__ . '/hoso.php';
+require __DIR__ . '/pheduyetdexuat.php';
+require __DIR__ . '/quanlydanhmuc.php';
 
 use App\Http\Controllers\GiangVienController;
 
@@ -29,7 +30,7 @@ Route::get('/admin/quy-che', function () {
 
 // auth
 
-Route::delete('/admin/destroyquyche/{id}', [QuyCheController::class,'destroy'])->name('quyche.destroy');
+Route::delete('/admin/destroyquyche/{id}', [QuyCheController::class, 'destroy'])->name('quyche.destroy');
 
 Route::get('/guiyeucaulienhe', function () {
     return view('Sinhvien.guiYeuCaulienHe');
@@ -83,18 +84,20 @@ Route::get('/admin/report/create', function () {
 // ROUTE CHO SINH VIÊN (GUEST)
 Route::prefix('guest')->group(function () {
     Route::get('/trang-chu', [SinhvienController::class, 'dashBoard'])
-        ->name('guest.trangChu');
-        
+        ->name('sinhvien.trangChu');
+
     Route::get('/cong-bo', [SinhvienController::class, 'CongBo'])
-        ->name('guest.congBo');
+        ->name('sinhvien.congBo');
     Route::get('/de-tai', [SinhvienController::class, 'DeTai'])
-        ->name('guest.deTai');
-    Route::get('/quy-che', [QuyCheController::class, 'index_guest'])->name('guest.quyChe.index');
-    Route::get('/su-kien', [SinhvienController::class, 'SuKien'])->name('guest.suKien');
-    
+        ->name('sinhvien.deTai');
+    Route::get('/quy-che', [QuyCheController::class, 'index_guest'])->name('sinhvien.quyChe.index');
+    Route::get('/su-kien', [SinhvienController::class, 'SuKien'])->name('sinhvien.suKien');
+
     // Trang hiển thị form liên hệ của Sinh viên
-    Route::get('/lien-he', [SinhvienController::class, 'lienHe'])->name('guest.lienhe');
-    
+    Route::get('/lien-he', [LienHeController::class, 'index_SV'])->name('sinhvien.lienhe.index');
+
+    Route::get('/search', [SinhvienController::class, 'search'])->name('sinhvien.search');
+
     // Tận dụng luôn hàm store của LienHeController để xử lý lưu data
-    Route::post('/lien-he', [\App\Http\Controllers\LienHeController::class, 'store'])->name('guest.lienhe.store');
+    Route::post('/lien-he', [LienHeController::class, 'store'])->name('sinhvien.lienhe.store');
 });

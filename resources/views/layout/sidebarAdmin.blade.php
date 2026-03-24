@@ -28,11 +28,19 @@
 
                 <!-- Đề tài -->
                 <li>
-                    <a href="admin/pheduyet"
+                    <a href="{{ route('admin.pheduyet.index') }}"
                         class="flex items-center px-3 py-2.5 text-white rounded-md hover:bg-[#2c5d6e] transition
-                       {{ request()->routeIs('#') ? 'bg-[#2c5d6e] border-l-4 border-white font-semibold' : '' }}">
+                       {{ request()->routeIs('admin.pheduyet.*') ? 'bg-[#2c5d6e] border-l-4 border-white font-semibold' : '' }}">
                         <i class="fas fa-file-alt w-6"></i>
                         <span class="ml-3">Đề tài nghiên cứu</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('admin.theodoitiendo.index') }}"
+                        class="flex items-center px-3 py-2.5 text-white rounded-md hover:bg-[#2c5d6e] hover:shadow-md transition-all duration-200 
+       {{ request()->routeIs('admin.theodoitiendo.*') ? 'bg-[#2c5d6e] shadow-md border-l-4 border-white text-white font-semibold' : '' }}">
+                        <i class="fas fa-tasks w-6 text-lg"></i>
+                        <span class="ml-3">Theo dõi tiến độ</span>
                     </a>
                 </li>
 
@@ -56,15 +64,6 @@
                     </a>
                 </li>
 
-                <!-- Hoạt động -->
-                <li>
-                    <a href="#"
-                        class="flex items-center px-3 py-2.5 text-white rounded-md hover:bg-[#2c5d6e] transition">
-                        <i class="fas fa-stream w-6"></i>
-                        <span class="ml-3">Hoạt động khoa học</span>
-                    </a>
-                </li>
-
                 <!-- Sự kiện -->
                 <li>
                     <a href="{{ route('admin.sukien.index') }}"
@@ -81,15 +80,6 @@
                         {{ request()->routeIs('admin.lienhe.*') ? 'bg-[#2c5d6e] border-l-4 border-white font-semibold' : '' }}">
                         <i class="fas fa-envelope w-6"></i>
                         <span class="ml-3">Liên hệ</span>
-                    </a>
-                </li>
-
-                <!-- Đăng tải -->
-                <li>
-                    <a href="#"
-                        class="flex items-center px-3 py-2.5 text-white rounded-md hover:bg-[#2c5d6e] transition">
-                        <i class="fas fa-upload w-6"></i>
-                        <span class="ml-3">Đăng tải</span>
                     </a>
                 </li>
 
@@ -115,7 +105,7 @@
 
                 <!-- Danh mục -->
                 <li>
-                    <a href="/admin/detai"
+                    <a href="{{ route('admin.danhmuc.index') }}"
                         class="flex items-center px-3 py-2.5 text-white rounded-md hover:bg-[#2c5d6e] transition">
                         <i class="fas fa-tags w-6"></i>
                         <span class="ml-3">Quản lý danh mục</span>
@@ -138,7 +128,7 @@
         }
 
         // Nhấn Enter trong input
-        input.addEventListener('keydown', function (e) {
+        input.addEventListener('keydown', function(e) {
             if (e.key === 'Enter') {
                 goToSearch();
             }

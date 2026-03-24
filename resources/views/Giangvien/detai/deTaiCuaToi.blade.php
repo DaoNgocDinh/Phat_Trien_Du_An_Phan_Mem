@@ -216,15 +216,12 @@
                     Tiến độ đề tài cập nhật thành công!
                 </div>
 
-                <div class="flex gap-4 flex-wrap">
-                    <button onclick="closeCapNhatModal()" class="bg-gray-500 hover:bg-gray-600 text-white px-8 py-3 rounded-lg shadow-md transition font-medium">
+                <div class="px-8 py-6 border-t border-gray-200 flex justify-end items-center gap-4 bg-gray-50">
+                    <button type="button" onclick="closeCapNhatModal()" class="bg-gray-400 hover:bg-gray-500 text-white px-8 py-2.5 rounded-lg shadow transition font-medium">
                         Hủy
                     </button>
-                    <button type="submit" form="capNhatForm" name="action" value="luu_nhap" class="bg-yellow-500 hover:bg-yellow-600 text-white px-8 py-3 rounded-lg shadow-md transition font-medium">
-                        Lưu nháp
-                    </button>
-                    <button type="submit" form="capNhatForm" class="bg-[#1D546D] hover:bg-[#2c5d6e] text-white px-8 py-3 rounded-lg shadow-md transition font-medium">
-                        Gửi báo cáo
+                    <button type="submit" form="capNhatForm" class="bg-[#1D546D] hover:bg-[#2c5d6e] text-white px-8 py-2.5 rounded-lg shadow transition font-medium flex items-center gap-2">
+                        <i class="fas fa-paper-plane"></i> Gửi báo cáo
                     </button>
                 </div>
             </div>
@@ -281,6 +278,22 @@
         // Có thể lấy lại ID đề tài cũ từ session hoặc flash data để mở đúng form
         document.getElementById('capNhatModal').classList.remove('hidden');
         alert("Có lỗi xảy ra: \n" + @json($errors->all()).join('\n'));
+    });
+</script>
+@endif
+@if (session('success'))
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        alert("{{ session('success') }}");
+    });
+</script>
+@endif
+
+@if ($errors->any())
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.getElementById('capNhatModal').classList.remove('hidden');
+        alert("Có lỗi xảy ra: \n- " + {!! json_encode($errors->all()) !!}.join('\n- '));
     });
 </script>
 @endif
