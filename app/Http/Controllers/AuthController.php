@@ -137,7 +137,7 @@ public function login(Request $request)
     if ($user->VaiTro == 'nghiencuusinh') {
         $sv = Nghiencuusinh::where('UserID', $user->UserID)->first();
         session(['HoTen' => $sv->HoTen]);
-        return redirect('/sinhvien/trang-chu');
+        return redirect()->route('giangvien.trangChu');
     }
 
     if ($user->VaiTro == 'giangvien') {

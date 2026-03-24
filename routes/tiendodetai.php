@@ -24,7 +24,7 @@ Route::prefix('admin')->middleware('roles:admin')->group(function () {
 
 });
 
-Route::prefix('giangvien')->middleware('roles:giangvien')->group(function () {
+Route::prefix('giangvien')->middleware('roles:giangvien,nghiencuusinh')->group(function () {
     Route::post('/cap-nhat-tien-do', [TienDoDeTaiController::class, 'store'])
          ->name('giangvien.capNhatTienDo');
 });

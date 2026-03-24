@@ -8,7 +8,7 @@ use App\Http\Controllers\LienHeController;
 use App\Http\Controllers\CongBoController;
 use App\Http\Controllers\TienDoDeTaiController;
 
-Route::prefix('giangvien')->middleware('roles:giangvien')->group(function () {
+Route::prefix('giangvien')->middleware('roles:giangvien,nghiencuusinh')->group(function () {
     Route::get('/trang-chu', [GiangVienController::class, 'dashBoard'])
         ->name('giangvien.trangChu');
 
