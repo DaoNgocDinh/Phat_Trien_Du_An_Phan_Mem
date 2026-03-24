@@ -91,6 +91,8 @@ Route::prefix('guest')->group(function () {
     Route::get('/de-tai', [SinhvienController::class, 'DeTai'])
         ->name('sinhvien.deTai');
     Route::get('/quy-che', [QuyCheController::class, 'index_guest'])->name('sinhvien.quyChe.index');
+    Route::get('/quy-che/{id}', [QuyCheController::class, 'view_sinhvien'])->name('sinhvien.quyChe.view');
+
     Route::get('/su-kien', [SinhvienController::class, 'SuKien'])->name('sinhvien.suKien');
 
     // Trang hiển thị form liên hệ của Sinh viên
