@@ -172,7 +172,7 @@ public function login(Request $request)
     return view('Admin.auth.change_password');
 }
 
- public function changePassword(Request $request)
+public function changePassword(Request $request)
 {
     $request->validate([
         'old_password' => 'required',
@@ -197,7 +197,10 @@ public function login(Request $request)
     $user->MatKhau = Hash::make($request->new_password);
     $user->save();
 
-    return back()->with('success', 'Đổi mật khẩu thành công');
+    session()->flush();
+
+    return redirect()->route('login')
+        ->with('success', 'Đổi mật khẩu thành công, vui lòng đăng nhập lại');
 }
 
     public function showForgotPassword()
