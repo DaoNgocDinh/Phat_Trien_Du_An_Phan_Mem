@@ -1,5 +1,6 @@
 <form action="{{ route('admin.danhmuc.store') }}" method="POST" onsubmit="return validateCreate()">
     @csrf
+    <input type="hidden" name="type" value="{{ $type }}">
 
     <div id="popupForm" class="hidden bg-[#EBF4F6] border border-black rounded-lg w-full h-full">
 
@@ -15,9 +16,9 @@
 
             <input
                 id="tenDanhMuc"
-                name="ten_loai"
+                name="{{ $type == 'loai' ? 'ten_loai' : 'ten_don_vi' }}"
                 type="text"
-                value="{{ old('ten_loai') }}"
+                value="{{ old('ten_loai') ?? old('ten_don_vi') }}"
                 placeholder="Nhập thông tin ..."
                 class="bg-[#F3F4F4] w-full border rounded px-3 py-1 mb-2
                 @error('ten_loai') border-red-500 @enderror">

@@ -16,12 +16,13 @@
         <form method="POST" id="formUpdate" onsubmit="return validateEdit()">
             @csrf
             @method('PUT')
+            <input type="hidden" name="type" value="{{ $type }}">
 
             <input type="hidden" id="editId" name="id">
 
             <input
                 id="editInput"
-                name="ten_loai"
+                name="{{ $type == 'loai' ? 'ten_loai' : 'ten_don_vi' }}"
                 type="text"
                 value="{{ old('ten_loai') }}"
                 class="w-full border rounded-lg px-4 py-2 mb-2 
