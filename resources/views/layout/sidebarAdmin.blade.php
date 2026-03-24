@@ -121,14 +121,11 @@
 
         function goToSearch() {
             const query = input.value.trim();
-            if (query) {
-                // ví dụ redirect tới route /search?query=...
-                window.location.href = `{{ route('admin.search') }}?search=${encodeURIComponent(query)}`;
-            }
+            window.location.href = `{{ route('admin.search') }}?search=${encodeURIComponent(query)}`;
         }
 
         // Nhấn Enter trong input
-        input.addEventListener('keydown', function(e) {
+        input.addEventListener('keydown', function (e) {
             if (e.key === 'Enter') {
                 goToSearch();
             }

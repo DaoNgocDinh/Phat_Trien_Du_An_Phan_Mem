@@ -75,10 +75,7 @@
 
         function goToSearch() {
             const query = input.value.trim();
-            if (query) {
-                // ví dụ redirect tới route /search?query=...
-                window.location.href = `{{ route('sinhvien.search') }}?search=${encodeURIComponent(query)}`;
-            }
+            window.location.href = `{{ route('sinhvien.search') }}?search=${encodeURIComponent(query)}`;
         }
 
         // Nhấn Enter trong input
