@@ -22,6 +22,12 @@
             </form>
         </div>
 
+        @if($results->count() == 0)
+            <div class="text-red-500 text-center text-gray-500 py-6">
+                Không tìm thấy dữ liệu phù hợp
+            </div>
+        @endif
+
         <div>
             <div class="w-full mx-auto mt-6 grid gap-4">
                 @foreach ($results as $item)

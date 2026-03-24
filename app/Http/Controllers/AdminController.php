@@ -70,7 +70,7 @@ class AdminController extends Controller
         $sukien = Sukien::select(
             'MaSuKien as Ma',
             'TenSuKien as Ten',
-            CongBo::raw("'Sự kiện' as Loai")
+            Sukien::raw("'Sự kiện' as Loai")
         );
 
         if ($search) {
@@ -86,6 +86,8 @@ class AdminController extends Controller
         if ($search) {
             $thongbao->where('TieuDe', 'like', "%{$search}%");
         }
+
+
 
         $results = $quyche
             ->unionAll($lienhe)
@@ -111,7 +113,9 @@ class AdminController extends Controller
             ['path' => request()->url(), 'query' => request()->query()]
         );
 
-        return view('Admin.search.index', ['results' => $paginated]);
+        return view('Admin.search.index', [
+            'results' => $paginated,
+        ]);
     }
     // --- QUẢN LÝ SỰ KIỆN ---
 
@@ -119,9 +123,9 @@ class AdminController extends Controller
     {
         // Lấy danh sách sự kiện kèm tổng số lượng đăng ký
         $sukiens = Sukien::withSum('dangkysukien as tong_dang_ky', 'SoLuongDangKy')
-                         ->orderBy('ThoiGian', 'desc')
-                         ->paginate(10);
-                         
+            ->orderBy('ThoiGian', 'desc')
+            ->paginate(10);
+
         return view('Admin.sukien.index', compact('sukiens'));
     }
 
@@ -151,7 +155,7 @@ class AdminController extends Controller
     public function suKienUpdate(Request $request, $id)
     {
         $sukien = Sukien::findOrFail($id);
-        
+
         $sukien->update([
             'TenSuKien' => $request->TenSuKien,
             'MoTa' => $request->MoTa,
@@ -168,7 +172,7 @@ class AdminController extends Controller
     {
         // Cần xóa các bản ghi đăng ký liên quan trong bảng dangkysukien trước để tránh lỗi khóa ngoại (Foreign Key)
         \App\Models\Dangkysukien::where('MaSuKien', $id)->delete();
-        
+
         // Sau đó mới xóa sự kiện
         Sukien::where('MaSuKien', $id)->delete();
 
