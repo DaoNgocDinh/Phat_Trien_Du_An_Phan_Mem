@@ -18,7 +18,25 @@ require __DIR__ . '/pheduyetdexuat.php';
 require __DIR__ . '/quanlydanhmuc.php';
 
 use App\Http\Controllers\GiangVienController;
-Route::get('/', [SinhvienController::class, 'dashBoard']);
+Route::get('/', function () {
+
+    if (session('UserID')) {
+
+        if (session('VaiTro') == 'admin') {
+            return redirect()->route('admin.trangChu');
+        }
+
+        if (session('VaiTro') == 'giangvien') {
+            return redirect()->route('  .trangChu');
+        }
+
+        if (session('VaiTro') == 'nghiencuusinh') {
+            return redirect()->route('giangvien.trangChu');
+        }
+    }
+
+    return view('Sinhvien.trangChu'); // hoặc route login của bạn
+});
 
 Route::get('/admin/quy-che', function () {
     return view('Admin.quyChe');
