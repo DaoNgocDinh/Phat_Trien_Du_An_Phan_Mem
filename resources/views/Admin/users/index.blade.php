@@ -159,7 +159,7 @@
 
             <!-- ICON -->
             <div class="w-16 h-16 rounded-full bg-green-500 flex items-center justify-center mb-4">
-                <span class="text-white text-3xl">✔</span>
+                <span class="text-gray-500 text-3xl">✔</span>
             </div>
 
             <!-- TEXT -->
@@ -167,7 +167,7 @@
                 {{ session('success') }}
             </div>
 
-            <div class="text-xl text-gray-500">
+            <div class="text text-gray-500">
                 Thao tác đã được thực hiện thành công
             </div>
 
