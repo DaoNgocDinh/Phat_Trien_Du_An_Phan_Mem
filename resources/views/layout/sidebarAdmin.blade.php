@@ -67,7 +67,8 @@
                 <!-- Sự kiện -->
                 <li>
                     <a href="{{ route('admin.sukien.index') }}"
-                        class="flex items-center px-3 py-2.5 text-white rounded-md hover:bg-[#2c5d6e] transition">
+                        class="flex items-center px-3 py-2.5 text-white rounded-md hover:bg-[#2c5d6e] transition
+                        {{ request()->routeIs('admin.sukien.*') ? 'bg-[#2c5d6e] border-l-4 border-white font-semibold' : '' }}">
                         <i class="fas fa-calendar-check w-6"></i>
                         <span class="ml-3">Sự kiện</span>
                     </a>
