@@ -153,4 +153,34 @@ class GiangVienController extends Controller
 
         return response()->json(['success' => true]);
     }
+    public function getThongBaoAPI()
+    {
+        try {
+            $danhSach = \App\Models\Thongbao::orderBy('NgayTao', 'desc')->take(10)->get();
+            // Lấy chính xác số lượng thông báo "chưa đọc" từ cột LoaiThongBao
+            $soThongBaoMoi = \App\Models\Thongbao::where('LoaiThongBao', 'chưa đọc')->count();
+
+            return response()->json([
+                'success' => true,
+                'data' => $danhSach,
+                'soMoi' => $soThongBaoMoi
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Lỗi kết nối khi tải thông báo.'], 500);
+        }
+    }
+
+    // Hàm đánh dấu TẤT CẢ đã đọc
+    public function markAllReadAPI()
+    {
+        \App\Models\Thongbao::where('LoaiThongBao', 'chưa đọc')->update(['LoaiThongBao' => 'đã đọc']);
+        return response()->json(['success' => true]);
+    }
+
+    // Hàm đánh dấu MỘT thông báo đã đọc
+    public function markReadAPI($id)
+    {
+        \App\Models\Thongbao::where('MaThongBao', $id)->update(['LoaiThongBao' => 'đã đọc']);
+        return response()->json(['success' => true]);
+    }
 }
