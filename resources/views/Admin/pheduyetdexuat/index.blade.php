@@ -205,7 +205,7 @@
                 <div class="flex justify-center gap-4">
 
                     <button onclick="confirmReject()"
-                        class="bg-red-500 text-white px-4 py-2 rounded">
+                        class="bg-[#1D8E8E] text-white px-4 py-2 rounded">
                         ✔ Xác nhận
                     </button>
 

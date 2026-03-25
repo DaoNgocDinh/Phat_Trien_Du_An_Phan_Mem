@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             NghiencuusinhSeeder::class,
             CanbokhoahocSeeder::class,
             LoaiDeTaisSeeder::class,
+            DonViSeeder::class,
             DetaiSeeder::class,
             TiendodetaiSeeder::class,
             SukienSeeder::class,

@@ -14,7 +14,7 @@ class DetaiSeeder extends Seeder
                 'MaSo' => 1,
                 'TenDeTai' => 'AI trong phân tích dữ liệu',
                 'ChuNhiem' => 'Nguyễn Văn An',
-                'DonVi' => 'CNTT',
+                'donvi_id' => 1, // CNTT
                 'CapDeTai' => 'Cấp trường',
                 'LoaiDeTai' => 'Nghiên cứu',
                 'ThoiGianBatDau' => '2024-01-01',
@@ -32,7 +32,7 @@ class DetaiSeeder extends Seeder
                 'MaSo' => 2,
                 'TenDeTai' => 'Blockchain trong giáo dục',
                 'ChuNhiem' => 'Trần Minh Hùng',
-                'DonVi' => 'CNTT',
+                'donvi_id' => 1, // CNTT
                 'CapDeTai' => 'Cấp bộ',
                 'LoaiDeTai' => 'Nghiên cứu',
                 'ThoiGianBatDau' => '2023-01-01',
@@ -50,7 +50,7 @@ class DetaiSeeder extends Seeder
                 'MaSo' => 3,
                 'TenDeTai' => 'Phân tích dữ liệu lớn',
                 'ChuNhiem' => 'Lê Thu Hà',
-                'DonVi' => 'HTTT',
+                'donvi_id' => 2, // HTTT
                 'CapDeTai' => 'Cấp trường',
                 'LoaiDeTai' => 'Nghiên cứu',
                 'ThoiGianBatDau' => '2024-03-01',
@@ -68,7 +68,7 @@ class DetaiSeeder extends Seeder
                 'MaSo' => 4,
                 'TenDeTai' => 'IoT trong nông nghiệp',
                 'ChuNhiem' => 'Phạm Quang Dũng',
-                'DonVi' => 'CNTT',
+                'donvi_id' => 1, // CNTT
                 'CapDeTai' => 'Cấp trường',
                 'LoaiDeTai' => 'Ứng dụng',
                 'ThoiGianBatDau' => '2024-02-01',
@@ -86,7 +86,7 @@ class DetaiSeeder extends Seeder
                 'MaSo' => 5,
                 'TenDeTai' => 'Deep Learning nhận dạng ảnh',
                 'ChuNhiem' => 'Đặng Minh Tuấn',
-                'DonVi' => 'AI',
+                'donvi_id' => 3, // AI
                 'CapDeTai' => 'Cấp bộ',
                 'LoaiDeTai' => 'Nghiên cứu',
                 'ThoiGianBatDau' => '2023-06-01',
@@ -104,7 +104,7 @@ class DetaiSeeder extends Seeder
                 'MaSo' => 6,
                 'TenDeTai' => 'Data Mining',
                 'ChuNhiem' => 'Nguyễn Hoàng Nam',
-                'DonVi' => 'CNTT',
+                'donvi_id' => 1, // CNTT
                 'CapDeTai' => 'Cấp trường',
                 'LoaiDeTai' => 'Nghiên cứu',
                 'ThoiGianBatDau' => '2024-05-01',
@@ -122,7 +122,7 @@ class DetaiSeeder extends Seeder
                 'MaSo' => 7,
                 'TenDeTai' => 'Hệ thống chatbot',
                 'ChuNhiem' => 'Trần Quốc Bảo',
-                'DonVi' => 'AI',
+                'donvi_id' => 3, // AI
                 'CapDeTai' => 'Cấp trường',
                 'LoaiDeTai' => 'Ứng dụng',
                 'ThoiGianBatDau' => '2024-04-01',
@@ -140,7 +140,7 @@ class DetaiSeeder extends Seeder
                 'MaSo' => 8,
                 'TenDeTai' => 'Bảo mật hệ thống web',
                 'ChuNhiem' => 'Phạm Thanh Long',
-                'DonVi' => 'CNTT',
+                'donvi_id' => 1, // CNTT
                 'CapDeTai' => 'Cấp bộ',
                 'LoaiDeTai' => 'Nghiên cứu',
                 'ThoiGianBatDau' => '2023-03-01',
@@ -158,7 +158,7 @@ class DetaiSeeder extends Seeder
                 'MaSo' => 9,
                 'TenDeTai' => 'Cloud Computing',
                 'ChuNhiem' => 'Lý Văn Đức',
-                'DonVi' => 'CNTT',
+                'donvi_id' => 1, // CNTT
                 'CapDeTai' => 'Cấp trường',
                 'LoaiDeTai' => 'Nghiên cứu',
                 'ThoiGianBatDau' => '2024-06-01',
@@ -176,7 +176,7 @@ class DetaiSeeder extends Seeder
                 'MaSo' => 10,
                 'TenDeTai' => 'Hệ thống quản lý học tập',
                 'ChuNhiem' => 'Nguyễn Văn An',
-                'DonVi' => 'CNTT',
+                'donvi_id' => 1, // CNTT
                 'CapDeTai' => 'Cấp trường',
                 'LoaiDeTai' => 'Ứng dụng',
                 'ThoiGianBatDau' => '2024-02-01',

@@ -25,12 +25,18 @@
             alert("{{ session('success') }}");
         </script>
         @endif
+        @if(session('error'))
+        <script>
+            alert("{{ session('error') }}");
+        </script>
+        @endif
         <!-- Header -->
         <div class="flex justify-between items-center mt-6">
             <div>
                 <p class="text-black mb-6">Chọn loại danh mục cần quản lý</p>
-                <select class="bg-[#F3F4F4] border border-gray-400 rounded px-3 py-2 w-56">
-                    <option>Loại đề tài</option>
+                <select class="bg-[#F3F4F4] border border-gray-400 rounded px-3 py-2 w-56" onchange="window.location.href='{{ route('admin.danhmuc.index') }}?type=' + this.value">
+                    <option value="loai" {{ $type == 'loai' ? 'selected' : '' }}>Loại đề tài</option>
+                    <option value="donvi" {{ $type == 'donvi' ? 'selected' : '' }}>Đơn vị</option>
                 </select>
             </div>
 
@@ -43,13 +49,19 @@
         <div class="flex gap-10 mt-6">
             <div class="w-2/3">
 
+                @if($type == 'loai')
                 <h3 class="font-semibold mb-4 text-black">Danh sách các loại đề tài</h3>
+                @else
+                <h3 class="font-semibold mb-4 text-black">Danh sách các đơn vị</h3>
+                @endif
 
                 <table class="w-full text-sm border-separate border-spacing-y-2">
                     <thead>
                         <tr>
                             <th>STT</th>
-                            <th class="text-center">Loại đề tài</th>
+                            <th class="text-center">
+                                {{ $type == 'loai' ? 'Loại đề tài' : 'Đơn vị' }}
+                            </th>
                             <th class="text-center">Hành động</th>
                         </tr>
                     </thead>
@@ -61,7 +73,11 @@
 
                             <!-- FIX CHỖ NÀY -->
                             <td id="ten{{$index}}" class="text-center">
+                                @if($type == 'loai')
                                 {{ $dm->ten_loai }}
+                                @else
+                                {{ $dm->ten_don_vi }}
+                                @endif
                             </td>
 
                             <td class="text-center">
@@ -74,7 +90,7 @@
                                 </button>
 
                                 <!-- DELETE -->
-                                <button onclick="moPopupXoa({{ $dm->id }}, '{{ $dm->ten_loai }}')"
+                                <button onclick="moPopupXoa({{ $dm->id }}, '{{ $type == 'loai' ? $dm->ten_loai : $dm->ten_don_vi }}')"
                                     class="bg-red-500 px-3 py-1 rounded text-white ml-2">
                                     Xóa
                                 </button>
@@ -100,6 +116,7 @@
     <form id="formXoa" method="POST">
         @csrf
         @method('DELETE')
+        <input type="hidden" name="type" value="{{ $type }}">
     </form>
 
     <form id="formEditSubmit" method="POST">
@@ -107,6 +124,7 @@
     </form>
 
     <!-- POPUP XÓA giữ nguyên -->
+
     <div id="popupXoa" class="hidden fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center">
         <div class="bg-white w-[420px] rounded-lg">
             <div class="flex justify-between border-b px-4 py-2">
@@ -208,6 +226,16 @@
             document.getElementById("popupForm")?.classList.add("hidden");
             document.getElementById("formEdit")?.classList.add("hidden");
             document.getElementById("popupXoa")?.classList.add("hidden");
+        }
+
+
+        // Lọc danh mục
+        function locDanhMuc(type) {
+            if (type === "loai") {
+                window.location.href = "/admin/danhmuc?type=loai";
+            } else {
+                window.location.href = "/admin/danhmuc?type=donvi";
+            }
         }
     </script>
 
