@@ -44,4 +44,8 @@ Route::prefix('giangvien')->middleware('roles:giangvien,nghiencuusinh')->group(f
 
     Route::get('/congbo/dexuat', [CongBoController::class, 'showSuggest'])->name('giangvien.congbo.suggest');
     Route::post('/congbo/dexuat', [CongBoController::class, 'suggest']);
+
+    Route::get('/api/thong-bao', [\App\Http\Controllers\GiangVienController::class, 'getThongBaoAPI'])->name('giangvien.api.thongbao');
+    Route::post('/api/thong-bao/read-all', [\App\Http\Controllers\GiangVienController::class, 'markAllReadAPI']);
+    Route::post('/api/thong-bao/read/{id}', [\App\Http\Controllers\GiangVienController::class, 'markReadAPI']);
 });

@@ -13,108 +13,78 @@
             <div class="flex items-center space-x-5 sm:space-x-6">
                 <!-- Chuông thông báo -->
                 <div class="relative inline-block text-left" id="notifDropdown">
-                    @php
-                        $danhSachThongBao = \App\Models\Thongbao::orderBy('NgayTao', 'desc')->take(6)->get();
-                        $soThongBaoMoi = \App\Models\Thongbao::where('NgayTao', '>=', \Carbon\Carbon::now()->subDays(7))->count();
-                    @endphp
+                    <button type="button" onclick="toggleThongBao()" class="relative rounded-full p-1.5 text-gray-200 hover:text-white hover:bg-[#2c5d6e] transition duration-150">
+                        
+                        <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                        </svg>
 
-                    <button type="button" onclick="toggleThongBao()"
-                        class="btn btn-ghost btn-circle relative hover:bg-white/20 transition-colors">
-                        <i class="fas fa-bell text-xl text-[#F9A826]"></i>
-                        @if($soThongBaoMoi > 0)
-                            <span id="notif-badge"
-                                class="absolute top-1 right-2 inline-flex items-center justify-center w-4 h-4 text-[10px] font-bold text-white bg-red-500 rounded-full border-2 border-[#1D546D] transition-all duration-300">
-                                {{ $soThongBaoMoi }}
-                            </span>
-                        @endif
+                        <span id="notif-badge" style="display: none;" class="absolute top-1 right-2 items-center justify-center w-4 h-4 text-[10px] font-bold text-white bg-red-500 rounded-full border-2 border-[#071E28]">
+                            0
+                        </span>
                     </button>
 
-                    <div id="thongBaoMenu" class="hidden absolute right-0 mt-3 w-[400px] bg-white rounded-2xl shadow-2xl border border-gray-100 z-50 flex-col overflow-hidden transition-all origin-top-right">
+                    <div id="thongBaoMenu" style="display: none;" class="absolute right-0 mt-3 w-[360px] sm:w-[400px] bg-white rounded-xl shadow-2xl border border-gray-200 z-50 flex-col overflow-hidden origin-top-right">
                         
-                        <div class="px-5 pt-5 pb-3 flex justify-between items-end" id="notif-header-main">
-                            <h3 class="text-2xl font-extrabold text-gray-900 tracking-tight">Thông báo</h3>
-                            <button onclick="markAllAsRead()"
-                                class="text-[13px] text-blue-600 font-medium hover:text-blue-800 transition">
-                                Đánh dấu tất cả đã đọc
+                        <div id="notif-header-main" class="px-5 py-4 flex justify-between items-center border-b border-gray-100 bg-gray-50">
+                            <h3 class="text-lg font-extrabold text-gray-900 tracking-tight">Thông báo</h3>
+                            <button onclick="markAllAsRead()" class="text-xs text-blue-600 font-semibold hover:text-blue-800 transition">
+                                Đánh dấu đã đọc
                             </button>
                         </div>
 
-                        <div id="notif-list-view" class="block">
-                            <div class="px-5 flex gap-6 border-b border-gray-200">
-                                <button id="tab-all" onclick="switchNotifTab('all')" class="pb-3 text-[15px] text-blue-600 font-semibold border-b-2 border-blue-600 transition-all">
-                                    Tất cả
-                                </button>
-                                <button id="tab-unread" onclick="switchNotifTab('unread')" class="pb-3 text-[15px] text-gray-500 font-medium hover:text-gray-800 border-b-2 border-transparent transition-all">
-                                    Chưa đọc
-                                </button>
+                        <div id="notif-list-view" style="display: block;">
+                            <div class="px-5 flex gap-5 border-b border-gray-100 shadow-sm">
+                                <button id="tab-all" onclick="switchNotifTab('all')" class="py-2.5 text-[14px] text-blue-600 font-bold border-b-2 border-blue-600">Tất cả</button>
+                                <button id="tab-unread" onclick="switchNotifTab('unread')" class="py-2.5 text-[14px] text-gray-500 font-medium hover:text-gray-800 border-b-2 border-transparent">Chưa đọc</button>
                             </div>
                             
-                            <div class="max-h-[60vh] overflow-y-auto bg-white" id="notif-list-container">
-                                @forelse($danhSachThongBao as $tb)
-                                    @php $isNew = $loop->iteration <= $soThongBaoMoi; @endphp
-                                    
-                                    <a href="javascript:void(0)" 
-                                    data-title="{{ $tb->TieuDe }}"
-                                    data-content="{{ $tb->NoiDung }}"
-                                    data-time="{{ \Carbon\Carbon::parse($tb->NgayTao)->format('H:i - d/m/Y') }}"
-                                    onclick="openNotifDetail(this)"
-                                    class="notif-item {{ $isNew ? 'is-unread' : '' }} flex items-start gap-4 p-4 border-b border-gray-50 hover:bg-gray-50 transition relative group">
-                                        
-                                        <div class="w-12 h-12 rounded-full bg-blue-50 flex-shrink-0 flex items-center justify-center overflow-hidden border border-gray-100">
-                                            <img src="https://ui-avatars.com/api/?name=HT&background=EBF4F6&color=1D546D" alt="Avatar" class="w-full h-full object-cover">
-                                        </div>
-                                        
-                                        <div class="flex-1 min-w-0">
-                                            <p class="text-[14px] text-gray-800 leading-snug">
-                                                <span class="font-bold text-gray-900">Hệ thống</span> 
-                                                đã gửi một thông báo: <span class="font-bold text-gray-900">{{ $tb->TieuDe }}</span>.
-                                            </p>
-                                            <p class="notif-time text-[13px] mt-1.5 font-semibold {{ $isNew ? 'text-blue-600' : 'text-gray-500' }} transition-colors">
-                                                {{ \Carbon\Carbon::parse($tb->NgayTao)->diffForHumans() }}
-                                            </p>
-                                        </div>
-
-                                        @if($isNew)
-                                            <div class="unread-dot flex-shrink-0 mt-2 transition-opacity duration-300">
-                                                <div class="w-2.5 h-2.5 bg-blue-600 rounded-full shadow-sm"></div>
-                                            </div>
-                                        @endif
-                                    </a>
-                                @empty
-                                    <div class="text-center py-10 flex flex-col items-center">
-                                        <i class="far fa-bell-slash text-4xl text-gray-300 mb-3"></i>
-                                        <p class="text-gray-500 font-medium">Bạn không có thông báo nào</p>
-                                    </div>
-                                @endforelse
-
-                                <div id="empty-unread-msg" class="hidden text-center py-10 flex-col items-center">
-                                    <i class="far fa-check-circle text-4xl text-green-400 mb-3"></i>
-                                    <p class="text-gray-500 font-medium">Bạn đã đọc hết tất cả thông báo!</p>
+                            <div class="w-full max-h-[60vh] overflow-y-auto bg-white">
+                                
+                                <div id="notif-loading" style="display: none;" class="py-12 flex-col items-center justify-center">
+                                    <i class="fas fa-spinner fa-spin text-3xl text-[#1D546D] mb-3"></i>
+                                    <span class="text-sm text-gray-500 font-medium">Đang tải thông báo...</span>
                                 </div>
+
+                                <div id="notif-error" style="display: none;" class="py-12 flex-col items-center justify-center text-center px-4">
+                                    <i class="fas fa-exclamation-triangle text-4xl text-red-500 mb-3"></i>
+                                    <p class="text-gray-800 text-sm font-bold mb-1">Lỗi kết nối khi tải thông báo.</p>
+                                    <p class="text-gray-500 text-xs mb-4">Hệ thống bị lỗi hoặc cơ sở dữ liệu gặp vấn đề.</p>
+                                    <button onclick="fetchNotifications()" class="px-5 py-2 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 shadow-sm transition">
+                                        <i class="fas fa-redo mr-1"></i> Thử lại
+                                    </button>
+                                </div>
+
+                                <div id="notif-empty" style="display: none;" class="py-14 flex-col items-center justify-center">
+                                    <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-3">
+                                        <i class="far fa-bell-slash text-3xl text-gray-400"></i>
+                                    </div>
+                                    <p class="text-gray-600 text-[15px] font-semibold">Bạn không có thông báo</p>
+                                </div>
+
+                                <div id="notif-content-wrapper" style="display: block;" class="w-full"></div>
                             </div>
                         </div>
 
-                        <div id="notif-detail-view" class="hidden flex-col">
-                            <div class="px-5 py-3 border-b border-gray-100 flex items-center gap-3 bg-gray-50/80">
-                                <button onclick="backToNotifList()" class="btn btn-sm btn-circle btn-ghost text-gray-500 hover:text-[#1D546D] hover:bg-gray-200">
-                                    <i class="fas fa-arrow-left"></i>
-                                </button>
-                                <span class="font-bold text-[#1D546D] text-[15px]">Chi tiết thông báo</span>
+                        <div id="notif-detail-view" style="display: none;" class="flex-col">
+                            <div class="px-4 py-3 border-b border-gray-100 flex items-center gap-3 bg-gray-50 hover:bg-gray-100 cursor-pointer transition" onclick="backToNotifList()">
+                                <i class="fas fa-arrow-left text-gray-500"></i>
+                                <span class="font-bold text-[#1D546D] text-sm">Quay lại thông báo</span>
                             </div>
                             
-                            <div class="p-6 max-h-[60vh] overflow-y-auto">
+                            <div class="p-6 max-h-[60vh] overflow-y-auto bg-white">
                                 <h4 id="detail-title" class="text-lg font-bold text-gray-900 mb-2 leading-snug"></h4>
-                                <p class="text-xs text-gray-500 font-medium mb-5 flex items-center gap-1.5">
+                                <p class="text-xs text-gray-500 font-medium mb-5 pb-4 border-b border-gray-100 flex items-center gap-1.5">
                                     <i class="far fa-clock"></i> <span id="detail-time"></span>
                                 </p>
-                                <div id="detail-content" class="text-[14.5px] text-gray-700 whitespace-pre-wrap leading-relaxed">
-                                </div>
+                                <div id="detail-content" class="text-[14.5px] text-gray-700 whitespace-pre-wrap leading-relaxed"></div>
                             </div>
                         </div>
 
                     </div>
                 </div>
-                <!-- Profile -->
+                
                 <!-- Profile -->
                 <div class="relative">
                     <button id="profileBtn" class="flex items-center space-x-3 focus:outline-none">
@@ -154,93 +124,228 @@
     </div>
 </nav>
 <script>
-    // 1. Logic bật/tắt menu thông báo
-    function toggleThongBao() {
-        const menu = document.getElementById('thongBaoMenu');
-        menu.classList.toggle('hidden');
+    let isNotifLoaded = false;
+    let currentNotifs = [];
+    let currentUnreadCount = 0;
+
+    function timeSince(dateString) {
+        const date = new Date(dateString);
+        const seconds = Math.floor((new Date() - date) / 1000);
+        let interval = seconds / 31536000;
+        if (interval > 1) return Math.floor(interval) + " năm trước";
+        interval = seconds / 2592000;
+        if (interval > 1) return Math.floor(interval) + " tháng trước";
+        interval = seconds / 86400;
+        if (interval > 1) return Math.floor(interval) + " ngày trước";
+        interval = seconds / 3600;
+        if (interval > 1) return Math.floor(interval) + " giờ trước";
+        interval = seconds / 60;
+        if (interval > 1) return Math.floor(interval) + " phút trước";
+        return "Vừa xong";
     }
 
-    document.addEventListener('click', function (event) {
-        const dropdown = document.getElementById('notifDropdown');
+    // Đóng/Mở an toàn bằng thẻ style
+    function toggleThongBao() {
         const menu = document.getElementById('thongBaoMenu');
-        if (dropdown && !dropdown.contains(event.target)) {
-            menu.classList.add('hidden');
+        if (menu.style.display === 'none' || menu.style.display === '') {
+            menu.style.display = 'flex';
+            if (!isNotifLoaded) fetchNotifications();
+        } else {
+            menu.style.display = 'none';
         }
-    });
+    }
 
-    // 2. Logic chuyển Tab (Tất cả / Chưa đọc)
+    function setNotifState(state) {
+        document.getElementById('notif-loading').style.display = state === 'loading' ? 'flex' : 'none';
+        document.getElementById('notif-error').style.display = state === 'error' ? 'flex' : 'none';
+        document.getElementById('notif-empty').style.display = state === 'empty' ? 'flex' : 'none';
+        document.getElementById('notif-content-wrapper').style.display = state === 'content' ? 'block' : 'none';
+    }
+
+    function fetchNotifications() {
+        setNotifState('loading');
+        document.getElementById('notif-content-wrapper').innerHTML = '';
+
+        // Đảm bảo bạn đã có Route này trong file giangvien.php của backend
+        fetch('/giangvien/api/thong-bao')
+            .then(response => {
+                if (!response.ok) throw new Error('Mất kết nối API');
+                return response.json();
+            })
+            .then(res => {
+                if (res.success) {
+                    isNotifLoaded = true;
+                    currentNotifs = res.data;
+                    currentUnreadCount = res.soMoi;
+
+                    const badge = document.getElementById('notif-badge');
+                    if (currentUnreadCount > 0) {
+                        badge.textContent = currentUnreadCount;
+                        badge.style.display = 'inline-flex';
+                    } else {
+                        badge.style.display = 'none';
+                    }
+
+                    if (currentNotifs.length === 0) {
+                        setNotifState('empty');
+                    } else {
+                        setNotifState('content');
+                        renderNotifications();
+                    }
+                } else {
+                    throw new Error(res.message);
+                }
+            })
+            .catch(error => {
+                console.error("Lỗi:", error);
+                setNotifState('error'); // Trigger hiển thị "Lỗi hệ thống - Thử lại"
+            });
+    }
+
+    function renderNotifications() {
+        const wrapper = document.getElementById('notif-content-wrapper');
+        wrapper.innerHTML = '';
+
+        currentNotifs.forEach((tb, index) => {
+            // Kiểm tra trạng thái trực tiếp từ DB (cột LoaiThongBao)
+            const isUnread = tb.LoaiThongBao === 'chưa đọc'; 
+            const timeAgo = timeSince(tb.NgayTao);
+
+            const html = `
+                <a href="javascript:void(0)" onclick="openNotifDetail(${index}, this)" class="notif-item ${isUnread ? 'is-unread' : ''} flex items-start gap-4 p-4 border-b border-gray-50 hover:bg-gray-50 transition relative group">
+                    <div class="w-12 h-12 rounded-full bg-blue-50 flex-shrink-0 flex items-center justify-center overflow-hidden border border-blue-100">
+                        <i class="fas fa-bell text-blue-500 text-lg"></i>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-[14px] text-gray-800 leading-snug">
+                            <span class="font-bold text-gray-900 block truncate">${tb.TieuDe}</span>
+                            <span class="text-gray-600 line-clamp-2 mt-0.5">${tb.NoiDung}</span>
+                        </p>
+                        <p class="notif-time text-[12px] mt-1.5 font-semibold ${isUnread ? 'text-blue-600' : 'text-gray-500'}">
+                            ${timeAgo}
+                        </p>
+                    </div>
+                    ${isUnread ? `<div class="unread-dot flex-shrink-0 mt-2"><div class="w-2.5 h-2.5 bg-blue-600 rounded-full shadow-sm"></div></div>` : ''}
+                </a>
+            `;
+            wrapper.insertAdjacentHTML('beforeend', html);
+        });
+    }
+
     function switchNotifTab(tabName) {
         const tabAll = document.getElementById('tab-all');
         const tabUnread = document.getElementById('tab-unread');
         const items = document.querySelectorAll('.notif-item');
-        const emptyMsg = document.getElementById('empty-unread-msg');
-        let unreadCount = 0;
 
         if (tabName === 'all') {
-            // Đổi style Tab "Tất cả" thành màu xanh
-            tabAll.className = "pb-3 text-[15px] text-blue-600 font-semibold border-b-2 border-blue-600 transition-all";
-            tabUnread.className = "pb-3 text-[15px] text-gray-500 font-medium hover:text-gray-800 border-b-2 border-transparent transition-all";
-
-            // Hiện toàn bộ item
+            tabAll.className = "py-2.5 text-[14px] text-blue-600 font-bold border-b-2 border-blue-600";
+            tabUnread.className = "py-2.5 text-[14px] text-gray-500 font-medium hover:text-gray-800 border-b-2 border-transparent";
+            
             items.forEach(item => item.style.display = 'flex');
-            emptyMsg.classList.add('hidden');
-        } else {
-            // Đổi style Tab "Chưa đọc" thành màu xanh
-            tabUnread.className = "pb-3 text-[15px] text-blue-600 font-semibold border-b-2 border-blue-600 transition-all";
-            tabAll.className = "pb-3 text-[15px] text-gray-500 font-medium hover:text-gray-800 border-b-2 border-transparent transition-all";
+            
+            if(items.length === 0) setNotifState('empty');
+            else setNotifState('content');
 
-            // Lọc item: Chỉ hiện những item có class 'is-unread'
+        } else {
+            tabUnread.className = "py-2.5 text-[14px] text-blue-600 font-bold border-b-2 border-blue-600";
+            tabAll.className = "py-2.5 text-[14px] text-gray-500 font-medium hover:text-gray-800 border-b-2 border-transparent";
+
+            let unreadExist = false;
             items.forEach(item => {
                 if (item.classList.contains('is-unread')) {
                     item.style.display = 'flex';
-                    unreadCount++;
+                    unreadExist = true;
                 } else {
                     item.style.display = 'none';
                 }
             });
 
-            // Nếu không có thông báo chưa đọc nào, hiện thông báo trống
-            if (unreadCount === 0) {
-                emptyMsg.classList.remove('hidden');
-                emptyMsg.classList.add('flex');
+            if (!unreadExist) setNotifState('empty');
+            else setNotifState('content');
+        }
+    }
+
+    function openNotifDetail(index, el) {
+        const tb = currentNotifs[index];
+        
+        document.getElementById('detail-title').textContent = tb.TieuDe;
+        document.getElementById('detail-time').textContent = timeSince(tb.NgayTao);
+        document.getElementById('detail-content').textContent = tb.NoiDung;
+
+        document.getElementById('notif-list-view').style.display = 'none';
+        document.getElementById('notif-header-main').style.display = 'none';
+        document.getElementById('notif-detail-view').style.display = 'flex';
+
+        // Nếu thông báo chưa đọc -> Gọi API update Database và xóa UI đỏ
+        if (el.classList.contains('is-unread')) {
+            // GỌI API LƯU XUỐNG DATABASE
+            fetch(`/giangvien/api/thong-bao/read/${tb.MaThongBao}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': '{{ csrf_token() }}' }
+            });
+            
+            // Cập nhật lại mảng hiện tại
+            tb.LoaiThongBao = 'đã đọc'; 
+
+            el.classList.remove('is-unread');
+            const dot = el.querySelector('.unread-dot');
+            if (dot) dot.remove();
+            
+            const timeText = el.querySelector('.notif-time');
+            if (timeText) {
+                timeText.classList.remove('text-blue-600');
+                timeText.classList.add('text-gray-500');
+            }
+
+            const badge = document.getElementById('notif-badge');
+            let count = parseInt(badge.textContent) || 0;
+            if (count > 0) {
+                count--;
+                if (count === 0) badge.style.display = 'none';
+                else badge.textContent = count;
             }
         }
     }
 
-    // 3. Logic Đánh dấu tất cả đã đọc
     function markAllAsRead() {
-        // Ẩn badge đỏ ở cái chuông
-        const badge = document.getElementById('notif-badge');
-        if (badge) {
-            badge.style.opacity = '0';
-            setTimeout(() => badge.style.display = 'none', 300);
-        }
+        // GỌI API UPDATE TOÀN BỘ XUỐNG DATABASE
+        fetch('/giangvien/api/thong-bao/read-all', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': '{{ csrf_token() }}' }
+        }).then(res => res.json()).then(data => {
+            if(data.success) {
+                const badge = document.getElementById('notif-badge');
+                if (badge) badge.style.display = 'none';
+                currentUnreadCount = 0;
 
-        // Loại bỏ class 'is-unread' khỏi tất cả các item
-        const items = document.querySelectorAll('.notif-item');
-        items.forEach(item => {
-            item.classList.remove('is-unread');
+                // Update lại trạng thái mảng
+                currentNotifs.forEach(tb => tb.LoaiThongBao = 'đã đọc');
+
+                const items = document.querySelectorAll('.notif-item');
+                items.forEach(item => {
+                    item.classList.remove('is-unread');
+                    const dot = item.querySelector('.unread-dot');
+                    if(dot) dot.remove();
+                    
+                    const timeText = item.querySelector('.notif-time');
+                    if(timeText) {
+                        timeText.classList.remove('text-blue-600');
+                        timeText.classList.add('text-gray-500');
+                    }
+                });
+
+                const tabUnread = document.getElementById('tab-unread');
+                if (tabUnread.classList.contains('text-blue-600')) {
+                    switchNotifTab('unread'); // Nếu đang ở tab Chưa đọc, load lại để hiện empty
+                }
+            }
         });
+    }
 
-        // Ẩn toàn bộ chấm xanh
-        const dots = document.querySelectorAll('.unread-dot');
-        dots.forEach(dot => {
-            dot.style.opacity = '0';
-            setTimeout(() => dot.style.display = 'none', 300);
-        });
-
-        // Đổi màu thời gian từ Xanh sang Xám
-        const timeTexts = document.querySelectorAll('.notif-time');
-        timeTexts.forEach(text => {
-            text.classList.remove('text-blue-600');
-            text.classList.add('text-gray-500');
-        });
-
-        // Nếu người dùng đang ở tab "Chưa đọc", tự động update giao diện cho mượt
-        const tabUnread = document.getElementById('tab-unread');
-        if (tabUnread.classList.contains('text-blue-600')) {
-            switchNotifTab('unread'); // Cập nhật lại list (sẽ hiện thông báo trống vì không còn mục is-unread)
-        }
+    function backToNotifList() {
+        document.getElementById('notif-detail-view').style.display = 'none';
+        document.getElementById('notif-list-view').style.display = 'block';
+        document.getElementById('notif-header-main').style.display = 'flex';
     }
 </script>
 <div id="logoutModal" class="hidden fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
