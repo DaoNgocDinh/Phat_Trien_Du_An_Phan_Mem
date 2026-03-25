@@ -8,7 +8,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 md:gap-6">
 
             <!-- Thẻ 1: Đề tài nghiên cứu -->
-            <a href="#"
+            <a href="{{route('admin.pheduyet.index')  }}"
                 class="group bg-white rounded-xl shadow hover:shadow-2xl hover:scale-105 transition-all duration-300 flex flex-col items-center justify-center aspect-square p-6 text-center border border-gray-200">
                 <div class="text-7xl md:text-8xl text-gray-700 mb-4">
                     <svg class="w-24 h-24 mx-auto" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -69,7 +69,7 @@
                 <h3 class="text-lg md:text-xl font-bold text-gray-800 group-hover:text-[#1D546D]">Liên hệ</h3>
             </a>
             <!-- Phê duyệt đề xuất -->
-            <a href="#"
+            <a href="{{ route('admin.pheduyet.index') }}"
                 class="group bg-white rounded-xl shadow hover:shadow-2xl hover:scale-105 transition-all duration-300 flex flex-col items-center justify-center aspect-square p-6 text-center border border-gray-200">
                 <div class="text-7xl md:text-8xl text-gray-700 mb-4">
                     <svg class="w-24 h-24 mx-auto" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">

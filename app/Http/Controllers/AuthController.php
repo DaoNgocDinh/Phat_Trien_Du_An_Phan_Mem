@@ -61,7 +61,7 @@ class AuthController extends Controller
 
         try {
 
-            $userID = (Taikhoan::max('UserID') ?? 0) + 1;
+            $userID = (Taikhoan::max('UserID') + 100000 ?? 0) + 1;
 
             Taikhoan::create([
                 'UserID' => $userID,

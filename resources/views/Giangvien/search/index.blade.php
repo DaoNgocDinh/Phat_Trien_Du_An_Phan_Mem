@@ -24,7 +24,7 @@
 
         @if($results->count() == 0)
             <div class="text-red-500 text-center text-gray-500 py-6">
-                Không tìm thấy dữ liệu phù hợp
+                Không có dữ liệu phù hợp với tiêu chí tìm kiếm
             </div>
         @endif
 

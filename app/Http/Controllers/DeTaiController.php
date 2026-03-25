@@ -65,7 +65,7 @@ class DeTaiController extends Controller
             'KinhPhi' => $request->KinhPhi,
         ]);
 
-        return redirect()->route('giangvien.deTai')->with('success', 'Thêm thành công');
+        return redirect()->route('giangvien.deTai')->with('success', 'Đề tài đã được gửi thành công!');
     }
 
     // form sửa

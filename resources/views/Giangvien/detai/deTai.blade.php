@@ -99,22 +99,22 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-center">
                                     <button onclick="openModal(
-                                                                                        '{{ $item->MaSo }}',
-                                                                                        '{{ $item->TenDeTai }}',
-                                                                                        '{{ $item->ChuNhiem }}',
-                                                                                        '{{ $item->DonVi }}',
-                                                                                        '{{ $item->CapDeTai }}',
-                                                                                        '{{ $item->LoaiDeTai }}',
-                                                                                        '{{ $item->ThoiGianBatDau }}',
-                                                                                        '{{ $item->ThoiGianKetThuc }}',
-                                                                                        '{{ $item->TrangThai }}',
-                                                                                        '{{ $item->MucTieu }}',
-                                                                                        '{{ $item->NoiDungChinh }}',
-                                                                                        '{{ $item->ThanhVien }}',
-                                                                                        '{{ $item->KetQua }}',
-                                                                                        '{{ $item->FileSanPham }}',
-                                                                                        '{{ $item->KinhPhi }}'
-                                                                                    )"
+                                                                                            '{{ $item->MaSo }}',
+                                                                                            '{{ $item->TenDeTai }}',
+                                                                                            '{{ $item->ChuNhiem }}',
+                                                                                            '{{ $item->DonVi }}',
+                                                                                            '{{ $item->CapDeTai }}',
+                                                                                            '{{ $item->LoaiDeTai }}',
+                                                                                            '{{ $item->ThoiGianBatDau }}',
+                                                                                            '{{ $item->ThoiGianKetThuc }}',
+                                                                                            '{{ $item->TrangThai }}',
+                                                                                            '{{ $item->MucTieu }}',
+                                                                                            '{{ $item->NoiDungChinh }}',
+                                                                                            '{{ $item->ThanhVien }}',
+                                                                                            '{{ $item->KetQua }}',
+                                                                                            '{{ $item->FileSanPham }}',
+                                                                                            '{{ $item->KinhPhi }}'
+                                                                                        )"
                                         class="text-green-600 hover:text-green-900 text-xl">
                                         <i class="fas fa-eye" style="color:#3D99D7;"></i>
                                     </button>
