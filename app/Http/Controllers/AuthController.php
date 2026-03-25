@@ -36,81 +36,108 @@ class AuthController extends Controller
         return view('Admin.taikhoan.register', compact('nextUserID', 'khoas', 'chucvus', 'chucvuByKhoa'));
     }
 
-    public function register(Request $request)
-    {
-        // Ensure ChucVu is only set for giangvien
-        if ($request->VaiTro !== 'giangvien') {
-            $request->merge(['ChucVu' => null]);
-        }
+public function register(Request $request)
+{
+    if ($request->VaiTro !== 'giangvien') {
+        $request->merge(['ChucVu' => null, 'Sdt' => null]);
+    }
 
-        $request->validate([
-            'VaiTro' => 'required|in:giangvien,nghiencuusinh',
-            'MatKhau' => 'required|min:6',
-            'HoTen' => 'required',
-            'Khoa' => 'required|exists:khoa,MaKhoa',
+    if ($request->VaiTro !== 'nghiencuusinh') {
+        $request->merge(['Lop' => null]);
+    }
 
-            'Email' => 'required|email',
-            'Sdt' => 'nullable',
-            'ChucVu' => 'nullable|required_if:VaiTro,giangvien|exists:chucvu,MaChucVu',
+    $request->validate([
+        'VaiTro'   => 'required|in:giangvien,nghiencuusinh',
+        'MatKhau'  => 'required|min:6',
+        'HoTen'    => 'required',
+        'Khoa'     => 'required|exists:khoa,MaKhoa',
 
-            'Lop' => 'nullable',
-            'NgaySinh' => 'required_if:VaiTro,nghiencuusinh|date'
+        'Email'    => 'required|email',
+        'NgaySinh' => 'required|date',
+
+        'ChucVu'   => 'required_if:VaiTro,giangvien|nullable|exists:chucvu,MaChucVu',
+        'Sdt'      => 'required_if:VaiTro,giangvien|nullable|regex:/^[0-9]{9,11}$/',
+
+        'Lop'      => 'required_if:VaiTro,nghiencuusinh|nullable',
+
+    ], [
+        'VaiTro.required'   => 'Vui lòng chọn vai trò',
+        'VaiTro.in'         => 'Vai trò không hợp lệ',
+
+        'MatKhau.required'  => 'Vui lòng nhập mật khẩu',
+        'MatKhau.min'       => 'Mật khẩu phải có ít nhất 6 ký tự',
+
+        'HoTen.required'    => 'Vui lòng nhập họ tên',
+
+        'Khoa.required'     => 'Vui lòng chọn khoa',
+        'Khoa.exists'       => 'Khoa không tồn tại',
+
+        'Email.required'    => 'Vui lòng nhập email',
+        'Email.email'       => 'Email không đúng định dạng',
+
+        'NgaySinh.required' => 'Vui lòng chọn ngày sinh',
+        'NgaySinh.date'     => 'Ngày sinh không hợp lệ',
+
+        'ChucVu.required_if'=> 'Vui lòng chọn chức vụ',
+        'ChucVu.exists'     => 'Chức vụ không tồn tại',
+
+        'Sdt.required_if'   => 'Vui lòng nhập số điện thoại',
+        'Sdt.regex'         => 'Số điện thoại không hợp lệ',
+
+        'Lop.required_if'   => 'Vui lòng nhập lớp',
+    ]);
+
+    DB::beginTransaction();
+
+    try {
+
+        $userID = (Taikhoan::max('UserID') ?? 0) + 1;
+
+        Taikhoan::create([
+            'UserID' => $userID,
+            'MatKhau' => Hash::make($request->MatKhau),
+            'VaiTro' => $request->VaiTro
         ]);
 
-        DB::beginTransaction();
-
-        try {
-
-            $userID = (Taikhoan::max('UserID') ?? 0) + 1;
-
-            Taikhoan::create([
+        if ($request->VaiTro === 'giangvien') {
+            Giangvien::create([
+                'MaGiangVien' => (Giangvien::max('MaGiangVien') ?? 0) + 1,
                 'UserID' => $userID,
-                'MatKhau' => Hash::make($request->MatKhau),
-                'VaiTro' => $request->VaiTro
+                'HoTen' => $request->HoTen,
+                'MaKhoa' => $request->Khoa,
+                'MaChucVu' => $request->ChucVu,
+                'Email' => $request->Email,
+                'Sdt' => $request->Sdt,
+                'NgaySinh' => $request->NgaySinh
             ]);
-
-            // Nên đã map sẵn từ id ở dropdown
-            $maKhoa = $request->Khoa;
-            $maChucVu = $request->ChucVu;
-            if ($request->VaiTro === 'giangvien') {
-                Giangvien::create([
-                    'MaGiangVien' => (Giangvien::max('MaGiangVien') ?? 0) + 1,
-                    'UserID' => $userID,
-                    'HoTen' => $request->HoTen,
-                    'MaKhoa' => $maKhoa,
-                    'MaChucVu' => $maChucVu,
-                    'Email' => $request->Email,
-                    'Sdt' => $request->Sdt,
-                    'NgaySinh' => $request->NgaySinh
-                ]);
-            }
-
-            if ($request->VaiTro === 'nghiencuusinh') {
-                Nghiencuusinh::create([
-                    'MaSinhVien' => (Nghiencuusinh::max('MaSinhVien') ?? 0) + 1,
-                    'UserID' => $userID,
-                    'HoTen' => $request->HoTen,
-                    'MaKhoa' => $maKhoa,
-                    'Lop' => $request->Lop,
-                    'Email' => $request->Email,
-                    'NgaySinh' => $request->NgaySinh
-                ]);
-            }
-
-            DB::commit();
-
-            return redirect()->route('admin.users.index')
-                ->with('success', 'Tạo tài khoản thành công');
-
-        } catch (\Exception $e) {
-
-            DB::rollBack();
-
-            return back()
-                ->with('error', 'Có lỗi xảy ra: ' . $e->getMessage())
-                ->withInput();
         }
+
+        if ($request->VaiTro === 'nghiencuusinh') {
+            Nghiencuusinh::create([
+                'MaSinhVien' => (Nghiencuusinh::max('MaSinhVien') ?? 0) + 1,
+                'UserID' => $userID,
+                'HoTen' => $request->HoTen,
+                'MaKhoa' => $request->Khoa,
+                'Lop' => $request->Lop,
+                'Email' => $request->Email,
+                'NgaySinh' => $request->NgaySinh
+            ]);
+        }
+
+        DB::commit();
+
+        return redirect()->route('admin.users.index')
+            ->with('success', 'Tạo tài khoản thành công');
+
+    } catch (\Exception $e) {
+
+        DB::rollBack();
+
+        return back()
+            ->with('error', 'Có lỗi xảy ra: ' . $e->getMessage())
+            ->withInput();
     }
+}
 public function login(Request $request)
 {
     $request->validate([

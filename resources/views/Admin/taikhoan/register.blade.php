@@ -6,31 +6,20 @@
 
 @if(session('success'))
 <div id="successModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
-    
     <div class="bg-white w-[400px] rounded-lg shadow-lg overflow-hidden">
-        
-        <!-- HEADER -->
         <div class="flex justify-between items-center border-b px-4 py-2 bg-gray-100">
             <span class="font-semibold text-gray-700">Thông báo</span>
             <button onclick="closeModal()" class="text-gray-600 hover:text-black">✖</button>
         </div>
 
-        <!-- CONTENT -->
         <div class="text-center py-8 px-4">
-
             <div class="w-16 h-16 mx-auto mb-4 bg-green-500 rounded-full flex items-center justify-center">
-                <i class="fa-solid fa-check text-white text-2xl"></i>
+                ✔
             </div>
-
             <h2 class="text-lg font-bold mb-2">Thêm tài khoản thành công!</h2>
-            <p class="text-gray-600 text-sm">
-                {{ session('success') }}
-            </p>
-
+            <p class="text-gray-600 text-sm">{{ session('success') }}</p>
         </div>
-
     </div>
-
 </div>
 @endif
 
@@ -39,16 +28,6 @@
     <div class="bg-[#1D546D] text-white text-2xl font-semibold px-7 py-3 rounded-md w-fit mb-8 ml-20 mt-10">
         Quản lý tài khoản > Tạo tài khoản
     </div>
-
-    @if ($errors->any())
-        <div class="bg-red-500 text-white p-3 rounded mx-20 mb-5">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>- {{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
 
     <div class="flex-1 mt-10">
 
@@ -60,32 +39,42 @@
                 <!-- LEFT -->
                 <div class="space-y-6">
 
+                    <!-- UserID -->
                     <div class="grid grid-cols-[160px_1fr] gap-3">
                         <label>UserID</label>
                         <input type="text" value="{{ $nextUserID }}" readonly class="bg-gray-300 p-2 rounded w-full">
                     </div>
 
+                    <!-- Vai trò -->
                     <div class="grid grid-cols-[160px_1fr] gap-3">
-                        <label>Vai trò</label>
-                        <select name="VaiTro" id="role" class="bg-gray-200 p-2 rounded w-full">
-                            <option value="giangvien">Giảng viên</option>
-                            <option value="nghiencuusinh">Nghiên cứu sinh</option>
+                        <label>Vai trò *</label>
+                        <select name="VaiTro" id="role" class="p-2 rounded w-full border @error('VaiTro') border-red-500 @enderror">
+                            <option value="giangvien" {{ old('VaiTro')=='giangvien'?'selected':'' }}>Giảng viên</option>
+                            <option value="nghiencuusinh" {{ old('VaiTro')=='nghiencuusinh'?'selected':'' }}>Nghiên cứu sinh</option>
                         </select>
                     </div>
+                    @error('VaiTro') <p class="text-red-500 text-sm ml-[160px]">{{ $message }}</p> @enderror
 
+                    <!-- Họ tên -->
                     <div class="grid grid-cols-[160px_1fr] gap-3">
-                        <label>Họ tên</label>
-                        <input type="text" name="HoTen" value="{{ old('HoTen') }}" class="bg-gray-200 p-2 rounded w-full">
+                        <label>Họ tên *</label>
+                        <input type="text" name="HoTen" value="{{ old('HoTen') }}"
+                            class="p-2 rounded w-full border @error('HoTen') border-red-500 @enderror">
                     </div>
+                    @error('HoTen') <p class="text-red-500 text-sm ml-[160px]">{{ $message }}</p> @enderror
 
+                    <!-- Mật khẩu -->
                     <div class="grid grid-cols-[160px_1fr] gap-3">
-                        <label>Mật khẩu</label>
-                        <input type="password" name="MatKhau" class="bg-gray-200 p-2 rounded w-full">
+                        <label>Mật khẩu *</label>
+                        <input type="password" name="MatKhau"
+                            class="p-2 rounded w-full border @error('MatKhau') border-red-500 @enderror">
                     </div>
+                    @error('MatKhau') <p class="text-red-500 text-sm ml-[160px]">{{ $message }}</p> @enderror
 
+                    <!-- Khoa -->
                     <div class="grid grid-cols-[160px_1fr] gap-3">
-                        <label>Khoa</label>
-                        <select id="khoa" name="Khoa" class="bg-gray-200 p-2 rounded w-full">
+                        <label>Khoa *</label>
+                        <select name="Khoa" class="p-2 rounded w-full border @error('Khoa') border-red-500 @enderror">
                             <option value="">-- Chọn khoa --</option>
                             @foreach($khoas as $k)
                                 <option value="{{ $k->MaKhoa }}" {{ old('Khoa') == $k->MaKhoa ? 'selected' : '' }}>
@@ -94,32 +83,36 @@
                             @endforeach
                         </select>
                     </div>
+                    @error('Khoa') <p class="text-red-500 text-sm ml-[160px]">{{ $message }}</p> @enderror
 
                 </div>
 
                 <!-- RIGHT -->
                 <div class="space-y-6">
 
-                    <!-- EMAIL CHUNG -->
+                    <!-- Email -->
                     <div class="grid grid-cols-[160px_1fr] gap-3">
-                        <label>Email</label>
+                        <label>Email *</label>
                         <input type="email" name="Email" value="{{ old('Email') }}"
-                            class="bg-gray-200 p-2 rounded w-full">
+                            class="p-2 rounded w-full border @error('Email') border-red-500 @enderror">
                     </div>
+                    @error('Email') <p class="text-red-500 text-sm ml-[160px]">{{ $message }}</p> @enderror
 
-                    <!-- NGÀY SINH -->
+                    <!-- Ngày sinh -->
                     <div class="grid grid-cols-[160px_1fr] gap-3">
-                        <label>Ngày sinh</label>
+                        <label>Ngày sinh *</label>
                         <input type="date" name="NgaySinh" value="{{ old('NgaySinh') }}"
-                            class="bg-gray-200 p-2 rounded w-full">
+                            class="p-2 rounded w-full border @error('NgaySinh') border-red-500 @enderror">
                     </div>
+                    @error('NgaySinh') <p class="text-red-500 text-sm ml-[160px]">{{ $message }}</p> @enderror
 
                     <!-- GIẢNG VIÊN -->
                     <div id="giangvien" class="space-y-5">
 
                         <div class="grid grid-cols-[160px_1fr] gap-3">
-                            <label>Chức vụ</label>
-                            <select id="chucvu" name="ChucVu" class="bg-gray-200 p-2 rounded w-full">
+                            <label>Chức vụ *</label>
+                            <select name="ChucVu" id="chucvu"
+                                class="p-2 rounded w-full border @error('ChucVu') border-red-500 @enderror">
                                 <option value="">-- Chọn chức vụ --</option>
                                 @foreach($chucvus as $cv)
                                     <option value="{{ $cv->MaChucVu }}" {{ old('ChucVu') == $cv->MaChucVu ? 'selected' : '' }}>
@@ -128,23 +121,26 @@
                                 @endforeach
                             </select>
                         </div>
+                        @error('ChucVu') <p class="text-red-500 text-sm ml-[160px]">{{ $message }}</p> @enderror
 
                         <div class="grid grid-cols-[160px_1fr] gap-3">
-                            <label>SĐT</label>
+                            <label>SĐT *</label>
                             <input type="text" name="Sdt" value="{{ old('Sdt') }}"
-                                class="bg-gray-200 p-2 rounded w-full">
+                                class="p-2 rounded w-full border @error('Sdt') border-red-500 @enderror">
                         </div>
+                        @error('Sdt') <p class="text-red-500 text-sm ml-[160px]">{{ $message }}</p> @enderror
 
                     </div>
 
-                    <!-- NGHIÊN CỨU SINH -->
+                    <!-- NCS -->
                     <div id="nghiencuusinh" class="space-y-5 hidden">
 
                         <div class="grid grid-cols-[160px_1fr] gap-3">
-                            <label>Lớp</label>
+                            <label>Lớp *</label>
                             <input type="text" name="Lop" value="{{ old('Lop') }}"
-                                class="bg-gray-200 p-2 rounded w-full">
+                                class="p-2 rounded w-full border @error('Lop') border-red-500 @enderror">
                         </div>
+                        @error('Lop') <p class="text-red-500 text-sm ml-[160px]">{{ $message }}</p> @enderror
 
                     </div>
 
@@ -152,11 +148,8 @@
 
             </div>
 
-            <!-- BUTTON -->
             <div class="flex justify-end gap-4 mt-10 mr-20">
-
-                <button type="submit"
-                    class="bg-[#1D8E8E] text-white px-5 py-2 rounded hover:bg-[#187979]">
+                <button type="submit" class="bg-[#1D8E8E] text-white px-5 py-2 rounded">
                     Tạo tài khoản
                 </button>
 
@@ -164,7 +157,6 @@
                     class="bg-gray-400 text-white px-5 py-2 rounded">
                     Hủy
                 </a>
-
             </div>
 
         </form>
@@ -185,22 +177,16 @@
         } else {
             gv.classList.add("hidden");
             ncs.classList.remove("hidden");
-
-            // reset field GV
-            document.getElementById("chucvu").value = "";
         }
     }
 
     role.addEventListener("change", changeRole);
     changeRole();
 
-
     setTimeout(() => {
-    let modal = document.getElementById('successModal');
-    if(modal) modal.style.display = 'none';
-}, 2000);
+        let modal = document.getElementById('successModal');
+        if(modal) modal.style.display = 'none';
+    }, 2000);
 </script>
-
-
 
 @endsection
