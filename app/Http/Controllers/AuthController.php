@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Canbokhoahoc;
 use App\Models\ChucVu;
 use App\Models\Khoa;
 use App\Models\Giangvien;
@@ -11,6 +10,8 @@ use App\Models\Taikhoan;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Cookie;
+
 class AuthController extends Controller
 {
     public function showRegister()
@@ -91,7 +92,7 @@ public function register(Request $request)
 
     try {
 
-        $userID = (Taikhoan::max('UserID') ?? 0) + 1;
+        $userID = (Taikhoan::max('UserID')+ 10000 ?? 0) + 1;
 
         Taikhoan::create([
             'UserID' => $userID,
@@ -138,6 +139,7 @@ public function register(Request $request)
             ->withInput();
     }
 }
+
 public function login(Request $request)
 {
     $request->validate([
@@ -156,15 +158,24 @@ public function login(Request $request)
         ])->withInput();
     }
 
+    // SESSION
     session([
         'UserID' => $user->UserID,
         'VaiTro' => $user->VaiTro
     ]);
 
+    // 👉 REMEMBER LOGIN
+    if ($request->remember) {
+        Cookie::queue('remember_user', $user->UserID, 60 * 24 * 7); // 7 ngày
+    } else {
+        Cookie::queue(Cookie::forget('remember_user'));
+    }
+
+    // ROLE
     if ($user->VaiTro == 'nghiencuusinh') {
         $sv = Nghiencuusinh::where('UserID', $user->UserID)->first();
         session(['HoTen' => $sv->HoTen]);
-        return redirect()->route('giangvien.trangChu');
+        return redirect()->route('giangvien.trangChu'); // bạn đang redirect sai role đó
     }
 
     if ($user->VaiTro == 'giangvien') {
@@ -179,20 +190,19 @@ public function login(Request $request)
     }
 
     return redirect('/');
-}
-    public function showLogin()
+}    public function showLogin()
     {
         return view('Admin.auth.login');
     }
 
-    public function logout()
-    {
+public function logout()
+{
+    session()->flush();
 
-        session()->flush();
+    Cookie::queue(Cookie::forget('remember_user'));
 
-        return redirect()->route('sinhvien.trangChu');
-
-    }
+    return redirect()->route('sinhvien.trangChu');
+}
 
     public function showChangePassword()
 {

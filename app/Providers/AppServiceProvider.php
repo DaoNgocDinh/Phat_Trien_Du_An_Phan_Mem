@@ -4,10 +4,11 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Models\Taikhoan;
+use App\Models\Giangvien;
+use App\Models\Nghiencuusinh;
 use Illuminate\Support\Facades\Hash;
-use App\Models\Lienhe;
-use Illuminate\Support\Facades\View;
-
+use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Session;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -40,5 +41,29 @@ class AppServiceProvider extends ServiceProvider
 
             echo "Admin default created: 99999 / admin123";
         }
+
+        if (!Session::has('UserID') && Cookie::has('remember_user')) {
+
+        $user = Taikhoan::where('UserID', Cookie::get('remember_user'))->first();
+
+        if ($user) {
+            Session::put('UserID', $user->UserID);
+            Session::put('VaiTro', $user->VaiTro);
+
+            if ($user->VaiTro == 'giangvien') {
+                $gv = Giangvien::where('UserID', $user->UserID)->first();
+                Session::put('HoTen', $gv->HoTen);
+            }
+
+            if ($user->VaiTro == 'nghiencuusinh') {
+                $sv = Nghiencuusinh::where('UserID', $user->UserID)->first();
+                Session::put('HoTen', $sv->HoTen);
+            }
+
+            if ($user->VaiTro == 'admin') {
+                Session::put('HoTen', 'Admin');
+            }
+        }
+    }
     }
 }
