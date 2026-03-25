@@ -159,6 +159,7 @@ class QuyCheController extends Controller
     public function index_guest()
     {
         $quyches = QuyChe::where('LoaiVanBan', '!=', 'Nội Bộ')
+            ->where('LoaiVanBan', '!=', 'Ngành')
             ->latest('NgayBanHanh')
             ->paginate(10);
 
