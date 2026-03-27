@@ -226,14 +226,19 @@
                 })
                 .then(res => res.json())
                 .then(data => {
-                    alert("Cập nhật thành công!");
-
-                    // đóng box
-                    document.getElementById("chiTietBox").classList.add("hidden")
-
-                    // reload lại trang (cách đơn giản nhất)
-                    location.reload()
-
+                    if (data.success) {
+                        alert("Cập nhật thành công!");
+                        // đóng box
+                        document.getElementById("chiTietBox").classList.add("hidden")
+                        // reload lại trang
+                        location.reload()
+                    } else {
+                        alert("Lỗi: " + (data.message || "Không thể cập nhật"))
+                    }
+                })
+                .catch(err => {
+                    console.error(err)
+                    alert("Lỗi khi cập nhật!")
                 })
         }
     </script>
