@@ -138,6 +138,12 @@ class QuyCheController extends Controller
         return view('Giangvien.quyChe.view', compact('quyche'));
     }
 
+    public function view_sinhvien($MaQuyChe)
+    {
+        $quyche = QuyChe::findOrFail($MaQuyChe);
+        return view('Sinhvien.quyChe.view', compact('quyche'));
+    }
+
     public function download($file)
     {
         $path = public_path('uploads/pdf/' . $file);
@@ -149,5 +155,14 @@ class QuyCheController extends Controller
         $originalName = explode('_', $file, 2)[1] ?? $file;
 
         return response()->download($path, $originalName);
+    }
+    public function index_guest()
+    {
+        $quyches = QuyChe::where('LoaiVanBan', '!=', 'Nội Bộ')
+            ->where('LoaiVanBan', '!=', 'Ngành')
+            ->latest('NgayBanHanh')
+            ->paginate(10);
+
+        return view('Sinhvien.quyChe', compact('quyches'));
     }
 }

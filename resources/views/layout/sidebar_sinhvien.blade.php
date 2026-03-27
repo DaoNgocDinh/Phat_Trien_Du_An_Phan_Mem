@@ -19,59 +19,51 @@
 
                 <!-- Menu items dành cho sinh viên, với active state -->
                 <li>
-                    <a href="{{ route('giangvien.trangChu') }}"
+                    <a href="{{ route('sinhvien.trangChu') }}"
                         class="flex items-center px-3 py-2.5 text-white rounded-md hover:bg-[#2c5d6e] hover:shadow-md transition-all duration-200 
-                       {{ request()->routeIs('giangvien.trangChu') ? 'bg-[#2c5d6e] shadow-md border-l-4 border-white text-white font-semibold' : '' }}">
+                       {{ request()->routeIs('sinhvien.trangChu') ? 'bg-[#2c5d6e] shadow-md border-l-4 border-white text-white font-semibold' : '' }}">
                         <i class="fas fa-home w-6 text-lg"></i>
                         <span class="ml-3">Trang chủ</span>
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('giangvien.deTai') }}"
+                    <a href="{{ route('sinhvien.deTai') }}"
                         class="flex items-center px-3 py-2.5 text-white rounded-md hover:bg-[#2c5d6e] hover:shadow-md transition-all duration-200 
-                       {{ request()->routeIs('giangvien.deTai') ? 'bg-[#2c5d6e] shadow-md border-l-4 border-white text-white font-semibold' : '' }}">
+                       {{ request()->routeIs('sinhvien.deTai') ? 'bg-[#2c5d6e] shadow-md border-l-4 border-white text-white font-semibold' : '' }}">
                         <i class="fas fa-flask w-6 text-lg"></i>
                         <span class="ml-3">Đề tài nghiên cứu</span>
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('giangvien.quyChe.index') }}"
+                    <a href="{{ route('sinhvien.quyChe.index') }}"
                         class="flex items-center px-3 py-2.5 text-white rounded-md hover:bg-[#2c5d6e] hover:shadow-md transition-all duration-200 
-                       {{ request()->routeIs('giangvien.quyChe.*') ? 'bg-[#2c5d6e] shadow-md border-l-4 border-white text-white font-semibold' : '' }}">
+                       {{ request()->routeIs('sinhvien.quyChe.*') ? 'bg-[#2c5d6e] shadow-md border-l-4 border-white text-white font-semibold' : '' }}">
                         <i class="fas fa-file-alt w-6 text-lg"></i>
                         <span class="ml-3">Quy chế khoa học</span>
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('giangvien.congBo') }}"
+                    <a href="{{ route('sinhvien.congBo') }}"
                         class="flex items-center px-3 py-2.5 text-white rounded-md hover:bg-[#2c5d6e] hover:shadow-md transition-all duration-200 
-                       {{ request()->routeIs('giangvien.congBo') ? 'bg-[#2c5d6e] shadow-md border-l-4 border-white text-white font-semibold' : '' }}">
+                       {{ request()->routeIs('sinhvien.congBo') ? 'bg-[#2c5d6e] shadow-md border-l-4 border-white text-white font-semibold' : '' }}">
                         <i class="fas fa-book w-6 text-lg"></i>
                         <span class="ml-3">Công bố khoa học</span>
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('giangvien.suKien') }}"
+                    <a href="{{ route('sinhvien.suKien') }}"
                         class="flex items-center px-3 py-2.5 text-white rounded-md hover:bg-[#2c5d6e] hover:shadow-md transition-all duration-200 
-                       {{ request()->routeIs('giangvien.suKien.*') ? 'bg-[#2c5d6e] shadow-md border-l-4 border-white text-white font-semibold' : '' }}">
+                       {{ request()->routeIs('sinhvien.suKien.*') ? 'bg-[#2c5d6e] shadow-md border-l-4 border-white text-white font-semibold' : '' }}">
                         <i class="fas fa-calendar-check w-6 text-lg"></i>
                         <span class="ml-3">Sự kiện</span>
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('giangvien.lienhe.index') }}"
+                    <a href="{{ route('sinhvien.lienhe.index') }}"
                         class="flex items-center px-3 py-2.5 text-white rounded-md hover:bg-[#2c5d6e] hover:shadow-md transition-all duration-200 
-                       {{ request()->routeIs('giangvien.lienhe.*') ? 'bg-[#2c5d6e] shadow-md border-l-4 border-white text-white font-semibold' : '' }}">
+                       {{ request()->routeIs('sinhvien.lienhe.*') ? 'bg-[#2c5d6e] shadow-md border-l-4 border-white text-white font-semibold' : '' }}">
                         <i class="fas fa-envelope w-6 text-lg"></i>
                         <span class="ml-3">Liên hệ</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('hoso.edit') }}"
-                        class="flex items-center px-3 py-2.5 text-white rounded-md hover:bg-[#2c5d6e] hover:shadow-md transition-all duration-200 
-                       {{ request()->routeIs('giangvien.hoso') ? 'bg-[#2c5d6e] shadow-md border-l-4 border-white text-white font-semibold' : '' }}">
-                        <i class="fas fa-user w-6 text-lg"></i>
-                        <span class="ml-3">Hồ sơ cá nhân</span>
                     </a>
                 </li>
             </ul>
@@ -83,7 +75,7 @@
 
         function goToSearch() {
             const query = input.value.trim();
-            window.location.href = `{{ route('giangvien.search') }}?search=${encodeURIComponent(query)}`;
+            window.location.href = `{{ route('sinhvien.search') }}?search=${encodeURIComponent(query)}`;
         }
 
         // Nhấn Enter trong input

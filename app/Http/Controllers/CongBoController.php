@@ -193,85 +193,6 @@ class CongBoController extends Controller
 
         return view('Admin.thongke.dashboard', compact('byYear', 'byType', 'byKhoaLoai', 'total', 'from', 'to', 'loai', 'khoa', 'giangvien', 'giangviens', 'khoas', 'loaiOptions', 'isCreatePage', 'showReport'));
     }
-    public function taobaocao(Request $request)
-    {
-        $from = $request->from;
-        $to = $request->to;
-        $loai = $request->loai;
-        $khoa = $request->khoa;
-        $giangvien = $request->giangvien;
-
-        $baseQuery = CongBo::query();
-
-        // lọc theo năm
-        if ($from && $to) {
-            $baseQuery->whereBetween('NamXuatBan', [$from, $to]);
-        }
-
-        // lọc theo khoa
-        if ($khoa && $khoa !== '') {
-            $baseQuery->where('KhoaID', $khoa);
-        }
-
-        // lọc theo giảng viên
-        if ($giangvien && $giangvien !== '') {
-            $baseQuery->where('GiangVienID', $giangvien);
-        }
-
-        // lọc theo loại công bố
-        if ($loai && $loai !== '') {
-            $baseQuery->where('LoaiCongBo', $loai);
-        }
-
-        // thống kê theo năm
-        $byYear = (clone $baseQuery)->select(
-            'NamXuatBan',
-            DB::raw('count(*) as total')
-        )
-            ->groupBy('NamXuatBan')
-            ->orderBy('NamXuatBan')
-            ->get();
-
-        // thống kê theo loại
-        $byType = (clone $baseQuery)->select(
-            'LoaiCongBo',
-            DB::raw('count(*) as total')
-        )
-            ->groupBy('LoaiCongBo')
-            ->orderBy('LoaiCongBo')
-            ->get();
-
-        // thống kê theo khoa + loại
-        $byKhoaLoai = (clone $baseQuery)
-            ->leftJoin('khoa', 'congbo.KhoaID', '=', 'khoa.MaKhoa')
-            ->select(
-                DB::raw('COALESCE(khoa.TenKhoa, "Chưa xác định") as TenKhoa'),
-                'LoaiCongBo',
-                DB::raw('count(*) as total')
-            )
-            ->groupBy('khoa.TenKhoa', 'LoaiCongBo')
-            ->orderBy('khoa.TenKhoa')
-            ->orderBy('LoaiCongBo')
-            ->get();
-
-        $total = $baseQuery->count();
-
-        // kiểm tra trang Tạo báo cáo
-        $isCreatePage = $request->routeIs('admin.congbo.baocao.create');
-        // chỉ hiển thị chart/table khi đã nhấn Xem
-        $showReport = ($from && $to) || ($request->filled('loai') || $request->filled('khoa') || $request->filled('giangvien'));
-
-        // lấy danh sách giảng viên cho select
-        $giangviens = Giangvien::select('MaGiangVien', 'HoTen')->get();
-
-        // lấy danh sách khoa cho select
-        $khoas = Khoa::select('MaKhoa', 'TenKhoa')->get();
-
-        // lấy danh sách loại công bố cho select
-        $loaiOptions = CongBo::distinct('LoaiCongBo')->pluck('LoaiCongBo')->filter()->values();
-
-        return view('Admin.thongke.create', compact('byYear', 'byType', 'byKhoaLoai', 'total', 'from', 'to', 'loai', 'khoa', 'giangvien', 'giangviens', 'khoas', 'loaiOptions', 'isCreatePage', 'showReport'));
-    }
 
     public function suggest(Request $request)
     {
@@ -449,9 +370,5 @@ class CongBoController extends Controller
 
         $writer->save('php://output');
         exit;
-    }
-    public function hienthitaobaocao()
-    {
-        return view('Admin.thongke.create');
     }
 }

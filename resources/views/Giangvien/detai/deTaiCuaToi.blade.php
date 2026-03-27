@@ -79,8 +79,12 @@
                                             <span class="px-4 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-[#619597] text-white">
                                                 {{ $item->TrangThai }}
                                             </span>
-                                        @elseif($item->TrangThai == 'Chờ phê duyệt')
+                                        @elseif($item->TrangThai == 'Chờ xét duyệt')
                                             <span class="px-4 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-[#67C3D9] text-white">
+                                                {{ $item->TrangThai }}
+                                            </span>
+                                        @elseif($item->TrangThai == 'Hoàn thành')
+                                            <span class="px-4 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-[#4CAF50] text-white">
                                                 {{ $item->TrangThai }}
                                             </span>
                                         @else
@@ -90,18 +94,33 @@
                                         @endif
                                     </td>
                                     <td class="px-6 py-5 whitespace-nowrap text-center">
-                                        <button type="button"
+                                        @php
+                                            $trangThai = trim($item->TrangThai);
+                                            // Kiểm tra nếu là Chờ xét duyệt hoặc Hoàn thành thì gán cờ khóa
+                                            $khoaCapNhat = ($trangThai === 'Chờ xét duyệt' || $trangThai === 'Hoàn thành' || str_contains(mb_strtolower($trangThai, 'UTF-8'), 'hủy'));
+                                        @endphp
+
+                                        @if($khoaCapNhat)
+                                            <button type="button" disabled
+                                                class="text-gray-400 font-medium px-4 py-2 bg-gray-100 rounded cursor-not-allowed"
+                                                title="Không thể cập nhật tiến độ đối với đề tài {{ $trangThai }}">
+                                                Cập nhật tiến độ
+                                            </button>
+                                        @else
+                                            <button type="button"
                                             data-maso="{{ $item->MaSo }}"
                                             data-tendetai="{{ $item->TenDeTai }}"
                                             data-trangthai="{{ $item->TrangThai ?? 'Chưa xác định' }}"
+                                            data-tieude="{{ $tienDoCu->TienDoHienTai ?? '' }}"
                                             data-phantram="{{ $tienDoCu->PhanTramTienDo ?? $item->PhanTramTienDo ?? 0 }}"
                                             data-noidung="{{ $tienDoCu->NoiDungBaoCao ?? '' }}"
                                             data-ketqua="{{ $tienDoCu->KetQua ?? '' }}"
                                             data-khokhan="{{ $tienDoCu->KhoKhan ?? '' }}"
-                                            onclick="openCapNhatModal(this)"
-                                            class="text-blue-600 hover:text-blue-900 font-medium px-4 py-2 bg-blue-50 rounded hover:bg-blue-100 transition">
+                                            data-filebaocao="{{ $tienDoCu->FileBaoCao ?? '' }}" onclick="openCapNhatModal(this)"
+                                            class="text-blue-600 hover:text-blue-900 font-medium px-4 py-2 bg-blue-50 rounded hover:bg-blue-100 transition shadow-sm">
                                             Cập nhật tiến độ
                                         </button>
+                                        @endif
                                     </td>
                                 </tr>
                             @empty
@@ -184,8 +203,8 @@
                         </div>
 
                         <div>
-                            <label class="block font-semibold text-gray-700 mb-1">Nội dung báo cáo</label>
-                            <textarea name="noiDung" rows="5" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1D546D] transition resize-y"></textarea>
+                            <label class="block font-semibold text-gray-700 mb-1">Nội dung báo cáo <span class="text-red-500">*</span></label>
+                            <textarea name="noiDung" rows="5" required class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1D546D] transition resize-y"></textarea>
                         </div>
                     </form>
                 </div>
@@ -194,18 +213,31 @@
                 <div class="md:w-1/2 space-y-6">
                     <div>
                         <label class="block font-semibold text-gray-700 mb-1">Kết quả đạt được</label>
-                        <textarea name="ketQua" rows="5" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1D546D] transition resize-y"></textarea>
+                        <textarea name="ketQua" form="capNhatForm" rows="5" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1D546D] transition resize-y"></textarea>
                     </div>
 
                     <div>
                         <label class="block font-semibold text-gray-700 mb-1">Khó khăn</label>
-                        <textarea name="khoKhan" rows="5" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1D546D] transition resize-y"></textarea>
+                        <textarea name="khoKhan" form="capNhatForm" rows="5" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1D546D] transition resize-y"></textarea>
                     </div>
 
                     <div>
-                        <label class="block font-semibold text-gray-700 mb-1">File minh chứng / báo cáo</label>
-                        <input type="file" name="fileBaoCao" form="capNhatForm" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1D546D] transition">
-                        <p class="text-xs text-gray-500 mt-1">Hỗ trợ: word, pdf, excel,...</p>
+                        <label class="block font-semibold text-gray-700 mb-1">File minh chứng / báo cáo trước đó</label>
+                        
+                        <div id="oldFileContainer" class="mb-3 hidden bg-gray-50 border border-gray-200 p-3 rounded-lg flex items-center justify-between">
+                            <div class="flex items-center gap-2 overflow-hidden">
+                                <i class="fas fa-file-pdf text-red-500 text-lg"></i>
+                                <span class="text-sm font-medium text-gray-700 truncate" id="oldFileName">tên_file.pdf</span>
+                            </div>
+                            <a id="oldFileLink" href="#" class="shrink-0 text-sm bg-[#1D546D] text-white px-3 py-1.5 rounded hover:bg-[#154053] transition shadow-sm flex items-center gap-1">
+                                <i class="fas fa-download"></i> Tải xuống
+                            </a>
+                        </div>
+
+                        <input type="file" name="fileBaoCao" form="capNhatForm" accept=".pdf,.doc,.docx" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1D546D] transition bg-white">
+                        <p class="text-xs text-gray-500 mt-1.5">
+                            <i class="fas fa-info-circle mr-1"></i> Hỗ trợ: PDF, Word (.doc, .docx). Tải lên file mới sẽ tự động ghi đè file cũ.
+                        </p>
                     </div>
                 </div>
             </div>
@@ -216,15 +248,12 @@
                     Tiến độ đề tài cập nhật thành công!
                 </div>
 
-                <div class="flex gap-4 flex-wrap">
-                    <button onclick="closeCapNhatModal()" class="bg-gray-500 hover:bg-gray-600 text-white px-8 py-3 rounded-lg shadow-md transition font-medium">
+                <div class="px-8 py-6 border-t border-gray-200 flex justify-end items-center gap-4 bg-gray-50">
+                    <button type="button" onclick="closeCapNhatModal()" class="bg-gray-400 hover:bg-gray-500 text-white px-8 py-2.5 rounded-lg shadow transition font-medium">
                         Hủy
                     </button>
-                    <button type="submit" form="capNhatForm" name="action" value="luu_nhap" class="bg-yellow-500 hover:bg-yellow-600 text-white px-8 py-3 rounded-lg shadow-md transition font-medium">
-                        Lưu nháp
-                    </button>
-                    <button type="submit" form="capNhatForm" class="bg-[#1D546D] hover:bg-[#2c5d6e] text-white px-8 py-3 rounded-lg shadow-md transition font-medium">
-                        Gửi báo cáo
+                    <button type="submit" form="capNhatForm" class="bg-[#1D546D] hover:bg-[#2c5d6e] text-white px-8 py-2.5 rounded-lg shadow transition font-medium flex items-center gap-2">
+                        <i class="fas fa-paper-plane"></i> Gửi báo cáo
                     </button>
                 </div>
             </div>
@@ -234,35 +263,58 @@
     <!-- Script mở/đóng modal -->
     <script>
         function openCapNhatModal(btn) {
-        // 1. Reset form
         document.getElementById('capNhatForm').reset();
 
-        // 2. Đọc dữ liệu từ nút bấm (biến 'btn')
+        // Đọc dữ liệu từ nút
         const maDeTai = btn.dataset.maso;
         const tenDeTai = btn.dataset.tendetai;
         const trangThai = btn.dataset.trangthai;
+        const tieuDe = btn.dataset.tieude;
         const phanTram = btn.dataset.phantram;
         const noiDung = btn.dataset.noidung;
         const ketQua = btn.dataset.ketqua;
         const khoKhan = btn.dataset.khokhan;
+        const fileBaoCao = btn.dataset.filebaocao; // <-- Lấy tên file cũ
 
-        // 3. Hiển thị thông tin bên ngoài
+        // Hiển thị thông tin
         document.getElementById('modalMaDeTai').value = maDeTai || '';
         document.getElementById('modalTenDeTai').textContent = tenDeTai || 'Không có thông tin';
         document.getElementById('modalTrangThai').textContent = trangThai || 'Không có thông tin';
         document.getElementById('modalPhanTram').textContent = (phanTram || '0') + '%';
 
-        // 4. Set mặc định thời gian cập nhật là ngày hôm nay
         const today = new Date().toISOString().split('T')[0];
         document.querySelector('input[name="thoiGian"]').value = today;
 
-        // 5. Điền dữ liệu cũ vào các ô input/textarea
+        // Điền Form
+        document.querySelector('input[name="tieuDe"]').value = tieuDe || '';
         document.querySelector('input[name="phanTram"]').value = phanTram || 0;
         document.querySelector('textarea[name="noiDung"]').value = noiDung || '';
         document.querySelector('textarea[name="ketQua"]').value = ketQua || '';
         document.querySelector('textarea[name="khoKhan"]').value = khoKhan || '';
 
-        // 6. Hiển thị Modal lên
+        // XỬ LÝ HIỂN THỊ FILE CŨ
+        const oldFileContainer = document.getElementById('oldFileContainer');
+        const oldFileLink = document.getElementById('oldFileLink');
+        const oldFileName = document.getElementById('oldFileName');
+
+        if (fileBaoCao && fileBaoCao !== '') {
+            oldFileContainer.classList.remove('hidden');
+            oldFileContainer.classList.add('flex');
+            
+            // Cắt lấy tên file gốc hiển thị cho đẹp
+            oldFileName.textContent = fileBaoCao.split('/').pop() || fileBaoCao;
+            
+            // GỌI THẲNG VÀO ROUTE TẢI XUỐNG VỪA TẠO
+            oldFileLink.href = '/giangvien/detai/download-bao-cao/' + fileBaoCao;
+            
+            // Đổi chữ và bỏ target="_blank" vì tải xuống không cần mở tab mới
+            oldFileLink.innerHTML = '<i class="fas fa-download"></i> Tải xuống';
+            oldFileLink.removeAttribute('target'); 
+        } else {
+            oldFileContainer.classList.remove('flex');
+            oldFileContainer.classList.add('hidden');
+        }
+
         document.getElementById('capNhatModal').classList.remove('hidden');
     }
 
@@ -281,6 +333,13 @@
         // Có thể lấy lại ID đề tài cũ từ session hoặc flash data để mở đúng form
         document.getElementById('capNhatModal').classList.remove('hidden');
         alert("Có lỗi xảy ra: \n" + @json($errors->all()).join('\n'));
+    });
+</script>
+@endif
+@if (session('success'))
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        alert("{{ session('success') }}");
     });
 </script>
 @endif

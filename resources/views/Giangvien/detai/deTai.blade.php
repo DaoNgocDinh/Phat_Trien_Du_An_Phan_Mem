@@ -82,10 +82,14 @@
                                     @php
                                         $status = strtolower(trim($item->TrangThai));
                                         $statusClass = 'bg-gray-300 text-gray-800';
-                                        if ($status === 'đang thực hiện' || $status === 'dang thuc hien') {
+                                        if ($status === 'Đang thực hiện' || $status === 'dang thuc hien' || $status === 'đang thực hiện') {
                                             $statusClass = 'bg-yellow-400 text-gray-900';
-                                        } elseif ($status === 'hoàn thành' || $status === 'hoan thanh') {
+                                        } elseif ($status === 'Hoàn thành' || $status === 'hoan thanh' || $status === 'hoàn thành') {
                                             $statusClass = 'bg-green-500 text-white';
+                                        } elseif ($status === 'Chờ xét duyệt' || $status === 'cho xet duyet' || $status === 'chờ xét duyệt') {
+                                            $statusClass = 'bg-blue-400 text-white';
+                                        } elseif ($status === 'Từ chối' || $status === 'tu choi' || $status === 'từ chối') {
+                                            $statusClass = 'bg-red-500 text-white';
                                         }
                                     @endphp
                                     <span
@@ -95,22 +99,22 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-center">
                                     <button onclick="openModal(
-                                                                                        '{{ $item->MaSo }}',
-                                                                                        '{{ $item->TenDeTai }}',
-                                                                                        '{{ $item->ChuNhiem }}',
-                                                                                        '{{ $item->DonVi }}',
-                                                                                        '{{ $item->CapDeTai }}',
-                                                                                        '{{ $item->LoaiDeTai }}',
-                                                                                        '{{ $item->ThoiGianBatDau }}',
-                                                                                        '{{ $item->ThoiGianKetThuc }}',
-                                                                                        '{{ $item->TrangThai }}',
-                                                                                        '{{ $item->MucTieu }}',
-                                                                                        '{{ $item->NoiDungChinh }}',
-                                                                                        '{{ $item->ThanhVien }}',
-                                                                                        '{{ $item->KetQua }}',
-                                                                                        '{{ $item->FileSanPham }}',
-                                                                                        '{{ $item->KinhPhi }}'
-                                                                                    )"
+                                                                                            '{{ $item->MaSo }}',
+                                                                                            '{{ $item->TenDeTai }}',
+                                                                                            '{{ $item->ChuNhiem }}',
+                                                                                            '{{ $item->DonVi }}',
+                                                                                            '{{ $item->CapDeTai }}',
+                                                                                            '{{ $item->LoaiDeTai }}',
+                                                                                            '{{ $item->ThoiGianBatDau }}',
+                                                                                            '{{ $item->ThoiGianKetThuc }}',
+                                                                                            '{{ $item->TrangThai }}',
+                                                                                            '{{ $item->MucTieu }}',
+                                                                                            '{{ $item->NoiDungChinh }}',
+                                                                                            '{{ $item->ThanhVien }}',
+                                                                                            '{{ $item->KetQua }}',
+                                                                                            '{{ $item->FileSanPham }}',
+                                                                                            '{{ $item->KinhPhi }}'
+                                                                                        )"
                                         class="text-green-600 hover:text-green-900 text-xl">
                                         <i class="fas fa-eye" style="color:#3D99D7;"></i>
                                     </button>

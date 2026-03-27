@@ -1,4 +1,4 @@
-@extends('layout.giangVien')
+@extends('layout.sinhvien')
 
 @section('title', 'Đề xuất đề tài nghiên cứu')
 
@@ -16,7 +16,7 @@
 
 
 
-            <form id="formLienHe" action="{{ route('giangvien.lienhe.store') }}" method="POST" class="space-y-5">
+            <form action="{{ route('sinhvien.lienhe.store') }}" method="POST" class="space-y-5">
                 @csrf
 
                 <!-- Họ tên -->
@@ -31,7 +31,7 @@
                     <label class="block mb-1 font-medium text-gray-600">Email</label>
                     <input type="text" name="email"
                         class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#2c5d6e] focus:outline-none" />
-                    @error('email')
+                    @error('name')
                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                     @enderror
                 </div>
@@ -120,7 +120,7 @@
                             cancelButtonText: "Hủy"
                         }).then((result) => {
                             if (result.isConfirmed) {
-                                document.querySelector('#formLienHe').submit();
+                                document.querySelector('form').submit();
                             }
                         });
                     }

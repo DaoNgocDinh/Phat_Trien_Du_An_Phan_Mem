@@ -9,6 +9,7 @@
 
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
 </head>
 
@@ -148,8 +149,6 @@
                         document.getElementById("lanGanNhat").value =
                             data.ganNhat.TienDoHienTai
 
-                        capNhatProgress(data.ganNhat.TienDoHienTai)
-
                     } else {
                         document.getElementById("trangThai").innerText =
                             "Chưa cập nhật"
@@ -213,27 +212,21 @@
             let trangThai = document.getElementById("lanGanNhat").value
             let maDeTai = window.currentMaDeTai
 
-            fetch('/admin/theodoitiendo/capnhat', {
+            fetch("{{ route('admin.theodoitiendo.capnhat-trang-thai') }}", {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                     },
                     body: JSON.stringify({
                         MaDeTai: maDeTai,
-                        TrangThai: trangThai
+                        TienDoHienTai: trangThai
                     })
                 })
                 .then(res => res.json())
                 .then(data => {
-                    alert("Cập nhật thành công!");
-
-                    // đóng box
-                    document.getElementById("chiTietBox").classList.add("hidden")
-
-                    // reload lại trang (cách đơn giản nhất)
+                    alert("Cập nhật thành công!")
                     location.reload()
-
                 })
         }
     </script>

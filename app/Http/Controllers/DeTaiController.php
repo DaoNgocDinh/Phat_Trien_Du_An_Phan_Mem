@@ -56,7 +56,7 @@ class DeTaiController extends Controller
             'LoaiDeTai' => $request->LoaiDeTai,
             'ThoiGianBatDau' => $request->ThoiGianBatDau,
             'ThoiGianKetThuc' => $request->ThoiGianKetThuc,
-            'TrangThai' => 'Chờ xét duyệt',
+            'TrangThai' => 'Chờ Duyệt',
             'MucTieu' => $request->MucTieu,
             'NoiDungChinh' => $request->NoiDungChinh,
             'Thanhvien' => '',
@@ -65,7 +65,7 @@ class DeTaiController extends Controller
             'KinhPhi' => $request->KinhPhi,
         ]);
 
-        return redirect()->route('giangvien.deTai')->with('success', 'Thêm thành công');
+        return redirect()->route('giangvien.deTai')->with('success', 'Đề tài đã được gửi thành công!');
     }
 
     // form sửa

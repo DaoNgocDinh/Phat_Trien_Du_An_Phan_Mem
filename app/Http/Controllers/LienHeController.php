@@ -12,6 +12,10 @@ class LienHeController extends Controller
     {
         return view('Giangvien.LienHe.index');
     }
+    public function index_SV()
+    {
+        return view('Sinhvien.LienHe.index');
+    }
     public function store(Request $request)
     {
         $request->validate([

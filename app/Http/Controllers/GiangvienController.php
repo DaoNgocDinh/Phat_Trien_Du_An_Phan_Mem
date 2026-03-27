@@ -7,8 +7,8 @@ use App\Models\Quyche;
 use App\Models\CongBo;
 use App\Models\DeTai;
 use App\Models\Sukien;
-use App\Models\Thongbao;
-
+use App\Models\Dangkysukien;
+use Carbon\Carbon;
 
 class GiangVienController extends Controller
 {
@@ -65,21 +65,11 @@ class GiangVienController extends Controller
             $sukien->where('TenSuKien', 'like', "%{$search}%");
         }
 
-        $thongbao = Thongbao::select(
-            'MaThongBao as Ma',
-            'TieuDe as Ten',
-            Thongbao::raw("'Thông báo' as Loai")
-        );
-
-        if ($search) {
-            $thongbao->where('TieuDe', 'like', "%{$search}%");
-        }
 
         $results = $quyche
             ->unionAll($congbo)
             ->unionAll($detai)
             ->unionAll($sukien)
-            ->unionAll($thongbao)
             ->get(); // lấy tất cả vào collection
 
         // Thêm filter thực sự
@@ -123,9 +113,74 @@ class GiangVienController extends Controller
     public function SuKien()
     {
         $sukiens = Sukien::withSum('dangkysukien as tong_dang_ky', 'SoLuongDangKy')
-                         ->latest()
-                         ->paginate(10);
-                         
+            ->latest()
+            ->paginate(10);
+
         return view('Giangvien.suKien', compact('sukiens'));
+    }
+
+    // Hàm lưu đăng ký vào DB
+    public function dangKySuKien(Request $request)
+    {
+        $maSuKien = $request->maSuKien;
+        // Lấy ID người dùng (Tùy theo cấu hình session của bạn)
+        $userId = session('UserID') ?? auth()->id() ?? 1; 
+
+        // Kiểm tra xem đã đăng ký chưa
+        $exists = Dangkysukien::where('MaSuKien', $maSuKien)->where('UserID', $userId)->first();
+        
+        if (!$exists) {
+            $maxId = Dangkysukien::max('MaDangky');
+            Dangkysukien::create([
+                'MaDangky'       => $maxId ? $maxId + 1 : 1,
+                'MaSuKien'       => $maSuKien,
+                'UserID'         => $userId,
+                'SoLuongDangKy'  => 1, // Mỗi lần bấm là 1 người
+                'ThoiGianDangKy' => Carbon::now(),
+            ]);
+            return response()->json(['success' => true]);
+        }
+        return response()->json(['success' => false]);
+    }
+
+    // Hàm xóa đăng ký khỏi DB
+    public function huyDangKySuKien(Request $request)
+    {
+        $maSuKien = $request->maSuKien;
+        $userId = session('UserID') ?? auth()->id() ?? 1;
+
+        Dangkysukien::where('MaSuKien', $maSuKien)->where('UserID', $userId)->delete();
+
+        return response()->json(['success' => true]);
+    }
+    public function getThongBaoAPI()
+    {
+        try {
+            $danhSach = \App\Models\Thongbao::orderBy('NgayTao', 'desc')->take(10)->get();
+            // Lấy chính xác số lượng thông báo "chưa đọc" từ cột LoaiThongBao
+            $soThongBaoMoi = \App\Models\Thongbao::where('LoaiThongBao', 'chưa đọc')->count();
+
+            return response()->json([
+                'success' => true,
+                'data' => $danhSach,
+                'soMoi' => $soThongBaoMoi
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Lỗi kết nối khi tải thông báo.'], 500);
+        }
+    }
+
+    // Hàm đánh dấu TẤT CẢ đã đọc
+    public function markAllReadAPI()
+    {
+        \App\Models\Thongbao::where('LoaiThongBao', 'chưa đọc')->update(['LoaiThongBao' => 'đã đọc']);
+        return response()->json(['success' => true]);
+    }
+
+    // Hàm đánh dấu MỘT thông báo đã đọc
+    public function markReadAPI($id)
+    {
+        \App\Models\Thongbao::where('MaThongBao', $id)->update(['LoaiThongBao' => 'đã đọc']);
+        return response()->json(['success' => true]);
     }
 }

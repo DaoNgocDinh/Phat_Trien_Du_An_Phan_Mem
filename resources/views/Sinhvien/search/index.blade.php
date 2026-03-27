@@ -1,4 +1,4 @@
-@extends('layout.giangvien')
+@extends('layout.sinhvien')
 
 @section('title', 'Tìm kiếm và lọc')
 
@@ -18,10 +18,15 @@
                     <option value="Công bố" {{ request('filter') == 'Công bố' ? 'selected' : '' }}>Công bố</option>
                     <option value="Đề tài" {{ request('filter') == 'Đề tài' ? 'selected' : '' }}>Đề tài</option>
                     <option value="Sự kiện" {{ request('filter') == 'Sự kiện' ? 'selected' : '' }}>Sự kiện</option>
-                    <option value="Thông báo" {{ request('filter') == 'Thông báo' ? 'selected' : '' }}>Thông báo</option>
                 </select>
             </form>
         </div>
+
+        @if($results->count() == 0)
+            <div class="text-red-500 text-center text-gray-500 py-6">
+                Không có dữ liệu phù hợp với tiêu chí tìm kiếm
+            </div>
+        @endif
 
         <div>
             <div class="w-full mx-auto mt-6 grid gap-4">
@@ -60,20 +65,17 @@
     function goToCard(type, id) {
         switch (type) {
             case 'Quy chế':
-                window.location.href = '/sinhvien/quyche/' + id;
+                window.location.href = '/guest/quy-che/';
                 break;
-            // case 'Công bố':
-            //     window.location.href = '/sinhvien/congbo/' + id;
-            //     break;
-            // case 'Đề tài':
-            //     window.location.href = '/sinhvien/detai/' + id; // hoặc route đề tài nếu khác
-            //     break;
-            // case 'Sự kiện':
-            //     window.location.href = '/sinhvien/sukien/' + id;
-            //     break;
-            // case 'Thông báo':
-            //     window.location.href = '/sinhvien/thongbao/' + id;
-            //     break;
+            case 'Công bố':
+                window.location.href = '/guest/cong-bo/';
+                break;
+            case 'Đề tài':
+                window.location.href = '/guest/de-tai/'; // hoặc route đề tài nếu khác
+                break;
+            case 'Sự kiện':
+                window.location.href = '/guest/su-kien/';
+                break;
             default:
                 break;
         }

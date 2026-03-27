@@ -1,4 +1,4 @@
-@extends('layout.giangvien')
+@extends('layout.giangVien')
 
 @section('title', 'Tìm kiếm và lọc')
 
@@ -18,10 +18,15 @@
                     <option value="Công bố" {{ request('filter') == 'Công bố' ? 'selected' : '' }}>Công bố</option>
                     <option value="Đề tài" {{ request('filter') == 'Đề tài' ? 'selected' : '' }}>Đề tài</option>
                     <option value="Sự kiện" {{ request('filter') == 'Sự kiện' ? 'selected' : '' }}>Sự kiện</option>
-                    <option value="Thông báo" {{ request('filter') == 'Thông báo' ? 'selected' : '' }}>Thông báo</option>
                 </select>
             </form>
         </div>
+
+        @if($results->count() == 0)
+            <div class="text-red-500 text-center text-gray-500 py-6">
+                Không có dữ liệu phù hợp với tiêu chí tìm kiếm
+            </div>
+        @endif
 
         <div>
             <div class="w-full mx-auto mt-6 grid gap-4">
@@ -62,18 +67,15 @@
             case 'Quy chế':
                 window.location.href = '/giangvien/quyche/' + id;
                 break;
-            // case 'Công bố':
-            //     window.location.href = '/giangvien/congbo/' + id;
-            //     break;
-            // case 'Đề tài':
-            //     window.location.href = '/giangvien/detai/' + id; // hoặc route đề tài nếu khác
-            //     break;
-            // case 'Sự kiện':
-            //     window.location.href = '/giangvien/sukien/' + id;
-            //     break;
-            // case 'Thông báo':
-            //     window.location.href = '/giangvien/thongbao/' + id;
-            //     break;
+            case 'Công bố':
+                window.location.href = '/giangvien/cong-bo/';
+                break;
+            case 'Đề tài':
+                window.location.href = '/giangvien/de-tai';
+                break;
+            case 'Sự kiện':
+                window.location.href = '/giangvien/su-kien';
+                break;
             default:
                 break;
         }

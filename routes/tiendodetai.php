@@ -19,12 +19,12 @@ Route::prefix('admin')->middleware('roles:admin')->group(function () {
         ->name('admin.theodoitiendo.data');
 
     // Cập nhật tiến độ
-    Route::post('/theodoitiendo/capnhat', [TienDoDeTaiController::class, 'capNhatTienDo'])
-        ->name('admin.theodoitiendo.capnhat');
+    Route::post('/theodoitiendo/capnhat-trang-thai', [TienDoDeTaiController::class, 'capNhatTrangThai'])
+        ->name('admin.theodoitiendo.capnhat-trang-thai');
 
 });
 
-Route::prefix('giangvien')->middleware('roles:giangvien')->group(function () {
+Route::prefix('giangvien')->middleware('roles:giangvien,nghiencuusinh')->group(function () {
     Route::post('/cap-nhat-tien-do', [TienDoDeTaiController::class, 'store'])
          ->name('giangvien.capNhatTienDo');
 });

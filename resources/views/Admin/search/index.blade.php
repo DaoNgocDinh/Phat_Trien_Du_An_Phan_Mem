@@ -23,7 +23,11 @@
                 </select>
             </form>
         </div>
-
+        @if($results->count() == 0)
+            <div class="text-red-500 text-center text-gray-500 py-6">
+                Không có dữ liệu phù hợp với tiêu chí tìm kiếm
+            </div>
+        @endif
         <div>
             <div class="w-full mx-auto mt-6 grid gap-4">
                 @foreach ($results as $item)
@@ -71,9 +75,9 @@
                 // case 'Đề tài':
                 //     window.location.href = '/admin/detai/' + id; // hoặc route đề tài nếu khác
                 //     break;
-                // case 'Sự kiện':
-                //     window.location.href = '/admin/sukien/' + id;
-                //     break;
+                case 'Sự kiện':
+                    window.location.href = '/admin/su-kien/';
+                    break;
                 // case 'Thông báo':
                 //     window.location.href = '/admin/thongbao/' + id;
                 //     break;

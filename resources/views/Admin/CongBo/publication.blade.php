@@ -7,7 +7,7 @@
 
         <div class="max-w-[1200px] mx-auto">
             <div class="inline-flex items-center rounded-lg bg-[#1D546D] px-4 py-2 text-white font-semibold text-lg">
-                Công bố khoa học > Danh sách công bố chưa phê duyệt
+                <a href="{{ route('admin.congbo.index') }}" class="text-white hover:text-gray-300">Công bố khoa học</a> > Danh sách công bố chưa phê duyệt
             </div>
 
             <div class="mt-6 flex items-start justify-between gap-4">
