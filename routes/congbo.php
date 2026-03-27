@@ -8,6 +8,9 @@ Route::prefix('admin')->middleware('roles:admin')->group(function () {
     Route::get('/congbo', [CongBoController::class, 'index'])
         ->name('admin.congbo.index');
 
+    Route::post('/congbo', [CongBoController::class, 'store'])
+        ->name('admin.congbo.store');
+
     Route::get('/congbo/bao-cao', [CongBoController::class, 'baocao'])->name('admin.congbo.baocao');
     Route::post('/congbo/export', [CongBoController::class, 'export'])->name('admin.congbo.export');
 

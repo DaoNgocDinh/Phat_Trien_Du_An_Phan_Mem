@@ -29,7 +29,7 @@ class CongBoController extends Controller
                 'LoaiCongBo' => $request->LoaiCongBo,
                 'NamXuatBan' => $request->NamCongBo,
                 'NoiCongBo' => $request->TapChi,
-                'GiangVienID' => $request->GiangVienID,
+                'GiangVienID' => session('UserID'),
                 'KhoaID' => $request->KhoaID,
                 'TrangThai' => 'ChoDuyet'
             ]);
@@ -219,6 +219,12 @@ class CongBoController extends Controller
             $namXuatBan = date('Y', strtotime($namXuatBan));
         }
 
+        // Lấy thông tin giảng viên đang đăng nhập
+        $giangvien = Giangvien::where('UserID', session('UserID'))->first();
+        if (!$giangvien) {
+            return redirect()->back()->with('error', 'Không tìm thấy thông tin giảng viên.');
+        }
+
         CongBo::create([
             'MaCongBo' => $MaCongBo,
             'TenCongBo' => $request->TenCongBo,
@@ -228,8 +234,10 @@ class CongBoController extends Controller
             'LoaiCongBo' => $request->LoaiCongBo,
             'DOI' => 'Có',
             'FilePDF' => $fileName ?? null,
-            'TrangThai' => 'ChoDuyet',
+            'TrangThai' => 'Chờ Duyệt',
             'NoiDungTomTat' => $request->NoiDungTomTat,
+            'GiangVienID' => $giangvien->MaGiangVien,
+            'KhoaID' => $giangvien->MaKhoa,
         ]);
 
         return redirect()->route('giangvien.congBo')->with('success', 'Thêm thành công');
