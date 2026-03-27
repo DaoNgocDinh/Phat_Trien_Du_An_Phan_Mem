@@ -7,6 +7,7 @@ use App\Models\LoaiDeTai;
 use App\Models\Detai;
 use Illuminate\Support\Facades\DB;
 use App\Models\DonVi;
+use Illuminate\Support\Facades\Validator;
 
 class LoaiDeTaiController extends Controller
 {
@@ -26,37 +27,44 @@ class LoaiDeTaiController extends Controller
     // THÊM
     public function store(Request $request)
     {
-        if ($request->type == 'donvi') {
+        try {
 
-            // ✅ validate riêng cho đơn vị
-            $request->validate([
-                'ten_don_vi' => 'required|string|max:255|unique:don_vis,ten_don_vi'
-            ], [
-                'ten_don_vi.required' => 'Không được để trống tên đơn vị!',
-                'ten_don_vi.unique' => 'Tên đơn vị đã tồn tại!',
-                'ten_don_vi.max' => 'Tối đa 255 ký tự!'
-            ]);
+            if ($request->type == 'donvi') {
 
-            \App\Models\DonVi::create([
-                'ten_don_vi' => $request->ten_don_vi
-            ]);
-        } else {
+                $request->validate([
+                    'ten_don_vi' => 'required|string|max:255|unique:don_vis,ten_don_vi'
+                ], [
+                    'ten_don_vi.required' => 'Không được để trống tên đơn vị!',
+                    'ten_don_vi.unique' => 'Tên đơn vị đã tồn tại!',
+                    'ten_don_vi.max' => 'Tối đa 255 ký tự!'
+                ]);
 
-            // ✅ GIỮ NGUYÊN của bạn
-            $request->validate([
-                'ten_loai' => 'required|string|max:255|unique:loai_de_tais,ten_loai'
-            ], [
-                'ten_loai.required' => 'Không được để trống tên loại!',
-                'ten_loai.unique' => 'Tên loại đã tồn tại!',
-                'ten_loai.max' => 'Tên loại tối đa 255 ký tự!'
-            ]);
+                \App\Models\DonVi::create([
+                    'ten_don_vi' => $request->ten_don_vi
+                ]);
+            } else {
 
-            \App\Models\LoaiDeTai::create([
-                'ten_loai' => $request->ten_loai
-            ]);
+                $request->validate([
+                    'ten_loai' => 'required|string|max:255|unique:loai_de_tais,ten_loai'
+                ], [
+                    'ten_loai.required' => 'Không được để trống tên loại!',
+                    'ten_loai.unique' => 'Tên loại đã tồn tại!',
+                    'ten_loai.max' => 'Tên loại tối đa 255 ký tự!'
+                ]);
+
+                \App\Models\LoaiDeTai::create([
+                    'ten_loai' => $request->ten_loai
+                ]);
+            }
+
+            return back()->with('success', 'Thêm danh mục thành công!');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+
+            return back()
+                ->withErrors($e->validator)
+                ->withInput()
+                ->with('form_type', 'create'); // 🔥 FIX BUG Ở ĐÂY
         }
-
-        return back()->with('success', 'Thêm danh mụcthành công!');
     }
 
     // SỬA
@@ -64,36 +72,45 @@ class LoaiDeTaiController extends Controller
     {
         if ($request->type == 'donvi') {
 
-            $request->validate([
-                'ten_don_vi' => 'required|string|max:255|unique:don_vis,ten_don_vi,' . $id
+            $validator = Validator::make($request->all(), [
+                'ten_don_vi' => 'required|string|max:255|unique:don_vis,ten_don_vi,' . $id . ',id'
             ], [
                 'ten_don_vi.required' => 'Không được để trống!',
                 'ten_don_vi.unique' => 'Tên đơn vị đã tồn tại!'
             ]);
 
-            $dm = \App\Models\DonVi::findOrFail($id);
+            if ($validator->fails()) {
+                return back()
+                    ->withErrors($validator)
+                    ->withInput()
+                    ->with('form_type', 'edit'); // 🔥 QUAN TRỌNG
+            }
 
-            $dm->update([
+            \App\Models\DonVi::findOrFail($id)->update([
                 'ten_don_vi' => $request->ten_don_vi
             ]);
         } else {
 
-            // ✅ giữ nguyên của bạn
-            $request->validate([
-                'ten_loai' => 'required|string|max:255|unique:loai_de_tais,ten_loai,' . $id
+            $validator = Validator::make($request->all(), [
+                'ten_loai' => 'required|string|max:255|unique:loai_de_tais,ten_loai,' . $id . ',id'
             ], [
                 'ten_loai.required' => 'Không được để trống!',
                 'ten_loai.unique' => 'Tên loại đã tồn tại!'
             ]);
 
-            $dm = \App\Models\LoaiDeTai::findOrFail($id);
+            if ($validator->fails()) {
+                return back()
+                    ->withErrors($validator)
+                    ->withInput()
+                    ->with('form_type', 'edit'); // 🔥
+            }
 
-            $dm->update([
+            \App\Models\LoaiDeTai::findOrFail($id)->update([
                 'ten_loai' => $request->ten_loai
             ]);
         }
 
-        return back()->with('success', 'Cập nhật danh mục thành công!');
+        return back()->with('success', 'Cập nhật thành công!');
     }
 
     // XÓA

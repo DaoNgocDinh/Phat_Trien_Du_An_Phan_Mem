@@ -1,6 +1,7 @@
 <form action="{{ route('admin.danhmuc.store') }}" method="POST" onsubmit="return validateCreate()">
     @csrf
     <input type="hidden" name="type" value="{{ $type }}">
+    <input type="hidden" name="form_type" value="create">
 
     <div id="popupForm" class="hidden bg-[#EBF4F6] border border-black rounded-lg w-full h-full">
 
@@ -21,12 +22,12 @@
                 value="{{ old('ten_loai') ?? old('ten_don_vi') }}"
                 placeholder="Nhập thông tin ..."
                 class="bg-[#F3F4F4] w-full border rounded px-3 py-1 mb-2
-                @error('ten_loai') border-red-500 @enderror">
-
-            @error('ten_loai')
+@if(session('form_type') == 'create' && $errors->has($type == 'loai' ? 'ten_loai' : 'ten_don_vi')) border-red-500 @endif">
+            @if(session('form_type') == 'create')
+            @error($type == 'loai' ? 'ten_loai' : 'ten_don_vi')
             <p class="text-red-500 text-sm mb-4">{{ $message }}</p>
             @enderror
-
+            @endif
             <div class="flex justify-center gap-4">
 
                 <button type="submit"
@@ -45,7 +46,7 @@
 
     </div>
 </form>
-@if ($errors->any())
+@if (session('form_type') == 'create' && $errors->any())
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         document.getElementById("popupForm").classList.remove("hidden");

@@ -152,6 +152,7 @@
         let idDangXoa = null
         let idDangSua = null
         let dongDangChon = null;
+        let id = "{{ old('id') }}";
 
         function boHighlight() {
             if (dongDangChon) {
@@ -236,6 +237,10 @@
             } else {
                 window.location.href = "/admin/danhmuc?type=donvi";
             }
+        }
+
+        if (id) {
+            document.getElementById("editId").value = id;
         }
     </script>
 

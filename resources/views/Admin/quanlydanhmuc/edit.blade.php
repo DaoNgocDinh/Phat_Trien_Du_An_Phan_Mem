@@ -19,18 +19,23 @@
             <input type="hidden" name="type" value="{{ $type }}">
 
             <input type="hidden" id="editId" name="id">
+            <input type="hidden" name="form_type" value="edit">
 
             <input
                 id="editInput"
                 name="{{ $type == 'loai' ? 'ten_loai' : 'ten_don_vi' }}"
                 type="text"
-                value="{{ old('ten_loai') }}"
+                value="{{ old($type == 'loai' ? 'ten_loai' : 'ten_don_vi') }}"
                 class="w-full border rounded-lg px-4 py-2 mb-2 
-    @error('ten_loai') border-red-500 @enderror">
+   @if(session('form_type') == 'edit' && $errors->has($type == 'loai' ? 'ten_loai' : 'ten_don_vi'))
+    border-red-500
+@endif">
 
-            @error('ten_loai')
+            @if(session('form_type') == 'edit')
+            @error($type == 'loai' ? 'ten_loai' : 'ten_don_vi')
             <p class="text-red-500 text-sm mb-4">{{ $message }}</p>
             @enderror
+            @endif
 
             <!-- Buttons -->
             <div class="flex justify-end gap-3">
@@ -51,15 +56,16 @@
     </div>
 </div>
 
-@if ($errors->any())
+@if (session('form_type') == 'edit' && $errors->any())
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         document.getElementById("formEdit").classList.remove("hidden");
+
         let id = "{{ old('id') }}";
         if (id) {
             document.getElementById("formUpdate").action = "/admin/danhmuc/update/" + id;
+            document.getElementById("editId").value = id;
         }
-
     });
 </script>
 @endif
