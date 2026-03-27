@@ -84,7 +84,7 @@ class TienDoDeTaiController extends Controller
             'noiDung'  => 'required|string', // Đổi từ nullable -> required (TC43)
             'ketQua'   => 'nullable|string',
             'khoKhan'  => 'nullable|string',
-            'fileBaoCao'=> 'nullable|mimes:pdf,doc,docx|max:10240', // Chỉ lấy pdf, doc, docx (TC44)
+            'fileBaoCao' => 'nullable|mimes:pdf,doc,docx|max:10240', // Chỉ lấy pdf, doc, docx (TC44)
         ], [
             'noiDung.required' => 'Vui lòng nhập nội dung báo cáo', // TC43
             'fileBaoCao.mimes' => 'Chỉ chấp nhận file PDF/Word', // TC44
@@ -101,7 +101,7 @@ class TienDoDeTaiController extends Controller
 
         // Tạo ID và Lưu tiến độ
         $maxId = \App\Models\Tiendodetai::max('MaTienDo');
-        
+
         \App\Models\Tiendodetai::create([
             'MaTienDo'        => $maxId ? $maxId + 1 : 1,
             'MaDeTai'         => $request->maDeTai,
@@ -132,7 +132,7 @@ class TienDoDeTaiController extends Controller
             'khoKhan'     => 'nullable|string',
             'fileBaoCao'  => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,zip|max:10240',
         ]);
-        
+
         // 2. Kiểm tra quyền
         $giangVien = Giangvien::where('HoTen', session('HoTen'))->first();
 
@@ -162,8 +162,8 @@ class TienDoDeTaiController extends Controller
         $maMoi = $maxMa + 1;
 
         // Đánh dấu dòng trạng thái để dễ nhận biết trong DB
-        $tienDoHienTaiText = $isDraft 
-            ? "Bản nháp - Cập nhật {$request->phanTram}%" 
+        $tienDoHienTaiText = $isDraft
+            ? "Bản nháp - Cập nhật {$request->phanTram}%"
             : "Đã báo cáo - Cập nhật {$request->phanTram}%";
 
         // 5. LUÔN LƯU VÀO BẢNG LỊCH SỬ (Tiendodetai)
@@ -172,7 +172,7 @@ class TienDoDeTaiController extends Controller
             'MaDeTai'        => $request->maDeTai,
             'TenDeTai'       => $deTai->TenDeTai,
             'TrangThai'      => $deTai->TrangThai,
-            'ThoiGianCapNhat'=> $request->thoiGian,
+            'ThoiGianCapNhat' => $request->thoiGian,
             'FileBaoCao'     => $filePath,
             'NoiDungBaoCao'  => $request->noiDung,
             'KetQua'         => $request->ketQua,
@@ -186,14 +186,14 @@ class TienDoDeTaiController extends Controller
             $deTai->update([
                 'PhanTramTienDo' => $request->phanTram,
                 // Tự động chuyển thành 'Hoàn thành' nếu % >= 100
-                'TrangThai'      => $request->phanTram >= 100 ? 'Hoàn thành' : $deTai->TrangThai, 
+                'TrangThai'      => $request->phanTram >= 100 ? 'Hoàn thành' : $deTai->TrangThai,
             ]);
         }
 
         // 7. Trả về thông báo tương ứng
-        $message = $isDraft 
-                ? 'Đã lưu nháp tiến độ (chưa cập nhật % vào hệ thống)!' 
-                : 'Cập nhật tiến độ thành công!';
+        $message = $isDraft
+            ? 'Đã lưu nháp tiến độ (chưa cập nhật % vào hệ thống)!'
+            : 'Cập nhật tiến độ thành công!';
 
         return redirect()->route('giangvien.deTaiCuaToi')->with('success', $message);
     }
@@ -203,7 +203,7 @@ class TienDoDeTaiController extends Controller
         // 1. Trường hợp file nằm trong Storage (Ví dụ: tien_do_files/abc.pdf)
         if (str_starts_with($file, 'tien_do_files/')) {
             $filePath = storage_path('app/public/' . $file);
-        } 
+        }
         // 2. Trường hợp file nằm trong Public (Ví dụ: 123456_abc.pdf)
         else {
             $filePath = public_path('uploads/baocao/' . $file);
@@ -216,5 +216,30 @@ class TienDoDeTaiController extends Controller
 
         // Nếu file bị mất hoặc xóa
         return back()->withErrors(['file' => 'File báo cáo không còn tồn tại trên máy chủ!']);
+    }
+
+
+    public function capNhatTrangThai(Request $request)
+    {
+        $request->validate([
+            'MaDeTai' => 'required|exists:detai,MaSo',
+            'TienDoHienTai' => 'required|string'
+        ]);
+
+        // Lấy dòng MỚI NHẤT
+        $tienDo = Tiendodetai::where('MaDeTai', $request->MaDeTai)
+            ->orderBy('ThoiGianCapNhat', 'desc')
+            ->first();
+
+        if (!$tienDo) {
+            return response()->json(['error' => 'Không tìm thấy tiến độ'], 404);
+        }
+
+        // 👉 UPDATE đúng dòng này
+        $tienDo->update([
+            'TienDoHienTai' => $request->TienDoHienTai
+        ]);
+
+        return response()->json(['success' => true]);
     }
 }

@@ -107,11 +107,19 @@
                     <div>
                         <label>CV :</label>
 
+                        {{-- Upload file mới --}}
                         <input type="file"
                             name="CV"
-                            class="border border-black rounded px-3 py-2 w-full"
+                            class="border border-black rounded px-3 py-2 w-full bg-gray-200"
                             disabled>
 
+
+                        {{-- Hiển thị tên CV nếu đã có --}}
+                        @if(!empty($hoso->CV))
+                        <p class="text-sm text-gray-600 mb-2">
+                            📄 {{ basename($hoso->CV) }}
+                        </p>
+                        @endif
                     </div>
 
 
@@ -367,7 +375,7 @@
     sdt.addEventListener("input", validateAll);
     email.addEventListener("input", validateEmail);
 
-    // ===== SUBMIT =====
+    // ===== SUBMIT =====a
     form.addEventListener("submit", function(e) {
         if (!validateAll()) {
             e.preventDefault();

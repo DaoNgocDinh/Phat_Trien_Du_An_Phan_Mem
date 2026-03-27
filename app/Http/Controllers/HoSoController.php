@@ -70,9 +70,20 @@ class HoSoController extends Controller
             $gv->NgaySinh = $request->NgaySinh;
 
             if ($request->hasFile('CV')) {
+
                 $file = $request->file('CV');
-                $path = $file->store('cv', 'public');
-                $gv->CV = $path;
+
+                // Lấy tên gốc
+                $originalName = $file->getClientOriginalName();
+
+                // Tạo tên mới để tránh trùng (khuyên dùng)
+                $newName = time() . '_' . $originalName;
+
+                // Lưu file
+                $file->storeAs('cv', $newName, 'public');
+
+                // 🔥 Lưu tên gốc để hiển thị
+                $gv->CV = $originalName;
             }
 
             $gv->save();
